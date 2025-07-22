@@ -29,3 +29,23 @@
     - Question réponse 
     - 
 pour ton site tu dois utiliser le framework Symfony !!! OBLIGATOIREMENT
+
+
+## Symfony 
+
+- framework => cadre (frame) de travail (work)
+- en + de donner de code, Symfony va ORGANISER ta manière de travailler avec PHP
+- front (Twig variante de html et PHP) ET back ( Controller / Entité / Doctrine ...  ) 
+
+## installer 2 outils en ligne de commande 
+
+=> composer <https://getcomposer.org/>
+=> symfony cli <https://symfony.com/download> `scoop install symfony-cli`
+
+## je peux créer mon projet Symfony 
+
+```sh
+symfony new <nom-projet> --webapp
+```
+
+créer un dossier nom-projet et ce dossier contient TOUS les fichiers sources d'une projet Symfony
