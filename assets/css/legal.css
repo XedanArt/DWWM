@@ -1,0 +1,227 @@
+/* ////////// CONDITIONS D'UTILISATION ////////// */
+/* ////////// CONDITIONS D'UTILISATION ////////// */
+/* ////////// CONDITIONS D'UTILISATION ////////// */
+/* ////////// SECTION ////////// */
+.terms-section {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+/* ////////// CONTAINER PRINCIPAL ////////// */
+.terms-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.493);
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
+  transition: box-shadow 0.3s ease;
+  border: 1px solid transparent;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* ////////// CONTAINER TITRE + INTRO + FIRST ////////// */
+.terms-title {
+  padding: 2rem;
+  background-color: #00000059;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  color: #ffffff;
+}
+
+.terms-title h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+}
+
+.terms-intro {
+  font-size: 1rem;
+  font-style: italic;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.terms-first {
+  line-height: 1.6;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+
+.terms-title p:last-of-type {
+  margin-bottom: 0;
+}
+
+/* ////////// ARTICLE 1 à 9 + h3 + p ////////// */
+.terms-first-article,
+.terms-second-article,
+.terms-third-article,
+.terms-fourth-article,
+.terms-fifth-article,
+.terms-sixth-article,
+.terms-seventh-article, 
+.terms-eighth-article,
+.terms-ninth-article {
+  padding: 2rem;
+  background-color: #00000059;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  font-family: "Segoe UI", sans-serif;
+  color: #ffffff;
+  margin-top: 20px;
+}
+
+.terms-first-article h3,
+.terms-second-article h3,
+.terms-third-article h3,
+.terms-fourth-article h3,
+.terms-fifth-article h3,
+.terms-sixth-article h3, 
+.terms-seventh-article h3,
+.terms-eighth-article h3,
+.terms-ninth-article h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+}
+
+.terms-first-article p,
+.terms-second-article p,
+.terms-third-article p,
+.terms-fourth-article p,
+.terms-fifth-article p,
+.terms-sixth-article p, 
+.terms-seventh-article p,
+.terms-eighth-article p,
+.terms-ninth-article p {
+  text-align: start;
+  line-height: 1.6;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+
+/* ////////// legalplace.fr ////////// */
+.terms-ninth-article a {
+  color: #b9a9ff;
+  text-decoration: underline;
+}
+
+.terms-ninth-article a:hover {
+  color: #8977da
+}
+
+/* ////////// POLITIQUE DE CONFIDENTIALITÉ ////////// */
+/* ////////// POLITIQUE DE CONFIDENTIALITÉ ////////// */
+/* ////////// POLITIQUE DE CONFIDENTIALITÉ ////////// */
+.privacy-section {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.privacy-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
+  transition: box-shadow 0.3s ease;
+  border: 1px solid transparent;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.privacy-first-article {
+  margin-top: 20px;
+  padding: 2rem;
+  background-color: #00000059;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  color: #ffffff;
+}
+
+.privacy-second-article,
+.privacy-third-article,
+.privacy-fourth-article,
+.privacy-contactus {
+  margin-top: 20px;
+  padding: 2rem;
+  background-color: #00000059;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  color: #ffffff;
+}
+
+.privacy-first-article h1,
+.privacy-second-article h1,
+.privacy-third-article h1,
+.privacy-fourth-article h1,
+.privacy-contactus h1 {
+  text-align: center;
+  background-color: #00000080;
+  border-radius: 12px;
+  padding-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.privacy-first-article h2,
+.privacy-second-article h2,
+.privacy-third-article h2,
+.privacy-fourth-article h2,
+.privacy-contactus h2 {
+  text-align: center;
+  background-color: #00000080;
+  border-radius: 12px;
+  padding-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.privacy-first-article h3,
+.privacy-second-article h3,
+.privacy-third-article h3,
+.privacy-fourth-article h3,
+.privacy-contactus h3 {
+  text-align: center;
+  color: #ffffff;
+  border-bottom: 1px solid #ffffff;
+  padding-bottom: 0.5rem;
+}
+
+.privacy-first-article h4,
+.privacy-second-article h4,
+.privacy-third-article h4,
+.privacy-fourth-article h4,
+.privacy-contactus h4 {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.privacy-first-article p,
+.privacy-second-article p,
+.privacy-third-article p,
+.privacy-fourth-article p,
+.privacy-contactus p {
+  text-align: start;
+}
+
+/* ////////// Liens hypertexte ////////// */
+.privacy-first-article a,
+.privacy-second-article a,
+.privacy-third-article a,
+.privacy-contactus a {
+  color: #b9a9ff;
+  text-decoration: underline;
+}
+
+.privacy-first-article a:hover,
+.privacy-second-article a:hover,
+.privacy-third-article a:hover,
+.privacy-contactus a:hover,
+.support-faq a:hover {
+  color: #8977da
+}

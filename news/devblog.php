@@ -1,0 +1,89 @@
+<?php
+  $basePath = "../";
+  include($basePath . "includes/header.php");
+  include($basePath . "includes/navbar.php");
+?>
+
+<div class="devblog-title-container">
+  <h2 class="devblog-title">Devblog de l'équipe : Voici les dernières nouveautés</h2>
+</div>
+
+<div class="devblog-carousel">
+  <!-- Flèche gauche -->
+  <button class="devblog-nav prev" type="button">❮</button>
+
+  <!-- Cartes du carousel -->
+  <div class="devblog-card">
+    <img src="/assets/images/devblog_01.png" alt="Starting project">
+    <div class="devblog-description">
+      <h3>DEVBLOG du 03/07/2025 : Début du projet.</h3>
+      <p>Il reste encore tant à accomplir...</p>
+    </div>
+  </div>
+
+  <div class="devblog-card">
+    <img src="/assets/images/devblog_02.png" alt="New Raid Kraken">
+    <div class="devblog-description">
+      <h3>DEVBLOG du 06/07/2025 : Nouveau Raid : Kraken</h3>
+      <p>Attention à ses tentacules... !</p>
+    </div>
+  </div>
+
+  <div class="devblog-card">
+    <img src="/assets/images/devblog_03.png" alt="Update : Stuff">
+    <div class="devblog-description">
+      <h3>DEVBLOG du 09/07/2025 : Refonte des équipements.</h3>
+      <p>Plus de place dans l'inventaire... pour porter encore plus d'équipements !</p>
+    </div>
+  </div>
+
+  <div class="devblog-card">
+    <img src="/assets/images/devblog_04.png" alt="New class">
+    <div class="devblog-description">
+      <h3>DEVBLOG du 11/07/2025 : Refonte des classes.</h3>
+      <p>A l'arc, à l'épée, au bâton... Choisissez avec quelles armes vous allez commencer votre aventure !</p>
+    </div>
+  </div>
+
+  <div class="devblog-card">
+    <img src="/assets/images/devblog_05.png" alt="New feature">
+    <div class="devblog-description">
+      <h3>DEVBLOG du 14/07/2025 : Déité, nouvelle fonctionnalité.</h3>
+      <p>Choisissez quel dieu vous allez servir... ou bien trahir.</p>
+    </div>
+  </div>
+
+  <div class="devblog-card">
+    <img src="/assets/images/devblog_07.png" alt="Ride a dragon">
+    <div class="devblog-description">
+      <h3>DEVBLOG du 16/07/2025 : Montures, ne voyagez plus seul !</h3>
+      <p>Explorez le monde à dos de loup géant, de cerf, de... Dragon ?!</p>
+    </div>
+  </div>
+
+  <div class="devblog-card">
+    <img src="/assets/images/devblog_08.png" alt="New Raid Sphinge">
+    <div class="devblog-description">
+      <h3>DEVBLOG du 18/07/2025 : Nouveau Raid : La Sphinge</h3>
+      <p>Répondez à son énigme, votre vie en dépend</p>
+    </div>
+  </div>
+
+  <div class="devblog-card">
+    <img src="/assets/images/devblog_09.png" alt="Mt Ardu">
+    <div class="devblog-description">
+      <h3>DEVBLOG du 22/07/2025 : Nouvelle Zone : Le Mont Ardu</h3>
+      <p>Explorez une nouvelle zone et affrontez-y de nouveaux dangers.</p>
+    </div>
+  </div>
+
+  <!-- Flèche droite -->
+  <button class="devblog-nav next" type="button">❯</button>
+</div>
+
+<div class="carousel-spacer"></div>
+
+<?php include($basePath . "includes/footer.php"); ?>
+
+<!-- Script JS spécifique au carousel -->
+<script src="<?= $basePath ?>assets/js/devblog.js" defer></script>

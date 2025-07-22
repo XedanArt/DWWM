@@ -1,0 +1,180 @@
+/* ////////// SECTION ////////// */
+/* ////////// SECTION ////////// */
+/* ////////// SECTION ////////// */
+.forum-section {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+    padding-bottom: 100px;;
+}
+
+/* ////////// FORUM CONTENEUR ////////// */
+/* ////////// FORUM CONTENEUR ////////// */
+/* ////////// FORUM CONTENEUR ////////// */
+.forum-topics-container {
+    display: flex;
+    flex-direction: row;
+    max-width: 1200px;
+    width: 100%;
+    gap: 30px;
+}
+
+/* ////////// FORUM MAIN ////////// */
+/* ////////// FORUM MAIN ////////// */
+/* ////////// FORUM MAIN ////////// */
+.forum-main {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    gap: 20px;
+}
+
+/* En-tête du forum */
+.forum-title-header {
+    font-family: 'OptimusPrinceps';
+    background-image: url('/assets/images/ms_band_01.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
+    color: #FFD7A1;
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.forum-logo {
+    height: 60px; 
+}
+
+.forum-title-header h2 {
+    padding-top:20px;
+}
+
+/* ////////// PARAM. DES SUJETS //////////  */
+/* ////////// PARAM. DES SUJETS //////////  */
+/* ////////// PARAM. DES SUJETS //////////  */
+.forum-annoucement p {
+    padding: 20px;
+    font-weight: 500;
+}
+
+.forum-annoucement,
+.forum-informations,
+.forum-morningsoul,
+.forum-search,
+.forum-allcategory,
+.forum-toc {
+    background-color: #c2b8b8;
+    padding: 0;
+    color: #333;
+}
+
+/* Titre pleine largeur avec fond */
+.forum-annoucement h2,
+.forum-informations h2,
+.forum-morningsoul h2 {
+    font-family: 'Montserrat';
+    background-image: url('/assets/images/ms_band_01.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #FFD7A1;
+    margin: 0;
+    padding: 12px 20px;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+/* Contenu interne sous le titre */
+.forum-title > *,
+.forum-annoucement > *,
+.forum-informations > *,
+.forum-morningsoul > *,
+.forum-search > *,
+.forum-allcategory > *,
+.forum-toc > * {
+    padding: 20px;
+}
+
+/* Listes */
+.topic-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 20px;
+}
+
+.topic-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #000000;
+}
+
+.topic-list a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+/* ////////// Sidebar ////////// */
+/* ////////// Sidebar ////////// */
+/* ////////// Sidebar ////////// */
+.forum-sidebar-container {
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.forum-search h2,
+.forum-allcategory h2,
+.forum-toc h2 {
+    font-family: 'Montserrat';
+    background-image: url('/assets/images/ms_band_side.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #FFD7A1;
+    margin: 0;
+    padding: 12px 20px;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.forum-search-form {
+    display: flex;
+    gap: 8px;
+    padding: 20px;
+}
+
+.forum-search-input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+}
+
+.forum-search-button {
+    padding: 10px 16px;
+    background-color: #643304;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.forum-search-button:hover {
+    background-color: #7a646b;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .forum-topics-container {
+        flex-direction: column;
+    }
+}

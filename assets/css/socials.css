@@ -1,0 +1,110 @@
+/* ////////// Règles attribuées à l'ensemble de la section ////////// */
+.social-section {
+  color: #f5f5f5;
+  padding-top: 100px;
+  padding-bottom: 300px;
+  font-family: Arial, sans-serif;
+}
+
+/* ////////// Conteneur des cards ////////// */
+.social-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  margin: 0 auto;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
+  transition: box-shadow 0.3s ease;
+  border: 1px solid transparent;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* ////////// Titre + Intro ////////// */
+.social-container h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.social-note {
+  font-size: 18px;
+  margin-bottom: 40px;
+  opacity: 0.8;
+}
+
+/* ////////// Cards ////////// */
+.social-cards {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.social-card {
+  background-color: #1a1a1aa8;
+  color: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 250px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.social-card img {
+  margin-top: 10px;
+  border-radius: 5px;
+  max-width: 100%;
+  height: auto;
+}
+
+.social-card:hover {
+  /* effet de déplacement vers le haut */
+  transform: translateY(-10px);
+  box-shadow: 0 8px 15px rgba(255, 255, 255, 0.2);
+}
+
+.social-card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.social-card i {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: #b9a9ff;
+}
+
+.social-card h3 {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+/* Animation logos réseaux sociaux */
+.social-card {
+  opacity: 0;
+  /* effet d'apparition à l'ouverture de la page */
+  transform: scale(0.8);
+  /* pour contrôler les paramètres de la transformation */
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+/* fin de l'effet, état final post-animation */
+.card-in-view {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .social-cards {
+    flex-direction: column;
+    gap: 15px;
+  }
+}

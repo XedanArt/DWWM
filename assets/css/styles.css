@@ -1,0 +1,177 @@
+/* ////////// BODY ////////// */
+/* ////////// BODY ////////// */
+/* ////////// BODY ////////// */
+body {
+  padding-top: 75px;
+  background-image: url('/assets/images/ms_hero_section_01.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+/* ////////// NAVBAR INCLUDE ////////// */
+/* ////////// NAVBAR INCLUDE ////////// */
+/* ////////// NAVBAR INCLUDE ////////// */
+/* Paramètres Logo */
+.logo {
+  width: 50px;
+  height: auto;
+}
+
+/* Fond navbar */
+.navbar-custom {
+  background-color: rgb(24,20,20);
+}
+
+/* Liens de la navbar + effet smooth au passage de la souris */
+.navbar-custom .nav-link.link-custom {
+  color: #ffffff;
+  transition: color 0.4s ease;
+}
+
+.navbar-custom .nav-link.link-custom:hover {
+  color: #FFD7A1;
+}
+
+/* Couleur du fond du menu déroulant */
+.dropdown-custom {
+  background-color: #f8dfbe;
+}
+
+/* Bouton Nous Rejoindre */
+.custom-login-btn {
+  background-color: #f4de83;
+  border-color: #6E3A10;
+  color: #000000;
+  transition: background-color 0.3s ease;
+}
+
+.custom-login-btn:hover {
+  background-color: #a7975b;
+  color: #fff;
+}
+
+/* Mise en page flex pour aligner le bouton */
+.navbar-custom .navbar-collapse {
+  display: flex;
+  align-items: center;
+}
+
+/* ////////// NAVBAR MENU BURGER INCLUDE ////////// */
+/* ////////// NAVBAR MENU BURGER INCLUDE ////////// */
+/* ////////// NAVBAR MENU BURGER INCLUDE ////////// */
+/* Paramétrage menu burger */
+/* Changement de couleur de l'icone burger */
+.navbar-custom .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,215,161, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* ////////// FOOTER INCLUDE ////////// */
+/* ////////// FOOTER INCLUDE ////////// */
+/* ////////// FOOTER INCLUDE ////////// */
+.footer-custom {
+  background-color: #06050c;
+  color: #ccc;
+  padding: 30px 20px;
+}
+
+/* Partie haute : colonnes d'informations */
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.footer-col {
+  flex: 1 1 30%;
+  min-width: 100px;
+}
+
+/* Titres des colonnes */
+.footer-title-custom {
+  color: white;
+  font-family: 'Montserrat';
+  border-bottom: 2px solid #89aa12;
+  padding-bottom: 4px;
+}
+
+/* Listes */
+.footer-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.footer-links-custom {
+  font-family: 'Roboto';
+  color: white;
+  text-decoration: none;
+  font-weight: 100;
+}
+
+.footer-links-custom:hover {
+  color: #89aa12;
+}
+
+/* Partie basse */
+.footer-bottom {
+  border-top: 1px solid #444;
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Liens légaux en bas */
+.legal-links {
+  margin-top: 20px;
+  display: flex;
+  font-size: 0.80rem;
+  gap: 20px;
+}
+
+/* Réseaux sociaux */
+.social-icons-custom {
+  display: flex;
+  margin-top: 20px;
+  padding-top: 10px;
+  gap: 10px;
+  justify-content: center;
+}
+
+.logo-box {
+  border: 1px solid white;
+  padding: 5px;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.logo-box:hover {
+  border-color: #89aa12;
+}
+
+.social-icon-img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.5s ease;
+}
+
+.social-icon-img:hover {
+  transform: scale(1.1);
+}
+
+#cookies,
+#mentions {
+  scroll-margin-top: 10rem;
+}
+
+/* Copyright */
+.copyright-custom {
+  margin-top: 20px;
+  font-family: 'IBMPlexSans';
+  color: white;
+  font-size: 0.9em;
+}

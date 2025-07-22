@@ -1,0 +1,54 @@
+/* FOOTER : Pour les titres des listes */
+/* FORUM : Pour les titres des Topics */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat/Montserrat-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* FOOTER : Pour les listes footer */
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/fonts/Roboto/Roboto-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* FOOTER : Pour le copyright */
+@font-face {
+  font-family: 'IBMPlexSans';
+  src: url('/assets/fonts/IBMPlexSans/IBMPlexSans-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* HOME.PHP : Titre principal */
+@font-face {
+  font-family: 'OptimusPrinceps';
+  src: url('/assets/fonts/OptimusPrinceps/OptimusPrinceps.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* HOME.PHP : Intro + Intro 2scnd */
+@font-face {
+  font-family: 'PlayfairDisplay';
+  src: url(/assets/fonts/PlayfairDisplay/PlayfairDisplay-Regular.woff2) format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* TEST POUR LE TITRE HOME */
+@font-face {
+  font-family: 'Cinzel';
+  src: url(/assets/fonts/Cinzel/Cinzel-Regular.woff2) format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* TEST POUR LES SOUS-TITRES/INTRO */
+@font-face {
+  font-family: 'IMFellEnglish';
+  src: url(/assets/fonts/IMFellEnglish/IMFellEnglish-Regular.woff2) format('woff2');
+}

@@ -1,0 +1,53 @@
+<?php
+  $basePath = "../";
+  include($basePath . "includes/header.php");
+  include($basePath . "includes/navbar.php");
+?>
+
+<section class="support-section">
+  <div class="support-wrapper">
+    <div class="support-container">
+      <h2>Contactez le Support</h2>
+      <p class="support-note">Besoin d'aide ? Remplissez le formulaire ci-dessous ou consultez notre FAQ.</p>
+
+      <form action="/submit-support" method="POST" class="support-form">
+        <div class="form-group">
+          <label for="name">Nom :</label>
+          <input type="text" id="name" name="name" required placeholder="Votre nom">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email :</label>
+          <input type="email" id="email" name="email" required placeholder="Votre email">
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message :</label>
+          <textarea id="message" name="message" rows="5" required placeholder="Décrivez votre problème ou question"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-support">Envoyer</button>
+      </form>
+
+      <div class="support-faq">
+        <h3>FAQ</h3>
+        <ul>
+          <li><strong>Comment signaler un bug ?</strong> Utilisez le formulaire ci-dessus ou envoyez un email à support@morning-soul.com.</li>
+          <li><strong>Quels sont les horaires du support ?</strong> Du lundi au vendredi, de 9h à 18h (CET).</li>
+          <li><strong>Où trouver les mises à jour du jeu ?</strong> Consultez les pages <a href="/news/changelog.php">changelogs</a> et <a href="/news/devblog.php">devblogs</a>.</li>
+        </ul>
+      </div>
+
+      <div class="support-email">
+        <p>Vous pouvez également nous contacter directement par email à <a href="mailto:support@morning-soul.com">support@morning-soul.com</a>.</p>
+      </div>
+    </div>
+
+    <div class="support-sidebar">
+      <p>Une question sur le jeu ou son gameplay ?</p>
+      <a href="/forum/forum.php" target="_blank">Accédez au forum</a>
+    </div>
+  </div>
+</section>
+
+<?php include($basePath . "includes/footer.php"); ?>
