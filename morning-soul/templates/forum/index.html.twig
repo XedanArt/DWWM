@@ -1,0 +1,10 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>Je suis la page de forum</h1>
+    <ul>
+    {% for sujet in sujets %}
+        <li>{{ sujet }}</li>    
+    {% endfor %}
+    </ul>
+{% endblock %}
