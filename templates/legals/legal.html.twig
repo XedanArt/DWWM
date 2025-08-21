@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="legals-container">
+  <div class="legals-main-back">
+
+    <div class="legals-block">
+      <h2 class="legals-title">1. Éditeur du site</h2>
+      <div class="legals-content">
+        <p>Le site Morning Soul est édité par [Nom de l’entreprise], société immatriculée sous le numéro [RCS ou SIRET], dont le siège social est situé à [adresse complète].</p>
+        <p>Contact : [email] / [numéro de téléphone]</p>
+      </div>
+    </div>
+
+    <div class="legals-block">
+      <h2 class="legals-title">2. Hébergement</h2>
+      <div class="legals-content">
+        <p>Le site est hébergé par [Nom de l’hébergeur], situé à [adresse complète].</p>
+        <p>Pour toute question relative à l’hébergement, vous pouvez contacter [email ou formulaire de contact de l’hébergeur].</p>
+      </div>
+    </div>
+
+    <div class="legals-block">
+      <h2 class="legals-title">3. Propriété intellectuelle</h2>
+      <div class="legals-content">
+        <p>Tout le contenu présent sur le site — textes, images, logos, vidéos, éléments graphiques — est protégé par le droit de la propriété intellectuelle et demeure la propriété exclusive de l’éditeur, sauf mention contraire explicite.</p>
+        <p>Toute reproduction ou exploitation, partielle ou totale, sans autorisation écrite préalable est strictement interdite.</p>
+      </div>
+    </div>
+
+    <div class="legals-block">
+      <h2 class="legals-title">4. Responsabilité</h2>
+      <div class="legals-content">
+        <p>L’éditeur s’efforce de fournir des informations exactes et à jour sur le site. Toutefois, il ne saurait être tenu responsable des erreurs, omissions ou d’une indisponibilité temporaire du service.</p>
+        <p>L’utilisateur reste seul responsable de l’usage qu’il fait du contenu et des services proposés.</p>
+      </div>
+    </div>
+
+    <div class="legals-block">
+      <h2 class="legals-title">5. Cookies</h2>
+      <div class="legals-content">
+        <p>Le site peut utiliser des cookies pour améliorer la navigation et mesurer l’audience. L’utilisateur peut accepter ou refuser ces cookies via le bandeau d’information et les paramètres de son navigateur.</p>
+        <p>Pour en savoir plus, consultez notre <a href="{{ path('legals.cookies')}}">politique de cookies</a>.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

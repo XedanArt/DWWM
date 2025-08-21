@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="dashboard-wrapper">
+  <h1 class="dashboard-title">Tableau de bord</h1>
+
+  {% if is_granted('ROLE_ADMIN') %}
+    <section class="dashboard-section">
+      <h2>Gestion des utilisateurs</h2>
+      {% if users is defined and users|length > 0 %}
+        <ul class="user-list scrollable-user-list">
+          {% for user in users %}
+            <li class="user-item">
+              <span>{{ user.displayUsername }}</span>
+              <button class="user-toggle" onclick="toggleUserMenu('{{ user.id }}')">▼</button>
+
+              <div id="user-menu-{{ user.id }}" class="user-menu hidden">
+                <p>Dernière connexion : 
+                  {% if user.lastLogin is not null %}
+                    {{ user.lastLogin|date('d/m/Y H:i') }}
+                  {% else %}
+                    Jamais
+                  {% endif %}
+                </p>
+                <p>Derniers topics : {{ user.topics is defined ? user.topics|length : 0 }}</p>
+                <p>Derniers posts : {{ user.posts is defined ? user.posts|length : 0 }}</p>
+
+                <div class="user-actions">
+                  <a href="{{ path('dashboard.contact_user', { id: user.id }) }}">Contacter</a>
+                  <a href="{{ path('dashboard.ban_user', { id: user.id, duration: 24 }) }}">Bannir 24h</a>
+                  <a href="{{ path('dashboard.ban_user', { id: user.id, duration: 48 }) }}">Bannir 48h</a>
+                  <a href="{{ path('dashboard.delete_user', { id: user.id }) }}" class="danger">Supprimer</a>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>Aucun utilisateur à afficher pour le moment.</p>
+      {% endif %}
+      <div class="alphabet-filter">
+        {% for letter in 'A'..'Z' %}
+        <button class="alphabet-button" onclick="filterUsersByLetter('{{ letter }}')">{{ letter }}</button>
+        {% endfor %}
+        <button class="alphabet-button reset" onclick="resetUserFilter()">Tous</button>
+      </div>
+    </section>
+
+    <section class="dashboard-section">
+      <h2>Poster du contenu</h2>
+      <ul class="dashboard-actions">
+        <li><a href="{{ path('news.devblog') }}">Poster un Devblog</a></li>
+        <li><a href="{{ path('news.changelog') }}">Poster un Changelog</a></li>
+        <li><a href="{{ path('forum.index') }}">Poster une annonce</a></li>
+      </ul>
+    </section>
+  {% endif %}
+
+  {% if is_granted('ROLE_SUPER_ADMIN') %}
+    <section class="dashboard-section super-admin-panel">
+      <h2>Panel Super Admin</h2>
+      <ul class="dashboard-actions">
+        <li><a href="{{ path('superadmin.create_admin') }}">👑 Créer un administrateur</a></li>
+        <li><a href="{{ path('superadmin.revoke_admin') }}">⚠️ Révoquer un administrateur</a></li>
+      </ul>
+    </section>
+  {% endif %}
+</div>
+
+<script>
+function toggleUserMenu(id) {
+  const menu = document.getElementById('user-menu-' + id);
+  menu.classList.toggle('hidden');
+}
+
+function filterUsersByLetter(letter) {
+  const users = document.querySelectorAll('.user-item');
+  users.forEach(user => {
+    const username = user.querySelector('span').textContent.trim().toUpperCase();
+    user.style.display = username.startsWith(letter) ? 'block' : 'none';
+  });
+}
+
+function resetUserFilter() {
+  const users = document.querySelectorAll('.user-item');
+  users.forEach(user => user.style.display = 'block');
+}
+
+</script>
+{% endblock %}

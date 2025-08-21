@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<div class="page-connexion">
+    <div class="connexion-container">
+        <div class="connexion-header">
+            <h1 class="h1-auth">Morning Soul</h1>
+        </div>
+
+        <div class="connexion-card{% if error %} shake{% endif %}">
+            <h2>Se connecter</h2>
+            <hr>
+
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-{{ label }}">{{ message }}</div>
+                {% endfor %}
+            {% endfor %}
+
+            {% if error %}
+                <div class="flash-error">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                    <br><a href="{{ path('auth.forgot_password') }}">Mot de passe oublié ?</a>
+                </div>
+            {% endif %}
+
+            {{ form_start(form, {
+                'action': path('auth.login'),
+                'attr': { 'class': 'login-form' }
+            }) }}
+
+                {{ form_widget(form.email, {
+                    'attr': {
+                        'class': 'input-auth',
+                        'value': last_username
+                    }
+                }) }}
+                {{ form_errors(form.email) }}
+
+                {{ form_widget(form.password, {
+                    'attr': { 'class': 'input-auth' }
+                }) }}
+                {{ form_errors(form.password) }}
+
+                <button type="submit" class="btn-connexion">Connexion</button>
+
+            {{ form_end(form) }}
+
+            <p class="register-link">
+                Pas encore inscrit ?
+                <a href="{{ path('auth.register') }}">S’inscrire</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+{% if error %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const box = document.querySelector('.connexion-card');
+            box && box.classList.add('shake');
+        });
+    </script>
+{% endif %}
+{% endblock %}

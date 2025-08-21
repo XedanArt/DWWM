@@ -1,0 +1,180 @@
+/* ////////// CONTENEUR DU TITRE ////////// */
+.devblog-title-container {
+  /* background-image: url('');
+  background-repeat: no-repeat;
+  background-position: center; */
+  padding-top: 160px;
+  padding-bottom: 20px;
+  text-align: center;
+  font-size: 2.4rem;
+  position: relative;
+  z-index: 10;
+}
+/* titre principal du site */
+.devblog-title {
+  font-family: 'Cinzel';
+  color: #FFD7A1;
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
+  transition: box-shadow 0.3s ease;
+  border: 1px solid transparent;
+}
+
+/* Zone carousel */
+.devblog-carousel {
+  position: relative;
+  padding-bottom: 10rem;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Cartes empilées */
+.devblog-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  width: 80vw;
+  max-width: 900px;
+  height: 100%;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dégradé vertical */
+.devblog-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 40%;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Ombre portée */
+.devblog-card.prev,
+.devblog-card.next {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.devblog-card.active img {
+  animation: zoomIn 0.6s ease-out;
+}
+
+/* Animation d'entrée sur l'image */
+@keyframes zoomIn {
+  from {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.devblog-card.active .devblog-description {
+  animation: fadeSlideUp 0.6s ease-out;
+}
+
+.devblog-card.active {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.devblog-card.prev {
+  transform: translateX(-130%) scale(0.85);
+  opacity: 0.3;
+  z-index: 5;
+}
+
+.devblog-card.next {
+  transform: translateX(30%) scale(0.85);
+  opacity: 0.3;
+  z-index: 5;
+}
+
+.devblog-card.hidden {
+  opacity: 0;
+  z-index: 0;
+}
+
+/* Image dans chaque carte */
+.devblog-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+/* Texte */
+.devblog-description {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  animation: gradientShift 15s ease infinite;
+}
+
+.devblog-description h3 {
+  margin: 0 0 10px;
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+.devblog-description p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #fff;
+}
+
+/* Flèches */
+.devblog-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 2rem;
+  padding: 10px 14px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.devblog-nav:hover {
+  background-color: #555;
+}
+
+.devblog-nav.prev { left: 10px; }
+.devblog-nav.next { right: 10px; }
+
+.carousel-spacer {
+  margin-bottom: 15rem;
+}

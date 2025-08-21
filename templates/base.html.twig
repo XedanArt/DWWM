@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}- Morning Soul -{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{{ asset('/img/favicon_ms_00.png') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/fonts.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/discover.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/download.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/support.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/socials.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/changelog.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/devblog.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/forum.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/base.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sections.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/topic_show.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/legals.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tag.results.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/topic_create.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    {% block stylesheets %}{% endblock %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
+    {% block javascripts %}{% endblock %}
+  </head>
+
+
+    <body class="site-background">
+       {% for label, messages in app.flashes %}
+       {% for message in messages %}
+        <div class="flash-{{ label }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% include "_inc/header.html.twig" %}
+        {% block body %}
+        {% endblock %}
+        {% include "_inc/footer.html.twig" %}
+    </body>
+</html>

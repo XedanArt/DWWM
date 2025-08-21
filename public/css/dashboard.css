@@ -1,0 +1,199 @@
+/* Dashboard Layout */
+.dashboard-wrapper {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: rgba(255, 240, 206, 0.548);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-title {
+  background-color: rgb(24, 20, 20);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgb(0, 0, 0);
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #FFD7A1;
+}
+
+/* Sections */
+.dashboard-section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #fff8e7;
+  box-shadow: 0 0 6px rgb(0, 0, 0);
+  border-left: 4px solid rgb(24,20,20);
+  border-radius: 6px;
+}
+
+.dashboard-section h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: rgb(24,20,20);
+}
+
+/* User List */
+.user-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Barre scrollable */
+.scrollable-user-list {
+  max-height: 400px; 
+  overflow-y: auto;
+  padding-right: 10px; /* Pour éviter que la scrollbar cache le contenu */
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fdfdfd;
+}
+
+/* Barre de recherche par ordre alphabétique */
+.alphabet-filter {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.alphabet-button {
+  padding: 6px 10px;
+  border: none;
+  background-color: #eee;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.alphabet-button:hover {
+  background-color: #ddd;
+}
+
+.alphabet-button.reset {
+  background-color: rgb(24,20,20);
+  color: white;
+}
+
+
+.user-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  background-color: #eef2f5;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+.user-item:hover {
+  background-color: #dde6ed;
+}
+
+.user-toggle {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* User Menu */
+.user-menu {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.hidden {
+  display: none;
+}
+
+.user-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.user-actions a {
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+  background-color: rgb(24,20,20);
+  color: white;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.user-actions a:hover {
+  background-color: rgb(61, 54, 54);
+}
+
+.user-actions .danger {
+  background-color: #d9534f;
+}
+
+.user-actions .danger:hover {
+  background-color: #c9302c;
+}
+
+/* Dashboard Actions */
+.dashboard-actions {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dashboard-actions li a {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  background-color: rgb(24,20,20);
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.dashboard-actions li a:hover {
+  background-color: rgb(58, 53, 53);
+}
+
+/* Super Admin Panel */
+.super-admin-panel {
+  border-left-color: rgb(24,20,20);
+}
+
+.super-admin-panel h2 {
+  color: rgb(24,20,20);
+}
+
+@media (max-width: 600px) {
+  .user-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dashboard-actions {
+    flex-direction: column;
+  }
+
+  .user-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .scrollable-user-list {
+    max-height: 300px;
+  }
+}

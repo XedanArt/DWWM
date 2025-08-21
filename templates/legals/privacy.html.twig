@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="legals-container">
+  <div class="legals-main-back">
+    <div class="legals-block">
+      <h2 class="legals-title">1. Données collectées</h2>
+      <div class="legals-content">
+        <p>Lorsque vous naviguez sur notre site, certaines données sont automatiquement enregistrées comme votre adresse IP, le type de navigateur, et les pages visitées. Des informations supplémentaires peuvent être collectées via nos formulaires : nom, prénom, e-mail, téléphone, etc.</p>
+        <p>Ces données servent à améliorer l’expérience utilisateur, garantir le bon fonctionnement de nos services, et assurer le traitement de vos demandes.</p>
+      </div>
+    </div>
+
+    <div class="legals-block">
+      <h2 class="legals-title">2. Finalité du traitement</h2>
+      <div class="legals-content">
+        <p>Les informations collectées sont utilisées pour vous fournir nos services, améliorer notre site, assurer la sécurité des échanges, et respecter nos obligations légales. Aucune donnée n’est vendue ou partagée avec des tiers sans votre consentement.</p>
+        <p>Tout traitement est réalisé conformément au RGPD, en garantissant la transparence et la protection de vos droits.</p>
+      </div>
+    </div>
+
+    <div class="legals-block">
+      <h2 class="legals-title">3. Conservation des données</h2>
+      <div class="legals-content">
+        <p>Vos données sont conservées pendant une durée adaptée à leur finalité. Passé ce délai, elles sont supprimées ou anonymisées conformément aux exigences réglementaires.</p>
+      </div>
+    </div>
+
+    <div class="legals-block">
+      <h2 class="legals-title">4. Vos droits</h2>
+      <div class="legals-content">
+        <p>Vous avez le droit d'accéder à vos données, de les corriger, de demander leur suppression, ou de vous opposer à leur traitement. Pour exercer ces droits, contactez-nous via les informations fournies dans nos <a href="{{ path('legals.legal') }}">mentions légales.</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

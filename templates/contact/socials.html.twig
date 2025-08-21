@@ -1,0 +1,40 @@
+{%  extends "base.html.twig" %}
+{% block body %}
+<div class="socials-separator">
+</div>
+<section class="social-section">
+  <div class="social-container">
+    <h2>Suivez-nous sur les réseaux sociaux</h2>
+    <p class="social-note">Restez connectés avec nous pour les dernières nouvelles et mises à jour.</p>
+    <div class="social-cards">
+      <div class="social-card" id="instagram">
+        <a href="https://www.instagram.com" target="_blank">
+          <i class="fab fa-instagram"></i>
+          <h3>Instagram</h3>
+          <img src="{{ asset('img/socials_insta_logo.png') }}" alt="Logo Instagram">
+        </a>
+      </div>
+
+      <div class="social-card" id="discord">
+        <a href="https://discord.gg/dYv6WBetaU" target="_blank">
+          <i class="fab fa-discord"></i>
+          <h3>Discord</h3>
+          <img src="{{ asset('img/socials_discord_logo.png') }}" alt="Logo discord" style="margin-top: 50px;">
+        </a>
+      </div>
+
+      <div class="social-card" id="twitter">
+        <a href="https://www.twitter.com" target="_blank">
+          <i class="fab fa-twitter"></i>
+          <h3>Twitter</h3>
+          <img src="{{ asset('img/socials_x_logo.png') }}" alt="Logo Twitter">
+        </a>
+      </div>
+    </div>
+  </div>
+</section>v
+{% endblock %}
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('js/socials.js') }}"></script>
+{% endblock %}

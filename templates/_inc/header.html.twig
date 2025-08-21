@@ -1,0 +1,73 @@
+<nav class="navbar navbar-expand-lg navbar-light navbar-custom fixed-top">
+  <div class="container-fluid">
+    <!-- Logo & Burger -->
+    <a class="navbar-brand" href="{{ path('homepage.index') }}">
+      <img src="{{ asset('img/favicon_ms_00.png') }}" alt="Logo" width="30" height="30" class="d-inline-block align-text-top logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Menu collapsé -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Jeu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle link-custom" href="#" id="siteDropdown" data-bs-toggle="dropdown" aria-expanded="false">Jeu</a>
+          <ul class="dropdown-menu dropdown-custom" aria-labelledby="siteDropdown">
+            <li><a class="dropdown-item" href="{{ path('game.discover') }}">Découvrir</a></li>
+            <li><a class="dropdown-item" href="{{ path('game.download') }}">Télécharger</a></li>
+          </ul>
+        </li>
+
+        <!-- Contact -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle link-custom" href="#" id="contactDropdown" data-bs-toggle="dropdown" aria-expanded="false">Contact</a>
+          <ul class="dropdown-menu dropdown-custom" aria-labelledby="contactDropdown">
+            <li><a class="dropdown-item" href="{{ path('contact.support') }}">Support</a></li>
+            <li><a class="dropdown-item" href="{{ path('contact.socials') }}">Réseaux</a></li>
+          </ul>
+        </li>
+
+        <!-- Actualités -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle link-custom" href="#" id="newsDropdown" data-bs-toggle="dropdown" aria-expanded="false">Actualités</a>
+          <ul class="dropdown-menu dropdown-custom" aria-labelledby="newsDropdown">
+            <li><a class="dropdown-item" href="{{ path('news.changelog') }}">Changelog</a></li>
+            <li><a class="dropdown-item" href="{{ path('news.devblog') }}">Devblog</a></li>
+          </ul>
+        </li>
+
+        <!-- Forum -->
+        <li class="nav-item">
+          <a class="nav-link link-custom" href="{{ path('forum.index') }}">Forum</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Section utilisateur (hors collapse pour rester à droite) -->
+    <div class="d-flex align-items-center ms-auto nav-user">
+      {% if app.user %}
+        <div class="dropdown">
+          <a href="#" class="nav-link d-flex align-items-center" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="me-2">{{ app.user.displayUsername }}</span>
+            <span class="chevron-icon me-2"><i class="fas fa-chevron-down"></i></span>
+            <img src="{{ asset('uploads/avatars/' ~ (app.user.avatar ?? 'default-avatar.png')) }}" alt="Avatar" class="rounded-circle" width="60" height="60">
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+            <li><a class="dropdown-item" href="{{ path('account.profile') }}">Mon Profil</a></li>
+
+            {% if 'ROLE_ADMIN' in app.user.roles or 'ROLE_SUPER_ADMIN' in app.user.roles %}
+              <li><a class="dropdown-item" href="{{ path('dashboard') }}">Dashboard</a></li>
+            {% endif %}
+
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{ path('auth.logout') }}">Déconnexion</a></li>
+          </ul>
+        </div>
+      {% else %}
+        <a class="btn btn-primary custom-login-btn" href="{{ path('auth.login') }}">Nous Rejoindre</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>

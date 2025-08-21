@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="forum-section-wrapper">
+  <div class="forum-section-main">
+    <div class="forum-section-card">
+
+      <div class="forum-section-header">
+        <h1 class="forum-section-title">{{ section.title }}</h1>
+        <p class="forum-section-subtitle">{{ topicCount }} sujets dans cette section</p>
+      </div>
+
+      <p class="forum-section-description">{{ section.description }}</p>
+
+      <div class="forum-section-topics">
+        {% for topic in topics %}
+          <a href="{{ path('topic.show', { id: topic.id }) }}" class="topic-row-link">
+            <div class="topic-row {% if topic.author and topic.author.roles is defined and ('ROLE_ADMIN' in topic.author.roles or 'ROLE_SUPER_ADMIN' in topic.author.roles) %}admin-topic{% endif %}">
+              <div class="topic-meta">
+                <img 
+                  src="{{ topic.author.avatar 
+                    ? asset('uploads/avatars/' ~ topic.author.avatar) 
+                    : asset('img/default-avatar.jpg') }}" 
+                  alt="Avatar de {{ topic.author.displayUsername }}" 
+                  class="topic-avatar"
+                />
+                <div class="topic-content">
+                  <h5 class="topic-title {% if topic.author and topic.author.roles is defined and ('ROLE_ADMIN' in topic.author.roles or 'ROLE_SUPER_ADMIN' in topic.author.roles) %}admin-title{% endif %}">{{ topic.title }}</h5>
+                  <p class="topic-author"> 
+                    par <strong>{{ topic.author.displayUsername }}</strong>
+                    {% if topic.author.roles is defined %}
+                    {% if 'ROLE_SUPER_ADMIN' in topic.author.roles %}
+                    <span class="badge badge-super">Super Admin</span>
+                    {% elseif 'ROLE_ADMIN' in topic.author.roles %}
+                    <span class="badge badge-admin">Admin</span>
+                    {% endif %}
+                    {% endif %}
+                  </p>
+                </div>
+              </div>
+
+              <div class="topic-stats">
+                <div class="topic-stat-line">{{ topic.postCount }} réponses • {{ topic.viewCount }} vues</div>
+                <div class="topic-stat-line">Créé le {{ topic.createdAt|date('d/m/Y H:i') }}</div>
+                <div class="topic-stat-line">Dernière activité à {{ topic.lastActivity|date('H:i') }}</div>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+
+      <div class="forum-section-pagination">
+        {{ knp_pagination_render(topics, 'pagination/custom_bootstrap_small.html.twig') }}
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

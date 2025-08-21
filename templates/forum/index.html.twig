@@ -1,0 +1,251 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<section class="forum-section">
+  <div class="forum-topics-container">
+
+    <!-- CONTENU PRINCIPAL -->
+    <div class="forum-main">
+
+      <!-- EN-TÊTE -->
+      <div class="forum-title">
+        <div class="forum-title-header">
+          <img src="{{ asset('img/favicon_ms_00.png') }}" alt="Logo Morning Soul" class="forum-logo">
+          <h2>BIENVENUE SUR MORNING SOUL - FORUM</h2>
+        </div>
+      </div>
+
+      <!-- À PROPOS -->
+      <div class="forum-morningsoul">
+        <h2 style="display: flex; justify-content: space-between; align-items: center;">
+          À propos de Morning Soul
+          <button class="collapse-btn" onclick="toggleSection(this)">−</button>
+        </h2>
+        <div class="collapsible-body">
+          <h5>Bienvenue sur le seuil du monde oublié...</h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel scelerisque metus...</p>
+        </div>
+      </div>
+
+      <!-- INFOS PRATIQUES -->
+      <div class="forum-informations">
+        <h2 style="display: flex; justify-content: space-between; align-items: center;">
+          Infos pratiques
+          <button class="collapse-btn" onclick="toggleSection(this)">−</button>
+        </h2>
+        <div class="collapsible-body">
+          <ul>
+            <li><a href="{{ path('forum.rules') }}">Règlement du forum</a></li>
+            <li><a href="{{ path('contact.support') }}">Contact modération</a></li>
+            <li><a href="{{ path('news.devblog') }}">Mises à jour & nouveautés</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ANNONCES -->
+      <div class="forum-announcement">
+        <h2 style="display: flex; justify-content: space-between; align-items: center;">
+          ANNONCES
+          <button class="collapse-btn" onclick="toggleSection(this)">−</button>
+        </h2>
+        <div class="collapsible-body">
+          {% for announcement in announcements %}
+            <div class="announcement-item">
+              <h3>{{ announcement.title }}</h3>
+              <p>{{ announcement.content }}</p>
+              <small>{{ announcement.createdAt|date('d/m/Y') }}</small>
+            </div>
+          {% else %}
+            <p>...</p>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- À LA UNE -->
+      <div class="forum-highlight">
+        <h2 style="display: flex; justify-content: space-between; align-items: center;">
+          À LA UNE
+          <button class="collapse-btn" onclick="toggleSection(this)">−</button>
+        </h2>
+        <div class="collapsible-body">
+          {% for topic in featuredTopics %}
+            <div class="highlight-item">
+              <h3><a href="{{ path('topic.show', { id: topic.id }) }}">{{ topic.title }}</a></h3>
+              <p>{{ topic.content[:150]|e ~ '...' }}</p>
+              <small>{{ topic.createdAt|date('d/m/Y') }} — {{ topic.author is defined and topic.author ? topic.author.displayUsername : 'Auteur inconnu' }}</small>
+            </div>
+          {% else %}
+            <p>Aucun sujet à la une.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="forum-sidebar-container">
+
+      <!-- RECHERCHE PAR TAG -->
+      <div class="forum-search">
+        <h2 style="display: flex; justify-content: space-between; align-items: center;">Rechercher par tag
+          <button class="collapse-btn" onclick="toggleSection(this)">−</button>
+        </h2>
+        <div class="collapsible-body">
+          <form method="GET" action="{{ path('tag.search') }}">
+            <select name="tag" class="forum-input tag-search-select" required></select>
+            <button type="submit" class="forum-submit">🔍 Rechercher</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- TABLE DES MATIÈRES -->
+      <div class="forum-toc">
+        <h2 style="display: flex; justify-content: space-between; align-items: center;">
+          Table des matières
+          <button class="collapse-btn" onclick="toggleSection(this)">−</button>
+        </h2>
+        <div class="collapsible-body">
+          <ul class="forum-toc-list debug-border">
+            {% for section in sections %}
+              {% if section.id is defined %}
+                <li><a href="{{ path('forum_section', { slug: section.slug }) }}">{{ section.title }}</a></li>
+              {% else %}
+                <li class="text-muted">Entrée invalide : {{ section }}</li>
+              {% endif %}
+            {% else %}
+              <li>Aucune section disponible.</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <!-- DERNIERS SUJETS -->
+      <div class="forum-allcategory">
+        <h2 style="display: flex; justify-content: space-between; align-items: center;">
+          Derniers sujets créés
+          <button class="collapse-btn" onclick="toggleSection(this)">−</button>
+        </h2>
+        <div class="collapsible-body">
+          {% for topic in topics|slice(0, 5) %}
+            <p>
+              <a href="{{ path('topic.show', { id: topic.id }) }}">{{ topic.title|e }}</a><br>
+              <small>{{ topic.createdAt|date('d/m/Y H:i') }} — {{ topic.author is defined and topic.author ? topic.author.displayUsername : 'Auteur inconnu' }}</small>
+            </p>
+          {% else %}
+            <p>Aucun sujet récent.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
+  <!-- BOUTON CRÉATION -->
+  <div class="forum-new-topic-btn" onclick="document.querySelector('#forum-new-topic-form').classList.toggle('visible')">
+    Nouveau Topic
+  </div>
+
+  <!-- FORMULAIRE FIXÉ -->
+  <div id="forum-new-topic-form" class="forum-new-topic-form">
+    {{ form_start(form, {
+      'action': path('forum.index'),
+      'attr': {'class': 'forum-form'}
+    }) }}
+
+      {{ form_row(form.section, {'attr': {'class': 'forum-input'}}) }}
+      {{ form_row(form.title, {'attr': {'class': 'forum-input'}}) }}
+      {{ form_row(form.content, {'attr': {'class': 'forum-textarea'}}) }}
+      {{ form_row(form.tags, {'attr': {'class': 'form-input tag-select'}}) }}
+      <small class="form-hint">Ajoutez jusqu’à 10 tags composés uniquement de lettres.</small>
+
+      <div class="forum-new-topic-actions">
+        <button type="submit" class="forum-submit">Créer</button>
+      </div>
+
+    {{ form_end(form) }}
+  </div>
+  {% endif %}
+</section>
+
+<!-- Script Select2 -->
+<script>
+function toggleSection(button) {
+  const parentDiv = button.closest('div');
+  const body = parentDiv.querySelector('.collapsible-body');
+  if (!body) return;
+
+  const isVisible = window.getComputedStyle(body).display !== 'none';
+  body.style.display = isVisible ? 'none' : 'block';
+  button.textContent = isVisible ? '+' : '−';
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Champ de création de tags (formulaire de création de topic)
+  const $tagInput = $('.tag-select');
+
+  $tagInput.select2({
+    placeholder: "Sélectionnez ou créez des tags",
+    allowClear: true,
+    width: '100%',
+    tags: true,
+    maximumSelectionLength: 10,
+
+    createTag: function (params) {
+      const term = $.trim(params.term);
+      const isValid = /^[\p{L}0-9\-_\s]+$/u.test(term);
+      const isTooLong = term.length > 15;
+
+      if (term === '' || !isValid || isTooLong) return null;
+
+      return {
+        id: term,
+        text: term,
+        newTag: true
+      };
+    },
+
+    templateResult: function (data) {
+      if (data.loading) return $('<span>Chargement...</span>');
+      if (data.newTag) {
+        return $('<span><strong>Créer :</strong> ' + data.text + '</span>');
+      }
+      return $('<span>' + data.text + '</span>');
+    },
+
+    escapeMarkup: function (markup) {
+      return markup;
+    }
+  });
+
+  // Correction visuelle : convertir chaîne en bulles
+  const rawValue = $tagInput.val();
+  if (rawValue && typeof rawValue === 'string' && rawValue.includes(',')) {
+    const tags = rawValue.split(',').map(t => t.trim()).filter(t => t !== '');
+    $tagInput.val(tags).trigger('change');
+  }
+
+  // Champ de recherche de tags (autre contexte, ex. filtre)
+  $('.tag-search-select').select2({
+    placeholder: "Rechercher un tag...",
+    allowClear: true,
+    width: '100%',
+    tags: false,
+    ajax: {
+      url: '/tags/search',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          term: params.term
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data.results
+        };
+      },
+      cache: true
+    }
+  });
+});
+</script>
+{% endblock %}

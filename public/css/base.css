@@ -1,0 +1,7 @@
+body.site-background {
+  background-image: url('../img/ms_hero_section_01.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}

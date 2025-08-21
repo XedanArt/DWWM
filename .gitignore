@@ -1,10 +1,21 @@
-
-###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
-/var/
+# Symfony folders
 /vendor/
-###< symfony/framework-bundle ###
+/var/
+/node_modules/
+/public/build/
+/public/uploads/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE and OS files
+*.log
+*.DS_Store
+.idea/
+.vscode/
+
+# PHPUnit
+/phpunit.xml
+/phpunit.xml.dist

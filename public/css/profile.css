@@ -1,0 +1,263 @@
+/* ========== CONTAINER PRINCIPAL ========== */
+.profile-main-container {
+  max-width: 1200px;
+  margin: 4rem auto;
+  padding-bottom: 10rem;
+}
+
+/* ========== WRAPPER DES CARTES ========== */
+.profile-card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .profile-card-container {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+/* ========== BOUTONS D'ONGLETS ========== */
+.profile-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tab-button {
+  padding: 0.75rem 1rem;
+  background-color: #fcf5e7;
+  box-shadow: 0 0 8px rgb(0, 0, 0);
+  border: none;
+  border-left: 4px solid transparent;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, border-left 0.3s;
+}
+
+.tab-button:hover {
+  background-color: #a1a0a0;
+}
+
+.tab-button.active {
+  background-color: #98b0c4;
+  border-left: 4px solid #796c52;
+}
+
+/* ========== CONTENEUR DES CARTES ========== */
+.profile-mycard-container {
+  background-color: rgb(255, 240, 206);
+  box-shadow: 0 0 15px rgb(0, 0, 0);
+  border-radius: 5px 5px 0 0;
+  flex-grow: 1;
+}
+
+.profile-mycard-container h2 {
+  font-family: 'Montserrat';
+  text-align: center;
+  background-color: rgb(24, 20, 20);
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0 0 8px rgb(0, 0, 0);
+  color: #fff8e7;
+  padding: 10px;
+}
+
+/* ========== CARTES INDIVIDUELLES ========== */
+.card-tab {
+  display: none;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.card-tab.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== TITRE UTILISATEUR ========== */
+.profile-username {
+  margin-bottom: 2rem;
+}
+
+/* ========== FIRST CARD (PROFIL) ========== */
+/* ========== FIRST CARD (PROFIL) ========== */
+/* ========== FIRST CARD (PROFIL) ========== */
+.profile-firstcard-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 20px;
+  min-height: 500px;
+}
+
+@media (max-width: 767px) {
+  .profile-firstcard-main {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* ========== COLONNE GAUCHE ========== */
+.profile-firstcard-left {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #fcf5e7;
+  box-shadow: 0 0 8px rgb(0, 0, 0);
+  border-radius: 10px 10px 0 0;
+  padding: 20px;
+}
+
+/* ========== AVATAR ========== */
+.profile-avatar-block {
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.profile-avatar {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  background-color: #000000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ========== FORMULAIRES ========== */
+.form-button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  background-color: rgb(24, 20, 20);
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-button:hover {
+  background-color: rgb(95, 91, 91);
+}
+
+/* ========== COLONNE DROITE ========== */
+.profile-firstcard-right {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #fcf5e7;
+  box-shadow: 0 0 8px rgb(0, 0, 0);
+  border-radius: 10px 10px 0 0;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+.profile-firstcard-right .form-group {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ========== TEXTAREA BIO ========== */
+.profile-firstcard-right .bio-textarea {
+  background-color: #ffffff; 
+  color: #000000;            
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  width: 100%;
+  max-width: 100%;
+  min-height: 120px;
+  box-sizing: border-box;
+  resize: vertical;
+  border-radius: 6px;
+}
+
+/* ========== BIOGRAPHIE ========== */
+.profile-bio {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  word-wrap: break-word;     
+  white-space: normal;     
+}
+
+/* ========== BIO VIDE ========== */
+.profile-bio-empty {
+  font-style: italic;
+  color: #888;
+}
+
+/* ========== COMPTEUR BIO ========== */
+.char-counter {
+  font-size: 0.85rem;
+  margin-top: 5px;
+  color: #555;
+}
+
+/* ========== SECOND CARD (Favoris) ========== */
+/* ========== SECOND CARD (Favoris) ========== */
+/* ========== SECOND CARD (Favoris) ========== */
+.profile-secondcard-main {
+  padding: 20px;
+  min-height: 500px;
+}
+
+.profile-secondcard-favorites {
+  padding: 20px;
+  min-height: 500px;
+  height: 100%;
+  background-color: #fcf5e7;
+  box-shadow: 0 0 8px rgb(0, 0, 0);
+}
+
+.profile-secondcard-favlist {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #fff8e7;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.fav-scroll-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fav-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+.fav-item a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.fav-item a:hover {
+  color: #796c52;
+}
+
+.fav-empty {
+  font-style: italic;
+  color: #888;
+  padding: 10px;
+}

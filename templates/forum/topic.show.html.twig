@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <div class="topic-separator"></div>
+
+  <div class="topic-container-global">
+    <div class="topic-show-wrapper">
+
+      <div class="topic-show-main">
+        <div class="topic-header">
+          <h1 class="topic-show-title">{{ topic.title }}</h1>
+          <p class="topic-meta">
+            Publié le {{ topic.createdAt|date('d/m/Y') }}
+            {% if topic.author is defined %}
+              par &#160;<strong>{{ topic.author.displayUsername }}</strong>
+            {% endif %}
+          </p>
+
+          {% if app.user %}
+            <form method="post" action="{{ path('topic.toggle_favorite', { id: topic.id }) }}" class="topic-fav-form">
+              <button type="submit" class="topic-fav-button">
+                {% if topic in app.user.favoriteTopics %}
+                  ★ Retirer des favoris
+                {% else %}
+                  ☆ Ajouter aux favoris
+                {% endif %}
+              </button>
+            </form>
+          {% endif %}
+        </div>
+
+        <div class="topic-show-content">
+          {{ topic.content|nl2br }}
+        </div>
+
+        <div class="topic-tags">
+          {% if topic.tags|length > 0 %}
+            <small class="topic-show-small">Tags :
+              {% for tag in topic.tags %}
+                <a href="{{ path('tag.search', { tag: tag.name }) }}">{{ tag.name }}</a>
+              {% endfor %}
+            </small>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="topic-show-comments">
+        <h2 class="comments-title">Réponses</h2>
+
+        {% if topic.posts is defined and topic.posts|length > 0 %}
+          {% for post in pagination %}
+            <div class="comment-card {% if post.user and post.user.roles is defined and ('ROLE_ADMIN' in post.user.roles or 'ROLE_SUPER_ADMIN' in post.user.roles) %}admin-post{% endif %}">
+              <div class="comment-meta">
+                <img src="{{ asset('uploads/avatars/' ~ post.user.avatar) }}" alt="Avatar de {{ post.user.displayUsername }}" class="comment-avatar-inline">
+
+                <span class="comment-author {% if post.user and post.user.roles is defined and ('ROLE_ADMIN' in post.user.roles or 'ROLE_SUPER_ADMIN' in post.user.roles) %}admin-author{% endif %}">
+                  <strong>{{ post.user.displayUsername }}</strong>
+                  {% if 'ROLE_SUPER_ADMIN' in post.user.roles %}
+                    <span class="badge badge-super">Super Admin</span>
+                  {% elseif 'ROLE_ADMIN' in post.user.roles %}
+                    <span class="badge badge-admin">Admin</span>
+                  {% endif %}
+                </span>
+
+                <span class="comment-date">le {{ post.createdAt|date('d/m/Y') }}</span>
+              </div>
+
+              <div class="comment-body {% if post.user and post.user.roles is defined and ('ROLE_ADMIN' in post.user.roles or 'ROLE_SUPER_ADMIN' in post.user.roles) %}admin-body{% endif %}">
+                {{ post.content|nl2br }}
+              </div>
+            </div>
+          {% endfor %}
+
+          <div class="forum-section-pagination">
+            {{ knp_pagination_render(pagination, 'pagination/custom_bootstrap_small.html.twig') }}
+          </div>
+        {% else %}
+          <p class="no-comments">Aucune réponse pour l’instant.</p>
+        {% endif %}
+      </div>
+
+      {% if app.user %}
+        <div class="comment-form">
+          <h3 class="form-title">Ajouter une réponse</h3>
+          <form action="{{ path('post.create', { topicId: topic.id }) }}" method="POST">
+            <textarea name="content" rows="4" required class="form-control" placeholder="Votre réponse..."></textarea>
+            <button type="submit" class="btn-submit">Envoyer</button>
+          </form>
+        </div>
+      {% else %}
+        <p class="login-prompt"><a href="{{ path('auth.login') }}">Connectez-vous</a> pour répondre.</p>
+      {% endif %}
+
+    </div>
+  </div>
+{% endblock %}

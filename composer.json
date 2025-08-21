@@ -1,20 +1,40 @@
 {
     "type": "project",
     "license": "proprietary",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "beberlei/doctrineextensions": "dev-master",
+        "doctrine/dbal": "^3",
+        "doctrine/doctrine-bundle": "^2.15",
+        "doctrine/doctrine-migrations-bundle": "^3.4",
+        "doctrine/orm": "^3.5",
+        "knplabs/knp-paginator-bundle": "^6.9",
+        "stof/doctrine-extensions-bundle": "^1.14",
+        "symfony/asset": "7.3.*",
         "symfony/console": "7.3.*",
         "symfony/dotenv": "7.3.*",
         "symfony/flex": "^2",
+        "symfony/form": "7.3.*",
         "symfony/framework-bundle": "7.3.*",
+        "symfony/password-hasher": "7.3.*",
         "symfony/runtime": "7.3.*",
-        "symfony/yaml": "7.3.*"
-    },
-    "require-dev": {
+        "symfony/security-bundle": "7.3.*",
+        "symfony/security-core": "7.3.*",
+        "symfony/translation": "7.3.*",
+        "symfony/twig-bundle": "7.3.*",
+        "symfony/validator": "7.3.*",
+        "symfony/yaml": "7.3.*",
+        "twig/cssinliner-extra": "*",
+        "twig/extra-bundle": "*",
+        "twig/html-extra": "^3.21",
+        "twig/intl-extra": "*",
+        "twig/markdown-extra": "*",
+        "twig/string-extra": "*",
+        "twig/twig": "^2.12|^3.0"
     },
     "config": {
         "allow-plugins": {
@@ -65,5 +85,13 @@
             "allow-contrib": false,
             "require": "7.3.*"
         }
+    },
+    "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^4.1",
+        "phpunit/phpunit": "^12.3",
+        "symfony/debug-bundle": "7.3.*",
+        "symfony/maker-bundle": "^1.64",
+        "symfony/stopwatch": "7.3.*",
+        "symfony/web-profiler-bundle": "7.3.*"
     }
 }

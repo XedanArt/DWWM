@@ -1,0 +1,30 @@
+{# templates/pagination/custom_bootstrap_small.html.twig #}
+<div class="pagination-wrapper mt-4 d-flex justify-content-center">
+  <div class="pagination-box">
+    <ul class="pagination mb-0">
+      {% if pageCount > 1 %}
+        {% if previous is defined %}
+          <li class="page-item">
+            <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): previous})) }}" aria-label="Précédent">
+              &laquo;
+            </a>
+          </li>
+        {% endif %}
+
+        {% for page in pagesInRange %}
+          <li class="page-item {{ page == current ? 'active' : '' }}">
+            <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+          </li>
+        {% endfor %}
+
+        {% if next is defined %}
+          <li class="page-item">
+            <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): next})) }}" aria-label="Suivant">
+              &raquo;
+            </a>
+          </li>
+        {% endif %}
+      {% endif %}
+    </ul>
+  </div>
+</div> 

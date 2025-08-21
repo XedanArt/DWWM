@@ -1,0 +1,115 @@
+/* Bloc 1 : World */
+.world-section-discover {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+#hero-1 {
+  background-image: url('../img/world-section-discover_01.png');
+}
+
+.title-world-section-discover {
+  font-family: 'OptimusPrinceps';
+}
+
+/* Bloc 2 : Gameplay */
+.gameplay-section-discover {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+#hero-2 {
+  background-image: url('../img/gameplay-section-discover_02.png');
+}
+
+.title-gameplay-section-discover {
+    font-family: 'OptimusPrinceps';
+}
+
+/* Bloc 3 : Évolution */
+.evo-section-discover {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+#hero-3 {
+  background-image: url('../img/evo-section-discover_03.png');
+}
+
+.title-evo-section-discover {
+    font-family: 'OptimusPrinceps';
+}
+
+/* Les Overlays */
+.overlay-text-discover {
+  background: rgba(0, 0, 0, 0.6);
+  /* effet de flou derrière l'élément (si couleur à opacité réduite */
+  backdrop-filter: blur(5px);
+  padding: 40px;
+  text-align: center;
+  border-radius: 10px;
+  max-width: 800px;
+}
+
+/* Transitions */
+.transition-section {
+  height: 50px;
+  width: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+}
+
+.gradient-overlay {
+  height: 100%;
+  width: 100%;
+}
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+
+.fade-in-up-discover.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-discover-zoom {
+  animation: backgroundZoom 20s ease-in-out infinite;
+}
+
+@keyframes backgroundZoom {
+  0%, 100% {
+    background-size: 100%;
+  }
+  50% {
+    background-size: 105%;
+  }
+}
+
+.overlay-text-discover:hover {
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+  transition: box-shadow 0.4s ease;
+}

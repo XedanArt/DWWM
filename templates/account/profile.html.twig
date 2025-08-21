@@ -1,0 +1,160 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="profile-main-container">
+  <div class="profile-card-container">
+
+    <!-- Onglets -->
+    <div class="profile-buttons-container tab-buttons-right">
+      <button data-tab="card1" class="tab-button active">Profil</button>
+      <button data-tab="card2" class="tab-button">Favoris</button>
+      <button data-tab="card3" class="tab-button">Historique</button>
+      <button data-tab="card4" class="tab-button">Sécurité</button>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="profile-mycard-container card-container-large">
+      <!-- Onglet Profil -->
+      <div id="card1" class="card-tab active">
+        <h2 class="profile-username">{{ app.user.displayUsername }}</h2>
+
+        <div class="profile-firstcard-main">
+          <!-- Colonne gauche -->
+          <div class="profile-firstcard-left">
+            <!-- Avatar -->
+            <div class="profile-avatar-block">
+              <img src="{{ asset('uploads/avatars/' ~ app.user.avatarPath) }}" alt="Avatar" class="profile-avatar" />
+              {{ form_start(avatarForm, {'attr': {'enctype': 'multipart/form-data'}}) }}
+                {{ form_row(avatarForm.avatar) }}
+                <button type="submit" class="form-button">Changer ma photo</button>
+              {{ form_end(avatarForm) }}
+            </div>
+
+            <!-- Email -->
+            <div class="profile-form-block">
+              <h5>Adresse e-mail</h5>
+              {{ form_start(emailForm) }}
+                {{ form_row(emailForm.email) }}
+                <button type="submit" class="form-button">Mettre à jour mon email</button>
+              {{ form_end(emailForm) }}
+            </div>
+
+            <!-- Pseudo -->
+            <div class="profile-form-block">
+              <h5>Nom d'utilisateur</h5>
+              {{ form_start(usernameForm) }}
+                {{ form_row(usernameForm.username) }}
+                <button type="submit" class="form-button">Modifier mon pseudo</button>
+              {{ form_end(usernameForm) }}
+            </div>
+          </div>
+
+          <!-- Colonne droite -->
+          <div class="profile-firstcard-right">
+            <h5>Biographie</h5>
+            {% if app.user.bio %}
+              <p class="profile-bio">{{ app.user.bio }}</p>
+            {% else %}
+              <p class="profile-bio-empty">Tu n'as pas encore écrit de bio. Parle un peu de toi !</p>
+            {% endif %}
+
+            {{ form_start(bioForm, {'attr': {'id': 'bio-form'}}) }}
+              <div class="form-group">
+                {{ form_label(bioForm.bio) }}
+                {{ form_widget(bioForm.bio, {
+                  'attr': {
+                    'maxlength': 400,
+                    'id': bioForm.bio.vars.id,
+                    'class': 'bio-textarea'
+                  }
+                }) }}
+                {{ form_errors(bioForm.bio) }}
+              </div>
+              <div id="bio-counter" class="char-counter">0 / 400 caractères</div>
+              <button type="submit" class="form-button">Mettre à jour ma bio</button>
+            {{ form_end(bioForm) }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Onglet Favoris -->
+      <div id="card2" class="card-tab">
+        <h2>Favoris</h2>
+        <div class="profile-secondcard-main">
+          <div class="profile-secondcard-favorites">
+            <div class="profile-secondcard-favlist">
+              {% if app.user.favoriteTopics|length > 0 %}
+                <ul class="fav-scroll-list">
+                  {% for topic in app.user.favoriteTopics %}
+                    <li class="fav-item">
+                      <a href="{{ path('topic.show' , { id: topic.id}) }}">{{ topic.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p class="fav-empty">Tu n'as encore aucun favoris.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Onglet Historique -->
+      <div id="card3" class="card-tab">
+        <h2>Historique</h2>
+      </div>
+
+      <!-- Onglet Sécurité -->
+      <div id="card4" class="card-tab">
+        <h2>Sécurité</h2>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Gestion des onglets
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const cardTabs = document.querySelectorAll('.card-tab');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        const tabId = button.dataset.tab;
+        cardTabs.forEach(tab => {
+          tab.classList.toggle('active', tab.id === tabId);
+        });
+      });
+    });
+
+    // Compteur de caractères pour la bio
+    const bioInput = document.getElementById('{{ bioForm.bio.vars.id }}');
+    const counter = document.getElementById('bio-counter');
+    const bioForm = document.getElementById('bio-form');
+
+    if (bioInput && counter) {
+      const updateCounter = () => {
+        const length = bioInput.value.length;
+        counter.textContent = `${length} / 400 caractères`;
+        counter.style.color = length > 400 ? 'red' : '#555';
+      };
+
+      bioInput.addEventListener('input', updateCounter);
+      updateCounter();
+
+      bioForm.addEventListener('submit', e => {
+        if (bioInput.value.length > 400) {
+          e.preventDefault();
+          alert('⛔ Ta biographie dépasse 400 caractères. Réduis-la avant de valider.');
+        }
+      });
+    }
+  });
+</script>
+{% endblock %}

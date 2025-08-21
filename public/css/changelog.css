@@ -1,0 +1,146 @@
+.changelog-separator {
+  height: 4rem;
+}
+
+/* ////////// Conteneur principal ////////// */
+.changelog-main-container {
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
+  transition: box-shadow 0.3s ease;
+  border: 1px solid transparent;
+  padding-top: 50px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  max-width: 1000px;
+}
+
+/* ////////// Titre principal du conteneur ////////// */
+.changelog-title h1 {
+  font-family: 'Montserrat';
+  border: 2px solid white;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* ////////// Conteneur du dernier patch en date ////////// */
+.changelog-last-patch {
+  font-family: 'Roboto';
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  border-radius: 2%;
+  overflow: hidden;
+}
+
+.changelog-last-title {
+  font-family: 'Roboto';
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.changelog-last-title h2 {
+  margin: 0;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.changelog-last-image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.changelog-last-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.changelog-last-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #00000085;
+  width: 100%;
+  padding: 1.5rem;
+}
+
+.changelog-last-content h4 {
+  margin-top: 0;
+  color: #ffffff;
+}
+
+/* ////////// Conteneur de la liste des patchs ////////// */
+.changelog-patch-list {
+  background-color: #00000085;
+  color: #ffffff;
+  padding: 1.5rem;
+}
+
+.patch-entry {
+  border-bottom: 1px solid #ffffff;
+}
+
+/* ////////// Conteneur de la sidebar ////////// */
+.changelog-sidebar-container {
+  padding: 3rem;
+}
+
+.changelog-sidebar-container > div {
+  position: sticky;
+  top: 100px;
+  background-color: #00000056;
+  color: white;
+  padding: 1rem;
+}
+
+/* Conteneur de la navigation (patch) */
+.changelog-patch-nav {
+  font-family: 'Montserrat';
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
+  transition: box-shadow 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.changelog-patch-items {
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+  color: white;
+}
+
+.changelog-patch-items:hover {
+  background-color: #6f5e88;
+}
+
+/* ////////// Pagination ////////// */
+.changelog-pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  background-color: #121212;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.changelog-pagination a {
+  color: #bbb;
+  padding: 6px 10px;
+  margin: 0 4px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border-radius: 4px;
+  background-color: #1a1a1a;
+  transition: 0.2s ease;
+}
+
+.changelog-pagination a:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.changelog-pagination a.active {
+  background-color: #6f5e88;
+  color: #fff;
+  font-weight: 500;
+}

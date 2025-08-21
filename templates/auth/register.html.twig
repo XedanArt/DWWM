@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+<div class="page-connexion">
+    <div class="connexion-container">
+        <div class="connexion-header">
+            <h1 class="h1-auth">Morning Soul</h1>
+        </div>
+
+        <div class="connexion-card">
+            <h2>S’inscrire</h2>
+            <hr>
+
+            {{ form_start(form) }}
+
+                {{ form_widget(form.username, { 'attr': {'class': 'input-auth'} }) }}
+                {% for error in form.username.vars.errors %}
+                    <span class="form-error">{{ error.message }}</span>
+                {% endfor %}
+
+                {{ form_widget(form.email, { 'attr': {'class': 'input-auth'} }) }}
+                {% for error in form.email.vars.errors %}
+                    <span class="form-error">{{ error.message|raw }}</span>
+                {% endfor %}
+
+                {{ form_widget(form.plainPassword, { 'attr': {'class': 'input-auth'} }) }}
+                {% for error in form.plainPassword.vars.errors %}
+                    <span class="form-error">{{ error.message }}</span>
+                {% endfor %}
+
+                {{ form_widget(form.confirmPassword, { 'attr': {'class': 'input-auth'} }) }}
+                {% for error in form.confirmPassword.vars.errors %}
+                    <span class="form-error">{{ error.message }}</span>
+                {% endfor %}
+
+                <button type="submit" class="btn-connexion">S’inscrire</button>
+
+            {{ form_end(form) }}
+
+            <p class="register-link">
+                Déjà inscrit ?
+                <a href="{{ path('auth.login') }}">Connexion</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

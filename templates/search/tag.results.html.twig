@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats pour le tag #{{ tag.name }}{% endblock %}
+
+{% block body %}
+<div class="tag-results-wrapper">
+  <div class="tag-results-main">
+    <div class="tag-results-card">
+
+      <!-- En-tête -->
+      <div class="tag-results-header">
+        <div class="tag-results-title">
+          <h2>#{{ tag.name }}</h2>
+        </div>
+        <div class="tag-results-subtitle">
+          {{ pagination.getTotalItemCount }} topic{{ pagination.getTotalItemCount > 1 ? 's' : '' }} associé{{ pagination.getTotalItemCount > 1 ? 's' : '' }}
+        </div>
+      </div>
+
+      <!-- Liste des topics -->
+      {% if pagination|length > 0 %}
+        <div class="tag-topic-list">
+          {% for topic in pagination %}
+            <a href="{{ path('topic.show', { id: topic.id }) }}" class="tag-topic-link">
+              <div class="tag-topic-row">
+
+                <!-- Métadonnées -->
+                <div class="tag-topic-meta">
+                  {% if topic.author and topic.author.avatar is defined %}
+                    <img src="{{ asset('uploads/avatars/' ~ topic.author.avatar) }}" alt="Avatar de {{ topic.author.username }}" class="comment-avatar-inline">
+                  {% else %}
+                    <img src="{{ asset('img/default-avatar.png') }}" alt="Avatar par défaut" class="comment-avatar-inline">
+                  {% endif %}
+
+                  <div class="tag-topic-content">
+                    <span class="comment-author">
+                      <strong>{{ topic.author is defined and topic.author ? topic.author.username : 'Auteur inconnu' }}</strong>
+                    </span>
+                    <div class="tag-topic-title">
+                      {{ topic.title }}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Statistiques -->
+                <div class="tag-topic-stats">
+                  <div class="tag-topic-stat-line">{{ topic.viewCount }} vue{{ topic.viewCount > 1 ? 's' : '' }}</div>
+                  <span class="comment-date">
+                      créé le {{ topic.createdAt|date('d/m/Y') }}
+                  </span>
+                  <div class="tag-topic-stat-line">{{ topic.getPostCount() }} réponse{{ topic.getPostCount() > 1 ? 's' : '' }}</div>
+                </div>
+
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        <div class="forum-section-pagination">
+          {{ knp_pagination_render(pagination) }}
+        </div>
+      {% else %}
+        <div class="tag-no-results">
+          Aucun topic trouvé pour ce tag.
+        </div>
+      {% endif %}
+
+      <!-- Bouton retour -->
+      <div class="forum-section-pagination">
+        <a href="{{ path('forum.index') }}" class="btn btn-secondary">← Retour au forum</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

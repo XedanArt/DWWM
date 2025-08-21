@@ -1,0 +1,49 @@
+.legals-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  margin-bottom: 10rem;
+}
+
+.legals-main-back {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
+  padding: 15px;
+  gap: 20px;
+}
+
+.legals-block {
+  margin-bottom: 2.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.legals-title {
+  font-family: 'Montserrat', sans-serif;
+  background-color: rgb(24,20,20);
+  color: #FFD7A1;
+  margin: 0;
+  padding: 12px 20px;
+  font-size: 1.4em;
+  font-weight: 600;
+}
+
+.legals-content {
+  font-family: 'Roboto';
+  background-color: #fff8e7;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.legals-content ul {
+  padding-left: 1.2rem;
+}
+
+.legals-content li {
+  margin-bottom: 0.5rem;
+}

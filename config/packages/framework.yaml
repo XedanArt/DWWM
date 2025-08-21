@@ -1,13 +1,23 @@
-# see https://symfony.com/doc/current/reference/configuration/framework.html
+# Voir la documentation officielle : https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
 
-    # Note that the session will be started ONLY if you read or write from it.
+    # La session ne démarre que si elle est utilisée (lecture/écriture)
     session: true
 
-    #esi: true
+    # Active le service de traduction (utile pour KnpPaginatorBundle et autres)
+    translator:
+        default_path: '%kernel.project_dir%/translations'
+        fallbacks: ['fr']
+
+    # Active les fragments HTTP (si tu utilises des contrôleurs comme services ou ESI)
     #fragments: true
 
+    # Active Edge Side Includes (utile avec Varnish ou reverse proxy)
+    #esi: true
+    
+
+# Configuration spécifique à l'environnement de test
 when@test:
     framework:
         test: true
