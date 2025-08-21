@@ -6,6 +6,8 @@ use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\User;
 use App\Entity\Topic;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
@@ -16,6 +18,11 @@ class Post
     private ?int $id = null;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: "Le contenu de la réponse est obligatoire.")]
+    #[Assert\Length(
+        max: 2000,
+        maxMessage: "Votre réponse ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]

@@ -23,6 +23,7 @@
   box-shadow: 0 0 8px rgb(0, 0, 0);
   text-align: center;
   margin-bottom: 2rem;
+  word-break: break-word;
 }
 
 .topic-show-title {

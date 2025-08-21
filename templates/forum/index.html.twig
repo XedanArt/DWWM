@@ -152,8 +152,8 @@
     }) }}
 
       {{ form_row(form.section, {'attr': {'class': 'forum-input'}}) }}
-      {{ form_row(form.title, {'attr': {'class': 'forum-input'}}) }}
-      {{ form_row(form.content, {'attr': {'class': 'forum-textarea'}}) }}
+      {{ form_row(form.title, {'attr': {'class': 'forum-input', 'maxlength': 150}}) }}
+      {{ form_row(form.content, {'attr': {'class': 'forum-textarea', 'maxlength': 5000}}) }}
       {{ form_row(form.tags, {'attr': {'class': 'form-input tag-select'}}) }}
       <small class="form-hint">Ajoutez jusqu’à 10 tags composés uniquement de lettres.</small>
 
@@ -246,6 +246,47 @@ document.addEventListener('DOMContentLoaded', function () {
       cache: true
     }
   });
+
+  // Compteur de caractères pour le champ titre
+  const titleInput = document.querySelector('input[name="topic[title]"]');
+  if (titleInput) {
+    const counter = document.createElement('small');
+    counter.className = 'char-counter';
+    counter.style.display = 'block';
+    counter.style.marginTop = '4px';
+    counter.style.fontSize = '0.85rem';
+    counter.style.color = '#666';
+    titleInput.parentNode.appendChild(counter);
+
+    function updateCounter() {
+      const length = titleInput.value.length;
+      counter.textContent = `${length}/150 caractères`;
+      counter.style.color = length > 150 ? 'red' : '#666';
+    }
+
+    titleInput.addEventListener('input', updateCounter);
+    updateCounter();
+  }
+  // Compteur de caractères pour le champ contenu
+  const contentInput = document.querySelector('textarea[name="content"]')
+  if (contentInput) {
+    const counter = document.createElement('small');
+    counter.className = 'char-counter';
+    counter.style.display = 'block';
+    counter.style.marginTop = '4px';
+    counter.style.fontSize = '0.85rem';
+    counter.style.color = '#666';
+    contentInput.insertAdjacentElement('afterend', counter);
+
+  function updateCounter() {
+    const length = contentInput.value.length;
+    counter.textContent = `${length}/5000 caractères`;
+    counter.style.color = length > 5000 ? 'red' : '#666';
+  }
+
+  contentInput.addEventListener('input', updateCounter);
+  updateCounter();
+}
 });
 </script>
 {% endblock %}

@@ -83,7 +83,7 @@
         <div class="comment-form">
           <h3 class="form-title">Ajouter une réponse</h3>
           <form action="{{ path('post.create', { topicId: topic.id }) }}" method="POST">
-            <textarea name="content" rows="4" required class="form-control" placeholder="Votre réponse..."></textarea>
+            <textarea name="content" rows="4" required class="form-control" placeholder="Votre réponse..." maxlength="2000"></textarea>
             <button type="submit" class="btn-submit">Envoyer</button>
           </form>
         </div>
@@ -93,4 +93,28 @@
 
     </div>
   </div>
+
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+  const textarea = document.querySelector('textarea[name="content"]');
+  if (textarea) {
+    const counter = document.createElement('small');
+    counter.className = 'char-counter';
+    counter.style.display = 'block';
+    counter.style.marginTop = '4px';
+    counter.style.fontSize = '0.85rem';
+    counter.style.color = '#666';
+    textarea.parentNode.appendChild(counter);
+
+    function updateCounter() {
+      const length = textarea.value.length;
+      counter.textContent = `${length}/2000 caractères`;
+      counter.style.color = length > 2000 ? 'red' : '#666';
+    }
+
+    textarea.addEventListener('input', updateCounter);
+    updateCounter();
+  }
+});
+</script>
 {% endblock %}
