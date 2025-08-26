@@ -102,6 +102,40 @@
       <!-- Onglet Historique -->
       <div id="card3" class="card-tab">
         <h2>Historique</h2>
+
+        <div class="profile-history-section">
+          <!-- Topics créés -->
+          <h3>Mes sujets</h3>
+          {% if app.user.topics|length > 0 %}
+            <ul class="history-list">
+              {% for topic in app.user.topics %}
+                <li>
+                  <a href="{{ path('topic.show', { id: topic.id }) }}">{{ topic.title }}</a>
+                  <span class="history-date">créé le {{ topic.createdAt|date('d/m/Y') }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="history-empty">Tu n'as pas encore créé de sujet.</p>
+          {% endif %}
+
+          <!-- Posts créés -->
+          <h3>Mes réponses</h3>
+          {% if app.user.posts|length > 0 %}
+            <ul class="history-list">
+              {% for post in app.user.posts %}
+                <li>
+                  <a href="{{ path('topic.show', { id: post.topic.id }) }}#post-{{ post.id }}">
+              {{ post.content|slice(0, 100) ~ '...' }}
+                  </a>
+                  <span class="history-date">posté le {{ post.createdAt|date('d/m/Y') }}</span>
+                 </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="history-empty">Tu n'as pas encore posté de réponse.</p>
+          {% endif %}
+        </div>
       </div>
 
       <!-- Onglet Sécurité -->

@@ -240,6 +240,9 @@
 }
 
 .highlight-item a {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
     text-decoration: none;
     color: #333;
     font-weight: 500;
@@ -394,6 +397,9 @@
 }
 
 .forum-allcategory a {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
     text-decoration: none;
     color: black;
 }
