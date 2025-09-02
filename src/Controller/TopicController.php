@@ -27,7 +27,7 @@ class TopicController extends AbstractController
         $topic = $topicRepo->find($id);
 
         if (!$topic) {
-            throw $this->createNotFoundException('⛔ Ce topic n’existe pas.');
+            throw $this->createNotFoundException('Ce topic n’existe pas.');
         }
 
         $topic->incrementViewCount();
@@ -60,10 +60,10 @@ class TopicController extends AbstractController
 
         if ($user->getFavoriteTopics()->contains($topic)) {
             $user->removeFavoriteTopic($topic);
-            $this->addFlash('info', '❎ Topic retiré des favoris.');
+            $this->addFlash('info', 'Topic retiré des favoris.');
         } else {
             $user->addFavoriteTopic($topic);
-            $this->addFlash('success', '⭐ Topic ajouté aux favoris.');
+            $this->addFlash('success', 'Topic ajouté aux favoris.');
         }
 
         $em->persist($user);
