@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
-
+use App\Form\ContactType;
+use App\Repository\PresentationRepository;
 use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -14,15 +16,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomepageController extends AbstractController 
 {
     // [URL + NOM DE LA ROUTE, index = accueil)]
-    #[Route('/homepage', name: 'homepage.index')]
+    #[Route('/', name: 'homepage.index')]
     public function index(): Response {
-       return $this->render('homepage/index.html.twig');
+       $title = "Morging Soul - Jeu Indépendant";
+       $subtitle = "- Un espace communautaire pour suivre l’évolution du projet -";
+       return $this->render('homepage/index.html.twig', [
+        "title" => $title, 
+        "subtitle" => $subtitle]);
     }
 
     // game > discover
     #[Route('/game/discover', name: 'game.discover')]
-    public function discover(): Response {
-        return $this->render('game/discover.html.twig');
+    public function discover(
+        PresentationRepository $presentation_repository
+    ): Response {
+        $contenu = $presentation_repository -> findAll();
+        return $this->render('game/discover.html.twig', ["contenu" => $contenu]);
     }
 
     // game > download
@@ -33,8 +42,20 @@ class HomepageController extends AbstractController
 
     // contact > support
     #[Route('/contact/support', name: 'contact.support')]
-    public function support(): Response {
-        return $this->render('contact/support.html.twig');
+    public function support(
+        Request $request,
+        EntityManagerInterface $em
+    ): Response {
+        $form = $this -> createForm(ContactType::class);
+        $form -> handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $contact=$form->getData();
+            $em->persist($contact);
+            $em->flush();
+        }
+        return $this->render('contact/support.html.twig', [
+            "form" => $form -> createView()
+        ]);
     }
 
     // contact > socials
