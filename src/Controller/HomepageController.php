@@ -40,23 +40,28 @@ class HomepageController extends AbstractController
         return $this->render('game/download.html.twig');
     }
 
-    // contact > support
+    // Le formulaire de contact renvoi une vue classique ou une vue 'success' si envoi de formulaire réussi
     #[Route('/contact/support', name: 'contact.support')]
     public function support(
         Request $request,
         EntityManagerInterface $em
     ): Response {
-        $form = $this -> createForm(ContactType::class);
-        $form -> handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
-            $contact=$form->getData();
+        $form = $this->createForm(ContactType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contact = $form->getData();
             $em->persist($contact);
             $em->flush();
+
+            $this->addFlash('success', 'Votre message a bien été envoyé. Nous vous répondrons sous peu.');
+            return $this->redirectToRoute('contact.support');
         }
-        return $this->render('contact/support.html.twig', [
-            "form" => $form -> createView()
-        ]);
-    }
+
+    return $this->render('contact/support.html.twig', [
+        'form' => $form->createView()
+    ]);
+}
 
     // contact > socials
     #[Route('/contact/socials', name: 'contact.socials')]

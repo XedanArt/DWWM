@@ -1,54 +1,86 @@
-{%  extends "base.html.twig" %}
+{% extends "base.html.twig" %}
+
 {% block body %}
-<div class="support-separator">
-</div>
-<section class="support-section">
-  <div class="support-wrapper">
-    <div class="support-container">
-      <h2>Contactez le Support</h2>
-      <p class="support-note">Besoin d'aide ? Remplissez le formulaire ci-dessous ou consultez notre FAQ.</p>
+  <div class="support-separator"></div>
 
-      {{form_start(form)}}
+  <section class="support-section">
+    <div class="support-wrapper">
+      <div class="support-container">
 
-        {{form_widget(form.nom)}}
-        {# <div class="form-group">
-          <label for="name">Nom :</label>
-          <input type="text" id="name" name="name" required placeholder="Votre nom">
-        </div> #}
-        
-        {{ form_widget(form.email) }}
-        {# <div class="form-group">
-          <label for="email">Email :</label>
-          <input type="email" id="email" name="email" required placeholder="Votre email">
-        </div> #}
+        {# Paramètre de validation formulaire #}
+        {% for message in app.flashes('success') %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
 
-        {{ form_widget(form.message) }}
-        {# <div class="form-group">
-          <label for="message">Message :</label>
-          <textarea id="message" name="message" rows="5" required placeholder="Décrivez votre problème ou question"></textarea>
-        </div> #}
+        {# Formulaire de contact #}
+        <div class="container mt-5">
+          <h2 class="mb-4">Contactez le support</h2>
+          {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+            <div class="mb-3">
+              {{ form_label(form.nom) }}
+              {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+              {{ form_errors(form.nom) }}
+            </div>
+            <div class="mb-3">
+              {{ form_label(form.email) }}
+              {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+              {{ form_errors(form.email) }}
+            </div>
+            <div class="mb-3">
+              {{ form_label(form.message) }}
+              {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+              {{ form_errors(form.message) }}
+            </div>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+          {{ form_end(form) }}
+        </div>
 
-        <button type="submit" class="btn btn-support">Envoyer</button>
-      {{ form_end(form) }}
+        <div class="support-faq">
+          <h3>FAQ</h3>
+          <ul>
+            <li><strong>Comment signaler un bug ?</strong> Utilisez le formulaire ci-dessus ou envoyez un email à <a href="mailto:support@morning-soul.com">support@morning-soul.com</a>.</li>
+            <li><strong>Quels sont les horaires du support ?</strong> Du lundi au vendredi, de 9h à 18h (CET).</li>
+            <li><strong>Où trouver les mises à jour du jeu ?</strong> Consultez les pages <a href="{{ path('news.changelog') }}">changelogs</a> et <a href="{{ path('news.devblog') }}">devblogs</a>.</li>
+          </ul>
+        </div>
 
-      <div class="support-faq">
-        <h3>FAQ</h3>
-        <ul>
-          <li><strong>Comment signaler un bug ?</strong> Utilisez le formulaire ci-dessus ou envoyez un email à support@morning-soul.com.</li>
-          <li><strong>Quels sont les horaires du support ?</strong> Du lundi au vendredi, de 9h à 18h (CET).</li>
-          <li><strong>Où trouver les mises à jour du jeu ?</strong> Consultez les pages <a href="{{ path('news.changelog')}}">changelogs</a> et <a href="{{ path('news.devblog')}}">devblogs</a>.</li>
-        </ul>
+        <div class="support-email">
+          <p>Vous pouvez également nous contacter directement par email à <a href="mailto:support@morning-soul.com">support@morning-soul.com</a>.</p>
+        </div>
       </div>
 
-      <div class="support-email">
-        <p>Vous pouvez également nous contacter directement par email à <a href="mailto:support@morning-soul.com">support@morning-soul.com</a>.</p>
+      <div class="support-sidebar">
+        <p>Une question sur le jeu ou son gameplay ?</p>
+        <a href="{{ path('forum.index') }}">Accédez au forum</a>
       </div>
     </div>
+  </section>
 
-    <div class="support-sidebar">
-      <p>Une question sur le jeu ou son gameplay ?</p>
-      <a href="{{ path('forum.index')}}">Accédez au forum</a>
-    </div>
-  </div>
-</section>
+  <script>
+  (() => {
+    'use strict';
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        } else {
+          // Attendre que Symfony redirige, donc pas de reset ici
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+
+    // Si le message de confirmation est affiché, on reset le formulaire
+    const successAlert = document.querySelector('.alert-success');
+    if (successAlert) {
+      const form = document.querySelector('.needs-validation');
+      if (form) form.reset();
+    }
+  })();
+</script>
 {% endblock %}
