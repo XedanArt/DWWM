@@ -1,29 +1,28 @@
-{%  extends "base.html.twig" %}
+{% extends "base.html.twig" %}
+
 {% block body %}
-<div class="site-wrapper d-flex flex-column min-vh-100">
-  <main class="container-fluid p-0">
-    
-    {% for article in contenu %}
-    <!-- Bloc 1 : Univers -->
-    <section class="world-section-discover" id="{{article.background}}">
-      <div class="overlay-text-discover">
-        <h2 class="title-world-section-discover">{{article.title}}</h2>
-        <p class="paragraph-world-section-discover">{{article.description}}</p>
-      </div>
-    </section>  
+  <div class="site-wrapper d-flex flex-column min-vh-100">
+    <main class="container-fluid p-0">
 
-    {% if loop.last==false %}
-    <!-- Transition -->
-    <div class="transition-section" id="transition-{{article.id}}">
-      <div class="gradient-overlay"></div>
-    </div>
-    {% endif %}
-    {% endfor %}
+      {% for article in contenu %}
+        <section class="world-section-discover" id="{{ article.background }}">
+          <div class="overlay-text-discover">
+            <h2 class="title-world-section-discover">{{ article.title }}</h2>
+            <p class="paragraph-world-section-discover">{{ article.description }}</p>
+          </div>
+        </section>
 
+        {% if not loop.last %}
+          <div class="transition-section" id="transition-{{ article.id }}">
+            <div class="gradient-overlay"></div>
+          </div>
+        {% endif %}
+      {% endfor %}
 
-  </main>
-</div>
+    </main>
+  </div>
 {% endblock %}
+
 {% block javascripts %}
-<script src="{{ asset('js/discover.js') }}"></script>
+  <script src="{{ asset('js/discover.js') }}"></script>
 {% endblock %}

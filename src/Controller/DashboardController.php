@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Repository\DevblogRepository;
+use App\Repository\ChangelogRepository;
+use App\Repository\AnnouncementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -90,6 +93,24 @@ class DashboardController extends AbstractController
 
         return $this->render('superadmin/revoke_admin.html.twig', [
             'revokedUser' => $user
+        ]);
+    }
+
+    #[Route('/dashboard/delete-entries', name: 'admin.entry.delete')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function deleteEntries(
+        DevblogRepository $devblogRepo,
+        ChangelogRepository $changelogRepo,
+        AnnouncementRepository $announcementRepo
+    ): Response {
+        $devblogs = $devblogRepo->findAll();
+        $changelogs = $changelogRepo->findAll();
+        $announcements = $announcementRepo->findAll();
+
+        return $this->render('dashboard/delete_entries.html.twig', [
+            'devblogs' => $devblogs,
+            'changelogs' => $changelogs,
+            'announcements' => $announcements
         ]);
     }
 }

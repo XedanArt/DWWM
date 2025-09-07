@@ -68,17 +68,5 @@ class HomepageController extends AbstractController
     public function socials(): Response {
         return $this->render('contact/socials.html.twig');
     }
-
-    // news > changelog
-    #[Route('/news/changelog', name: 'news.changelog')]
-    public function changelog(): Response {
-        return $this->render('news/changelog.html.twig');
-    }
-
-    // news > devblog
-    #[Route('/news/devblog', name: 'news.devblog')]
-    public function devblog(): Response {
-        return $this->render('news/devblog.html.twig');
-    }
 } 
 

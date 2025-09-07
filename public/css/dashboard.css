@@ -156,7 +156,7 @@
   gap: 1rem;
 }
 
-.dashboard-actions li a {
+/* .dashboard-actions li a {
   display: inline-block;
   padding: 0.6rem 1rem;
   background-color: rgb(24,20,20);
@@ -168,7 +168,7 @@
 }
 
 .dashboard-actions li a:hover {
-  background-color: rgb(58, 53, 53);
+  background-color: rgb(58, 53, 53); */
 }
 
 /* Super Admin Panel */
@@ -205,4 +205,21 @@
   .scrollable-user-list {
     max-height: 300px;
   }
+}
+
+/* ////////// TITRES DES VUES D'AJOUT D'ENTRÉES ////////// */
+/* ////////// TITRES DES VUES D'AJOUT D'ENTRÉES ////////// */
+/* ////////// TITRES DES VUES D'AJOUT D'ENTRÉES ////////// */
+.announcement-title,
+.changelog-title,
+.devblog-title {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #FFD7A1;
+  background-color: rgb(24,20,20);
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 8px rgb(0, 0, 0);
 }

@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Suppression d'une entrée{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+  <h2 class="text-danger mb-4">
+    <i class="bi bi-trash3-fill me-2"></i> Suppression d'une entrée
+  </h2>
+
+  {% for message in app.flashes('success') %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+
+  <div class="row g-4">
+    <!-- Devblogs -->
+    <div class="col-md-4">
+      <h4 class="mb-3">Devblogs</h4>
+      <ul class="list-group">
+        {% for devblog in devblogs %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ devblog.title }}
+            <form method="post" action="{{ path('admin.devblog.delete', {id: devblog.id}) }}" onsubmit="return confirm('Supprimer ce devblog ?');">
+              <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+            </form>
+          </li>
+        {% else %}
+          <li class="list-group-item text-muted">Aucun devblog disponible.</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Changelogs -->
+    <div class="col-md-4">
+      <h4 class="mb-3">Changelogs</h4>
+      <ul class="list-group">
+        {% for changelog in changelogs %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ changelog.version }} - {{ changelog.date|date('d/m/Y') }}
+            <form method="post" action="{{ path('admin.changelog.delete', {id: changelog.id}) }}" onsubmit="return confirm('Supprimer ce changelog ?');">
+              <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+            </form>
+          </li>
+        {% else %}
+          <li class="list-group-item text-muted">Aucun changelog disponible.</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Annonces -->
+    <div class="col-md-4">
+      <h4 class="mb-3">Annonces</h4>
+      <ul class="list-group">
+        {% for announcement in announcements %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ announcement.title }}
+            <form method="post" action="{{ path('admin.announcement.delete', {id: announcement.id}) }}" onsubmit="return confirm('Supprimer cette annonce ?');">
+              <button class="btn btn-sm btn-outline-danger">Supprimer</button>
+            </form>
+          </li>
+        {% else %}
+          <li class="list-group-item text-muted">Aucune annonce disponible.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-// php bin/console app:promote-super-admin ton@email.com
+// php bin/console app:promote-super-admin superadmin@superadmin.fr
 #[AsCommand(
     name: 'app:promote-super-admin',
     description: 'Attribue le rôle ROLE_SUPER_ADMIN à un utilisateur existant.',

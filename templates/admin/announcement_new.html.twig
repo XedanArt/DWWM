@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une annonce{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+  <h2 class="text-center announcement-title">
+    <i class="bi bi-megaphone-fill me-2"></i> Nouvelle annonce
+  </h2>
+
+  {% for message in app.flashes('success') %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      {{ form_start(form) }}
+
+        <div class="mb-3">
+          {{ form_label(form.title, 'Titre', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+          {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Maintenance prévue ce weekend'}}) }}
+          {{ form_errors(form.title) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(form.content, 'Contenu', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+          {{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': '6', 'placeholder': 'Détaillez le message à transmettre à la communauté'}}) }}
+          {{ form_errors(form.content) }}
+        </div>
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-circle me-1"></i> Publier l’annonce
+          </button>
+        </div>
+
+      {{ form_end(form) }}
+    </div>
+  </div>
+</div>
+{% endblock %}

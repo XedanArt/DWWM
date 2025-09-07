@@ -47,11 +47,15 @@
     </section>
 
     <section class="dashboard-section">
-      <h2>Poster du contenu</h2>
+      <h2>Gérer le contenu</h2>
       <ul class="dashboard-actions">
-        <li><a href="{{ path('news.devblog') }}">Poster un Devblog</a></li>
-        <li><a href="{{ path('news.changelog') }}">Poster un Changelog</a></li>
-        <li><a href="{{ path('forum.index') }}">Poster une annonce</a></li>
+        <li><a href="{{ path('admin.devblog.new') }}" class="btn btn-primary">Ajouter un Devblog</a></li>
+        <li><a href="{{ path('admin.changelog.new') }}" class="btn btn-primary">Ajouter un Changelog</a></li>
+        <li><a href="{{ path('admin.announcement.new') }}" class="btn btn-primary">Ajouter une annonce</a></li>
+        <li><a href="{{ path('admin.entry.delete') }}" class="btn btn-danger">
+              <i class="bi bi-trash3-fill me-1"></i> Suppression d'une entrée
+            </a>
+        </li>
       </ul>
     </section>
   {% endif %}
@@ -60,8 +64,8 @@
     <section class="dashboard-section super-admin-panel">
       <h2>Panel Super Admin</h2>
       <ul class="dashboard-actions">
-        <li><a href="{{ path('superadmin.create_admin') }}">👑 Créer un administrateur</a></li>
-        <li><a href="{{ path('superadmin.revoke_admin') }}">⚠️ Révoquer un administrateur</a></li>
+        <li><a href="{{ path('superadmin.create_admin') }}" class="btn btn-primary">👑 Créer un administrateur</a></li>
+        <li><a href="{{ path('superadmin.revoke_admin') }}" class="btn btn-danger">⚠️ Révoquer un administrateur</a></li>
       </ul>
     </section>
   {% endif %}
