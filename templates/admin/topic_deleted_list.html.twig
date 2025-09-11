@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Topics supprimés{% endblock %}
+
+{% block body %}
+<div class="dashboard-wrapper">
+  <section class="dashboard-section">
+    <h2 class="dashboard-title text-danger"> Topics supprimés</h2>
+
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Titre</th>
+          <th>Auteur</th>
+          <th>Date de suppression</th>
+          <th>Accès</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for topic in topics %}
+          <tr>
+            <td><strong>{{ topic.title }}</strong></td>
+            <td>{{ topic.author.displayUsername }}</td>
+            <td>{{ topic.deletedAt|date('d/m/Y H:i') }}</td>
+            <td>
+              <span class="text-muted">Accès désactivé</span>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="4" class="text-center text-muted">Aucun topic supprimé pour le moment.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</div>
+{% endblock %}

@@ -92,18 +92,6 @@
   margin-bottom: 5px;
 }
 
-.form-group input,
-.form-group textarea {
-  /* Couleur du fond du champ de saisie */
-  background-color: black;
-  color: white;
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
 .btn-support {
   display: inline-block;
   background-color: #4e2a84;

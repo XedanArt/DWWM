@@ -111,13 +111,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function isAdmin(): bool { return in_array('ROLE_ADMIN', $this->roles); }
     public function isSuperAdmin(): bool { return in_array('ROLE_SUPER_ADMIN', $this->roles); }
 
-    /**
-     * Retourne le pseudo décoré selon le rôle :
-     * - [[pseudo]] si super admin
-     * - [pseudo] si admin
-     * - pseudo sinon
-     * À utiliser dans les vues pour affichage.
-     */
     public function getDisplayUsername(): string
     {
         $name = trim($this->username ?? 'Utilisateur', '[]');
@@ -133,16 +126,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $name;
     }
 
-    public function getLastLogin(): ?\DateTimeInterface
-    {
-        return $this->lastLogin;
-    }
-
-    public function setLastLogin(?\DateTimeInterface $lastLogin): self
-    {
-        $this->lastLogin = $lastLogin;
-        return $this;
-    }
+    public function getLastLogin(): ?\DateTimeInterface { return $this->lastLogin; }
+    public function setLastLogin(?\DateTimeInterface $lastLogin): self { $this->lastLogin = $lastLogin; return $this; }
 
     public function getTopics(): Collection { return $this->topics; }
     public function addTopic(Topic $topic): self
@@ -202,7 +187,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     public function getFavoriteTopics(): Collection { return $this->favoriteTopics; }
-
     public function addFavoriteTopic(Topic $topic): self
     {
         if (!$this->favoriteTopics->contains($topic)) {
@@ -210,42 +194,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
         return $this;
     }
-
     public function removeFavoriteTopic(Topic $topic): self
     {
         $this->favoriteTopics->removeElement($topic);
         return $this;
     }
 
-    public function __toString(): string
-    {
-        return $this->getDisplayUsername();
-    }
+    public function __toString(): string { return $this->getDisplayUsername(); }
 
-    public function getAvatarPath(): string
-    {
-        return $this->avatar ?? 'default-avatar.png';
-    }
+    public function getAvatarPath(): string { return $this->avatar ?? 'default-avatar.png'; }
 
-    public function getResetToken(): ?string
-    {
-        return $this->resetToken;
-    }
+    public function getResetToken(): ?string { return $this->resetToken; }
+    public function setResetToken(?string $resetToken): self { $this->resetToken = $resetToken; return $this; }
 
-    public function setResetToken(?string $resetToken): self
-    {
-        $this->resetToken = $resetToken;
-        return $this;
-    }
-
-    public function getTokenExpiresAt(): ?\DateTimeInterface
-    {
-        return $this->tokenExpiresAt;
-    }
-
-    public function setTokenExpiresAt(?\DateTimeInterface $tokenExpiresAt): self
-    {
-        $this->tokenExpiresAt = $tokenExpiresAt;
-        return $this;
-    }
+    public function getTokenExpiresAt(): ?\DateTimeInterface { return $this->tokenExpiresAt; }
+    public function setTokenExpiresAt(?\DateTimeInterface $tokenExpiresAt): self { $this->tokenExpiresAt = $tokenExpiresAt; return $this; }
 }

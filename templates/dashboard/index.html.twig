@@ -47,6 +47,17 @@
     </section>
 
     <section class="dashboard-section">
+      <h2>Gestion contenu utilisateur</h2>
+      <ul class="dashboard-actions">
+        <li>
+          <a href="{{ path('topic.quarantine.list') }}" class="btn btn-primary">
+             Voir les topics en quarantaine
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="dashboard-section">
       <h2>Gérer le contenu</h2>
       <ul class="dashboard-actions">
         <li><a href="{{ path('admin.devblog.new') }}" class="btn btn-primary">Ajouter un Devblog</a></li>
@@ -64,8 +75,8 @@
     <section class="dashboard-section super-admin-panel">
       <h2>Panel Super Admin</h2>
       <ul class="dashboard-actions">
-        <li><a href="{{ path('superadmin.create_admin') }}" class="btn btn-primary">👑 Créer un administrateur</a></li>
-        <li><a href="{{ path('superadmin.revoke_admin') }}" class="btn btn-danger">⚠️ Révoquer un administrateur</a></li>
+        <li><a href="{{ path('superadmin.create_admin') }}" class="btn btn-primary"> Créer un administrateur</a></li>
+        <li><a href="{{ path('superadmin.revoke_admin') }}" class="btn btn-danger"> Révoquer un administrateur</a></li>
       </ul>
     </section>
   {% endif %}
@@ -89,6 +100,5 @@ function resetUserFilter() {
   const users = document.querySelectorAll('.user-item');
   users.forEach(user => user.style.display = 'block');
 }
-
 </script>
 {% endblock %}

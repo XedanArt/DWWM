@@ -7,7 +7,7 @@
   <div class="changelog-show-container p-4 shadow rounded text-white" style="max-width: 800px; width: 100%; background-color: #1c1c1c;">
     
     <h1 class="text-center mb-3">Mise à jour {{ changelog.version }}</h1>
-    <p class="text-center text-muted">Publié le {{ changelog.date|date('d/m/Y') }}</p>
+    <p class="text-center">Publié le {{ changelog.date|date('d/m/Y') }}</p>
 
     {% if changelog.image %}
       <div class="text-center mb-4 overflow-hidden rounded" style="max-height: 400px;">

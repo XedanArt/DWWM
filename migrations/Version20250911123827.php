@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250910110259 extends AbstractMigration
+final class Version20250911123827 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,16 +20,14 @@ final class Version20250910110259 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE changelog ADD slug VARCHAR(255) NOT NULL');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_C8422601989D9B62 ON changelog (slug)');
-        $this->addSql('ALTER TABLE devblog CHANGE slug slug VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE topic ADD is_quarantined TINYINT(1) NOT NULL, ADD deleted_at DATETIME DEFAULT NULL');
+        $this->addSql('ALTER TABLE user DROP is_quarantined, DROP deleted_at');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP INDEX UNIQ_C8422601989D9B62 ON changelog');
-        $this->addSql('ALTER TABLE changelog DROP slug');
-        $this->addSql('ALTER TABLE devblog CHANGE slug slug VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE user ADD is_quarantined TINYINT(1) NOT NULL, ADD deleted_at DATETIME DEFAULT NULL');
+        $this->addSql('ALTER TABLE topic DROP is_quarantined, DROP deleted_at');
     }
 }
