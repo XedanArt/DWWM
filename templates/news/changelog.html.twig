@@ -1,9 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<div class="changelog-separator"></div>
-
-<div class="container changelog-main-container my-5">
+<div class="container changelog-main-container">
   <div class="row">
 
     <!-- Section principale -->
@@ -18,18 +16,20 @@
       {% if pagination|length > 0 %}
         {% set latest = pagination|first %}
         <div class="changelog-last-patch mb-5" id="entry-{{ latest.date|date('Y-m-d') }}">
-          <div class="changelog-last-title text-center">
-            <h2>MÀJ {{ latest.version }} : {{ latest.date|date('d/m/Y') }}</h2>
-          </div>
-          <div class="changelog-last-image-wrapper">
-            {% if latest.image %}
-              <img src="{{ asset('img/' ~ latest.image) }}" alt="Illustration {{ latest.version }}" class="changelog-last-image">
-            {% endif %}
-            <div class="changelog-last-content">
-              <h4>{{ latest.date|date('d F Y') }}</h4>
-              <p>{{ latest.content|nl2br }}</p>
+          <a href="{{ path('news.changelog.show', {slug: latest.slug}) }}" class="text-decoration-none text-light">
+            <div class="changelog-last-title text-center">
+              <h2>MÀJ {{ latest.version }} : {{ latest.date|date('d/m/Y') }}</h2>
             </div>
-          </div>
+            <div class="changelog-last-image-wrapper">
+              {% if latest.image %}
+                <img src="{{ asset('img/' ~ latest.image) }}" alt="Illustration {{ latest.version }}" class="changelog-last-image">
+              {% endif %}
+              <div class="changelog-last-content">
+                <h4>{{ latest.date|date('d F Y') }}</h4>
+                <p>{{ latest.content|length > 300 ? latest.content[:300] ~ '...' : latest.content|nl2br }}</p>
+              </div>
+            </div>
+          </a>
         </div>
       {% endif %}
 
@@ -37,8 +37,12 @@
       <div class="changelog-patch-list">
         {% for changelog in pagination|slice(1) %}
           <div class="patch-entry mb-4" id="entry-{{ changelog.date|date('Y-m-d') }}">
-            <h5>MÀJ {{ changelog.version }} - {{ changelog.date|date('d F Y') }}</h5>
-            <p><strong>Changelog :</strong> {{ changelog.content|nl2br }}</p>
+            <h5>
+              <a href="{{ path('news.changelog.show', {slug: changelog.slug}) }}" class="text-decoration-none text-light">
+                MÀJ {{ changelog.version }} - {{ changelog.date|date('d F Y') }}
+              </a>
+            </h5>
+            <p><strong>Changelog :</strong> {{ changelog.content|length > 200 ? changelog.content[:200] ~ '...' : changelog.content|nl2br }}</p>
           </div>
         {% else %}
           <p>Aucun changelog disponible pour le moment.</p>
@@ -57,7 +61,7 @@
         <h5>Correctifs</h5>
         <div class="changelog-patch-items-container">
           {% for changelog in pagination %}
-            <a class="changelog-patch-items" href="#entry-{{ changelog.date|date('Y-m-d') }}">
+            <a class="changelog-patch-items" href="{{ path('news.changelog.show', {slug: changelog.slug}) }}">
               MÀJ - {{ changelog.version }} : {{ changelog.date|date('d/m/Y') }}
             </a><br>
           {% endfor %}

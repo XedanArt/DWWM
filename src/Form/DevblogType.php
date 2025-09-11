@@ -23,7 +23,8 @@ class DevblogType extends AbstractType
             ])
             ->add('date', DateTimeType::class, [
                 'label' => 'Date de publication',
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'data' => new \DateTimeImmutable()
             ])
             ->add('image', TextType::class, [
                 'label' => 'Nom du fichier image'

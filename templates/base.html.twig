@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}- Morning Soul -{% endblock %}</title>
     <link rel="icon" type="image/png" href="{{ asset('/img/favicon_ms_00.png') }}">
+
+    {# Feuilles de style #}
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
@@ -25,27 +27,36 @@
     <link rel="stylesheet" href="{{ asset('css/tag.results.css') }}">
     <link rel="stylesheet" href="{{ asset('css/topic_create.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/superadmin.css') }}">
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     {% block stylesheets %}{% endblock %}
+
+    {# Scripts #}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
     {% block javascripts %}{% endblock %}
   </head>
 
+  <body class="site-background">
+    <div class="page-wrapper">
+      {# Flash messages #}
+      {% for label, messages in app.flashes %}
+        {% for message in messages %}
+          <div class="flash-{{ label }}">
+              {{ message }}
+          </div>
+        {% endfor %}
+      {% endfor %}
 
-    <body class="site-background">
-       {% for label, messages in app.flashes %}
-       {% for message in messages %}
-        <div class="flash-{{ label }}">
-            {{ message }}
-        </div>
-        {% endfor %}
-        {% endfor %}
-        {% include "_inc/header.html.twig" %}
-        {% block body %}
-        {% endblock %}
-        {% include "_inc/footer.html.twig" %}
-    </body>
+      {% include "_inc/header.html.twig" %}
+
+      <main>
+        {% block body %}{% endblock %}
+      </main>
+
+      {% include "_inc/footer.html.twig" %}
+    </div>
+  </body>
 </html>

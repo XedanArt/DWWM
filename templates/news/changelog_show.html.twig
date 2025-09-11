@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MÀJ {{ changelog.version }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="changelog-show-container p-4 shadow rounded text-white" style="max-width: 800px; width: 100%; background-color: #1c1c1c;">
+    
+    <h1 class="text-center mb-3">Mise à jour {{ changelog.version }}</h1>
+    <p class="text-center text-muted">Publié le {{ changelog.date|date('d/m/Y') }}</p>
+
+    {% if changelog.image %}
+      <div class="text-center mb-4 overflow-hidden rounded" style="max-height: 400px;">
+        <img src="{{ asset('img/' ~ changelog.image) }}" alt="Illustration {{ changelog.version }}" class="img-fluid w-100" style="object-fit: cover; height: 100%; display: block;">
+      </div>
+    {% endif %}
+
+    <hr style="border-color: #444;">
+
+    <div class="changelog-content" style="white-space: pre-line; font-size: 1.1rem;">
+      {{ changelog.content }}
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="{{ path('news.changelog') }}" class="btn btn-outline-light">← Retour aux changelogs</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

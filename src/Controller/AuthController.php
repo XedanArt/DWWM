@@ -173,4 +173,48 @@ class AuthController extends AbstractController
     {
         return $this->render('auth/logout.html.twig');
     }
+
+    /**
+ * Activation d’un compte administrateur via lien sécurisé
+ */
+    #[Route('/auth/activate/{token}', name: 'auth.activate', methods:  ['GET', 'POST'])]
+    public function activateAccount(
+    string $token,
+    Request $request,
+    EntityManagerInterface $em,
+    UserPasswordHasherInterface $passwordHasher
+    ): Response {
+        $user = $em->getRepository(User::class)->findOneBy(['resetToken' => $token]);
+
+        if (!$user || $user->getTokenExpiresAt() < new \DateTime()) {
+            $this->addFlash('error', 'Lien invalide ou expiré.');
+            return $this->redirectToRoute('auth.login');
+    }
+
+        if ($request->isMethod('POST')) {
+            $newPassword = $request->request->get('newPassword');
+            $confirmPassword = $request->request->get('confirmPassword');
+
+            if ($newPassword !== $confirmPassword) {
+                $this->addFlash('error', 'Les mots de passe ne correspondent pas.');
+            } elseif (strlen($newPassword) < 6) {
+                $this->addFlash('error', 'Le mot de passe doit contenir au moins 6 caractères.');
+            } else {
+                $hashedPassword = $passwordHasher->hashPassword($user, $newPassword);
+                $user->setPassword($hashedPassword);
+                $user->setResetToken(null);
+                $user->setTokenExpiresAt(null);
+
+                $em->flush();
+
+                $this->addFlash('success', 'Votre compte est activé. Vous pouvez maintenant vous connecter.');
+                return $this->redirectToRoute('auth.login');
+            }
+    }
+
+    return $this->render('auth/activate.html.twig', [
+        'token' => $token,
+        'user' => $user,
+    ]);
+}
 }

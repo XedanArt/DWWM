@@ -1,4 +1,3 @@
-
 {% extends "base.html.twig" %}
 
 {% block title %}Devblog de l'équipe{% endblock %}
@@ -11,16 +10,18 @@
 <div class="devblog-carousel">
   <button class="devblog-nav prev" type="button">❮</button>
 
-  {% for devblog in devblogs %}
-    <div class="devblog-card">
-      {% if devblog.image %}
-        <img src="{{ asset('img/' ~ devblog.image) }}" alt="{{ devblog.title }}">
-      {% endif %}
-      <div class="devblog-description">
-        <h3>DEVBLOG du {{ devblog.date|date('d/m/Y') }} : {{ devblog.title }}</h3>
-        <p>{{ devblog.content|nl2br }}</p>
+  {% for devblog in devblogs|reverse %}
+    <a href="{{ path('news.devblog.show', { slug: devblog.slug }) }}" class="devblog-card-link">
+      <div class="devblog-card">
+        {% if devblog.image %}
+          <img src="{{ asset('img/' ~ devblog.image) }}" alt="{{ devblog.title }}">
+        {% endif %}
+        <div class="devblog-description">
+          <h3>DEVBLOG du {{ devblog.date|date('d/m/Y') }} : {{ devblog.title }}</h3>
+          <p>{{ devblog.content|nl2br }}</p>
+        </div>
       </div>
-    </div>
+    </a>
   {% else %}
     <p class="text-muted">Aucun devblog disponible pour le moment.</p>
   {% endfor %}

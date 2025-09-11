@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class DevblogController extends AbstractController
 {
@@ -23,18 +24,35 @@ class DevblogController extends AbstractController
         ]);
     }
 
+    #[Route('/news/devblog/{slug}', name: 'news.devblog.show')]
+    public function show(string $slug, DevblogRepository $repo): Response
+    {
+        $devblog = $repo->findOneBy(['slug' => $slug]);
+
+        if (!$devblog) {
+            throw $this->createNotFoundException('Devblog introuvable.');
+    }
+
+        return $this->render('news/devblog_show.html.twig', [
+            'devblog' => $devblog
+        ]);
+    }
+
     #[Route('/admin/devblog/new', name: 'admin.devblog.new')]
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function new(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
         if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_SUPER_ADMIN')) {
             throw $this->createAccessDeniedException();
-    }
+        }
 
         $devblog = new Devblog();
         $form = $this->createForm(DevblogType::class, $devblog);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $slug = $slugger->slug($devblog->getTitle())->lower();
+            $devblog->setSlug($slug);
+
             $em->persist($devblog);
             $em->flush();
 

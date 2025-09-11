@@ -1,0 +1,26 @@
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f4; font-family: Arial, sans-serif;">
+  <tr>
+    <td align="center">
+      <table width="600" cellpadding="20" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+        <tr>
+          <td align="center">
+            <img src="{{ absolute_url(asset('img/ms_hero_section_01.png')) }}" alt="Morning Soul" style="max-width: 300px; margin-bottom: 20px;" />
+            <h2 style="color: #796c52; margin-bottom: 10px;">Bienvenue {{ username }} !</h2>
+            <p style="font-size: 16px; color: #333; line-height: 1.5;">
+              Un compte <strong>administrateur</strong> a été créé pour toi sur <strong>Morning Soul</strong>.
+            </p>
+            <p style="font-size: 16px; color: #333; line-height: 1.5;">
+              Pour activer ton accès et personnaliser ton mot de passe, clique sur le bouton ci-dessous. Ce lien est valable pendant 24 heures.
+            </p>
+            <a href="{{ activationLink }}" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #796c52; color: #ffffff; text-decoration: none; border-radius: 5px; font-weight: bold;">
+              Activer mon compte
+            </a>
+          </td>
+        </tr>
+      </table>
+      <p style="font-size: 12px; color: #999; margin-top: 20px;">
+        Cet email a été envoyé automatiquement. Merci de ne pas y répondre.
+      </p>
+    </td>
+  </tr>
+</table>

@@ -25,4 +25,24 @@ class UserRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAdmins(): array
+    {
+        return $this->createQueryBuilder('u')
+        ->where('JSON_CONTAINS(u.roles, :role) = 1')
+        ->setParameter('role', json_encode('ROLE_ADMIN'))
+        ->orderBy('u.username', 'ASC')
+        ->getQuery()
+        ->getResult();
+    }
+
+    public function findPendingInvitations(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.resetToken IS NOT NULL')
+            ->andWhere('u.tokenExpiresAt > :now')
+            ->setParameter('now', new \DateTime())
+            ->getQuery()
+            ->getResult();
+    }
+
 }

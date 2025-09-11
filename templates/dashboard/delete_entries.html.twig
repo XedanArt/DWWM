@@ -1,71 +1,87 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Suppression d'une entrée{% endblock %}
+{% block title %}Historique des entrées supprimables{% endblock %}
 
 {% block body %}
-<div class="container mt-5">
-  <h2 class="text-danger mb-4">
-    <i class="bi bi-trash3-fill me-2"></i> Suppression d'une entrée
-  </h2>
+<div class="delete-entries-main container mt-5">
+  <h2 class="mb-4 text-center changelog-title">Historique des entrées</h2>
 
-  {% for message in app.flashes('success') %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      {{ message }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  {% endfor %}
+  {# Devblogs #}
+  <div class="mb-5">
+    <h3 class="mb-3 devblog-title">Devblogs</h3>
 
-  <div class="row g-4">
-    <!-- Devblogs -->
-    <div class="col-md-4">
-      <h4 class="mb-3">Devblogs</h4>
-      <ul class="list-group">
-        {% for devblog in devblogs %}
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            {{ devblog.title }}
-            <form method="post" action="{{ path('admin.devblog.delete', {id: devblog.id}) }}" onsubmit="return confirm('Supprimer ce devblog ?');">
-              <button class="btn btn-sm btn-outline-danger">Supprimer</button>
-            </form>
-          </li>
-        {% else %}
-          <li class="list-group-item text-muted">Aucun devblog disponible.</li>
-        {% endfor %}
-      </ul>
-    </div>
+    {% for entry in devblogs %}
+      <div class="card mb-2 shadow-sm">
+        <div class="card-body d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ entry.title }}</strong><br>
+            <small class="text-muted">{{ entry.date|date('d/m/Y') }}</small>
+          </div>
+          <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'devblog' }) }}" onsubmit="return confirm('Confirmer la suppression ?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entry.id) }}">
+            <button class="btn btn-danger btn-sm">
+              <i class="bi bi-trash-fill me-1"></i> Supprimer
+            </button>
+          </form>
+        </div>
+      </div>
+    {% else %}
+      <p>Aucun devblog disponible.</p>
+    {% endfor %}
 
-    <!-- Changelogs -->
-    <div class="col-md-4">
-      <h4 class="mb-3">Changelogs</h4>
-      <ul class="list-group">
-        {% for changelog in changelogs %}
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            {{ changelog.version }} - {{ changelog.date|date('d/m/Y') }}
-            <form method="post" action="{{ path('admin.changelog.delete', {id: changelog.id}) }}" onsubmit="return confirm('Supprimer ce changelog ?');">
-              <button class="btn btn-sm btn-outline-danger">Supprimer</button>
-            </form>
-          </li>
-        {% else %}
-          <li class="list-group-item text-muted">Aucun changelog disponible.</li>
-        {% endfor %}
-      </ul>
-    </div>
+    {{ knp_pagination_render(devblogs) }}
+  </div>
 
-    <!-- Annonces -->
-    <div class="col-md-4">
-      <h4 class="mb-3">Annonces</h4>
-      <ul class="list-group">
-        {% for announcement in announcements %}
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            {{ announcement.title }}
-            <form method="post" action="{{ path('admin.announcement.delete', {id: announcement.id}) }}" onsubmit="return confirm('Supprimer cette annonce ?');">
-              <button class="btn btn-sm btn-outline-danger">Supprimer</button>
-            </form>
-          </li>
-        {% else %}
-          <li class="list-group-item text-muted">Aucune annonce disponible.</li>
-        {% endfor %}
-      </ul>
-    </div>
+  {# Changelogs #}
+  <div class="mb-5">
+    <h3 class="mb-3 devblog-title">Changelogs</h3>
+
+    {% for entry in changelogs %}
+      <div class="card mb-2 shadow-sm">
+        <div class="card-body d-flex justify-content-between align-items-center">
+          <div>
+            <strong>Version {{ entry.version }}</strong><br>
+            <small class="text-muted">{{ entry.date|date('d/m/Y') }}</small>
+          </div>
+          <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'changelog' }) }}" onsubmit="return confirm('Confirmer la suppression ?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entry.id) }}">
+            <button class="btn btn-danger btn-sm">
+              <i class="bi bi-trash-fill me-1"></i> Supprimer
+            </button>
+          </form>
+        </div>
+      </div>
+    {% else %}
+      <p>Aucun changelog disponible.</p>
+    {% endfor %}
+
+    {{ knp_pagination_render(changelogs) }}
+  </div>
+
+  {# Annonces #}
+  <div class="mb-5">
+    <h3 class="mb-3 devblog-title">Annonces</h3>
+
+    {% for entry in announcements %}
+      <div class="card mb-2 shadow-sm">
+        <div class="card-body d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ entry.title }}</strong><br>
+            <small class="text-muted">{{ entry.createdAt|date('d/m/Y') }}</small>
+          </div>
+          <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'announcement' }) }}" onsubmit="return confirm('Confirmer la suppression ?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entry.id) }}">
+            <button class="btn btn-danger btn-sm">
+              <i class="bi bi-trash-fill me-1"></i> Supprimer
+            </button>
+          </form>
+        </div>
+      </div>
+    {% else %}
+      <p>Aucune annonce disponible.</p>
+    {% endfor %}
+
+    {{ knp_pagination_render(announcements) }}
   </div>
 </div>
 {% endblock %}

@@ -223,3 +223,7 @@
   margin-bottom: 2rem;
   box-shadow: 0 0 8px rgb(0, 0, 0);
 }
+
+.delete-entries-main {
+  margin-bottom: 15rem;
+}

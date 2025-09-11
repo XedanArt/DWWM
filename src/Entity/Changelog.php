@@ -25,6 +25,9 @@ class Changelog
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $slug = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -72,5 +75,16 @@ class Changelog
     {
         $this->image = $image;
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+    return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+    $this->slug = $slug;
+    return $this;
     }
 }

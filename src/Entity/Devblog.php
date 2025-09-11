@@ -26,56 +26,23 @@ class Devblog
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    #[ORM\Column(length: 255, unique: true, nullable: false)]
+    private ?string $slug = null;
 
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
+    public function getId(): ?int { return $this->id; }
 
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
+    public function getTitle(): ?string { return $this->title; }
+    public function setTitle(string $title): static { $this->title = $title; return $this; }
 
-        return $this;
-    }
+    public function getContent(): ?string { return $this->content; }
+    public function setContent(string $content): static { $this->content = $content; return $this; }
 
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
+    public function getDate(): ?\DateTime { return $this->date; }
+    public function setDate(\DateTime $date): static { $this->date = $date; return $this; }
 
-    public function setContent(string $content): static
-    {
-        $this->content = $content;
+    public function getImage(): ?string { return $this->image; }
+    public function setImage(string $image): static { $this->image = $image; return $this; }
 
-        return $this;
-    }
-
-    public function getDate(): ?\DateTime
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTime $date): static
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(string $image): static
-    {
-        $this->image = $image;
-
-        return $this;
-    }
+    public function getSlug(): ?string { return $this->slug; }
+    public function setSlug(string $slug): static { $this->slug = $slug; return $this; }
 }

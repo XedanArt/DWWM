@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un administrateur{% endblock %}
+
+{% block body %}
+<div class="create-admin-container container mt-5">
+  <h2 class="mb-4 text-center">Création d’un compte administrateur</h2>
+
+  {% for message in app.flashes('success') %}
+    <div class="alert alert-success">{{ message }}</div>
+  {% endfor %}
+  {% for message in app.flashes('danger') %}
+    <div class="alert alert-danger">{{ message }}</div>
+  {% endfor %}
+
+  {{ form_start(form, { action: path('superadmin.create_admin.submit') }) }}
+
+    <div class="mb-3">
+      {{ form_label(form.email) }}
+      {{ form_widget(form.email, { attr: { class: 'form-control', placeholder: 'admin@example.com' } }) }}
+      {{ form_errors(form.email) }}
+    </div>
+
+    <div class="mb-3">
+      {{ form_label(form.username) }}
+      {{ form_widget(form.username, { attr: { class: 'form-control', placeholder: 'Pseudo administrateur' } }) }}
+      {{ form_errors(form.username) }}
+    </div>
+
+    <div class="mb-3">
+      {{ form_label(form.plainPassword) }}
+      {{ form_widget(form.plainPassword, { attr: { class: 'form-control', placeholder: 'Mot de passe initial' } }) }}
+      {{ form_errors(form.plainPassword) }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      <i class="bi bi-person-plus-fill me-1"></i> Créer l’administrateur
+    </button>
+
+  {{ form_end(form) }}
+</div>
+{% endblock %}

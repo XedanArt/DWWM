@@ -1,146 +1,200 @@
-.changelog-separator {
-  height: 4rem;
-}
-
-/* ////////// Conteneur principal ////////// */
+/* === Structure principale === */
 .changelog-main-container {
-  background-color: rgba(0, 0, 0, 0.6);
-  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
-  transition: box-shadow 0.3s ease;
-  border: 1px solid transparent;
-  padding-top: 50px;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  max-width: 1000px;
+  background-color: #121212;
+  color: #e0e0e0;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  margin-top: 5rem;
+  margin-bottom: 10rem;
 }
 
-/* ////////// Titre principal du conteneur ////////// */
+/* === Titre principal === */
 .changelog-title h1 {
-  font-family: 'Montserrat';
-  border: 2px solid white;
-  color: #ffffff;
-  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #f5f5f5;
+  border-bottom: 2px solid #444;
+  padding-bottom: 0.5rem;
 }
 
-/* ////////// Conteneur du dernier patch en date ////////// */
+/* === Dernier patch mis en avant === */
 .changelog-last-patch {
-  font-family: 'Roboto';
-  background-color: rgba(0, 0, 0, 0.6);
-  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
-  color: #ffffff;
-  border-radius: 2%;
-  overflow: hidden;
-}
-
-.changelog-last-title {
-  font-family: 'Roboto';
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
+  background-color: #1e1e1e;
+  border-left: 4px solid #6c63ff;
+  padding: 1.5rem;
+  border-radius: 6px;
 }
 
 .changelog-last-title h2 {
-  margin: 0;
-  color: #ffffff;
+  font-size: 1.6rem;
   font-weight: 600;
+  color: #ffffff;
 }
 
 .changelog-last-image-wrapper {
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .changelog-last-image {
   width: 100%;
-  height: auto;
-  display: block;
-}
-
-.changelog-last-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background-color: #00000085;
-  width: 100%;
-  padding: 1.5rem;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
 }
 
 .changelog-last-content h4 {
-  margin-top: 0;
-  color: #ffffff;
+  font-size: 1rem;
+  color: #aaa;
+  margin-bottom: 0.5rem;
 }
 
-/* ////////// Conteneur de la liste des patchs ////////// */
-.changelog-patch-list {
-  background-color: #00000085;
-  color: #ffffff;
-  padding: 1.5rem;
+.changelog-last-content p {
+  font-size: 1.05rem;
+  line-height: 1.6;
 }
 
+/* === Liste des patchs précédents === */
 .patch-entry {
-  border-bottom: 1px solid #ffffff;
-}
-
-/* ////////// Conteneur de la sidebar ////////// */
-.changelog-sidebar-container {
-  padding: 3rem;
-}
-
-.changelog-sidebar-container > div {
-  position: sticky;
-  top: 100px;
-  background-color: #00000056;
-  color: white;
+  background-color: #181818;
   padding: 1rem;
+  border-radius: 6px;
+  border-left: 3px solid #444;
 }
 
-/* Conteneur de la navigation (patch) */
-.changelog-patch-nav {
-  font-family: 'Montserrat';
-  background-color: rgba(0, 0, 0, 0.6);
-  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
-  transition: box-shadow 0.3s ease;
-  border: 1px solid transparent;
+.patch-entry h5 {
+  font-size: 1.1rem;
+  color: #ddd;
+  margin-bottom: 0.5rem;
+}
+
+.patch-entry p {
+  font-size: 1rem;
+  color: #bbb;
+}
+
+/* === Sidebar === */
+.changelog-sidebar-container {
+  background-color: #1a1a1a;
+  padding: 1.5rem;
+  border-radius: 6px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+}
+
+.changelog-patch-nav h5 {
+  font-size: 1.2rem;
+  color: #f0f0f0;
+  margin-bottom: 1rem;
+}
+
+.changelog-patch-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .changelog-patch-items {
+  color: #9ec3ff;
   text-decoration: none;
-  transition: background-color 0.2s ease-in-out;
-  color: white;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
 }
 
 .changelog-patch-items:hover {
-  background-color: #6f5e88;
+  color: #ffffff;
+  text-decoration: underline;
 }
 
-/* ////////// Pagination ////////// */
+/* === Pagination === */
 .changelog-pagination {
-  display: flex;
+  text-align: center;
+}
+
+.changelog-pagination .pagination {
   justify-content: center;
-  margin: 20px 0;
-  background-color: #121212;
-  padding: 8px;
-  border-radius: 6px;
 }
 
-.changelog-pagination a {
-  color: #bbb;
-  padding: 6px 10px;
-  margin: 0 4px;
-  font-size: 0.9rem;
-  text-decoration: none;
-  border-radius: 4px;
-  background-color: #1a1a1a;
-  transition: 0.2s ease;
+.changelog-pagination .page-item .page-link {
+  background-color: #2a2a2a;
+  color: #fff;
+  border: none;
+  margin: 0 2px;
 }
 
-.changelog-pagination a:hover {
-  background-color: #333;
+.changelog-pagination .page-item.active .page-link {
+  background-color: #6c63ff;
   color: #fff;
 }
 
-.changelog-pagination a.active {
-  background-color: #6f5e88;
+/* === Responsive === */
+@media (max-width: 768px) {
+  .changelog-main-container {
+    padding: 1rem;
+  }
+
+  .changelog-title h1 {
+    font-size: 1.6rem;
+  }
+
+  .changelog-last-title h2 {
+    font-size: 1.3rem;
+  }
+
+  .patch-entry h5 {
+    font-size: 1rem;
+  }
+
+  .changelog-sidebar-container {
+    margin-top: 2rem;
+  }
+}
+
+/* ////////// SLUG ////////// */
+/* ////////// SLUG ////////// */
+/* ////////// SLUG ////////// */
+/* Container principal du changelog */
+.changelog-show-container {
+  max-width: 800px;
+  width: 100%;
+  background-color: #1c1c1c;
   color: #fff;
-  font-weight: 500;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  margin-bottom: 100px; /* éloigne du footer */
+}
+
+/* Image bien contenue */
+.changelog-show-container img {
+  border-radius: 8px;
+  object-fit: cover;
+  max-height: 400px;
+  width: 100%;
+  display: block;
+}
+
+/* Contenu du changelog */
+.changelog-content {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .changelog-show-container {
+    padding: 1.5rem;
+    margin-bottom: 80px;
+  }
+
+  .changelog-content {
+    font-size: 1rem;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
 }
