@@ -1,0 +1,39 @@
+monolog:
+    channels: ['super_admin', 'security', 'user', 'account', 'content_modif', 'admin_actions']
+
+    handlers:
+        super_admin_handler:
+            type: stream
+            path: '%kernel.logs_dir%/controllers/super_admin.log'
+            level: info
+            channels: ['super_admin']
+
+        security_handler:
+            type: stream
+            path: '%kernel.logs_dir%/controllers/security.log'
+            level: info
+            channels: ['security']
+
+        user_handler:
+            type: stream
+            path: '%kernel.logs_dir%/controllers/user.log'
+            level: info
+            channels: ['user']
+        
+        account_handler:
+            type: stream
+            path: '%kernel.logs_dir%/controllers/account.log'
+            level: info
+            channels: ['account']
+
+        content_modif_handler:
+            type: stream
+            path: '%kernel.logs_dir%/controllers/content_modif.log'
+            level: info
+            channels: ['content_modif']
+
+        admin_actions_handler:
+            type: stream
+            path: '%kernel.logs_dir%/controllers/admin_actions.log'
+            level: info
+            channels: ['admin_actions']

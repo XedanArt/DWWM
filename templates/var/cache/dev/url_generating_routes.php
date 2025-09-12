@@ -20,7 +20,7 @@ return [
     '_profiler_exception_css' => [['token'], ['_controller' => 'web_profiler.controller.exception_panel::stylesheet'], [], [['text', '/exception.css'], ['variable', '/', '[^/]++', 'token', true], ['text', '/_profiler']], [], [], []],
     'app_account' => [[], ['_controller' => 'App\\Controller\\AccountController::index'], [], [['text', '/account']], [], [], []],
     'app_account_profile' => [[], ['_controller' => 'App\\Controller\\AccountController::profile'], [], [['text', '/account/profile']], [], [], []],
-    'auth.login' => [[], ['_controller' => 'App\\Controller\\AuthController::login'], [], [['text', '/auth/login']], [], [], []],
+    'app_login' => [[], ['_controller' => 'App\\Controller\\AuthController::login'], [], [['text', '/auth/login']], [], [], []],
     'auth.register' => [[], ['_controller' => 'App\\Controller\\AuthController::register'], [], [['text', '/auth/register']], [], [], []],
     'debug_auth' => [[], ['_controller' => 'App\\Controller\\AuthDebugController::debug'], [], [['text', '/debug-auth']], [], [], []],
     'dashboard' => [[], ['_controller' => 'App\\Controller\\DashboardController::index'], [], [['text', '/dashboard']], [], [], []],

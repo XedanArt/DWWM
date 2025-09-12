@@ -312,3 +312,120 @@
 .btn-connexion {
   text-decoration: none;
 }
+
+/* ////////// ACTIVATION CSS ////////// */
+/* ////////// ACTIVATION CSS ////////// */
+/* ////////// ACTIVATION CSS ////////// */
+.activation-container {
+  max-width: 500px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.activation-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.activation-card-body {
+  padding: 30px;
+}
+
+.activation-title {
+  text-align: center;
+  color: #796c52;
+  margin-bottom: 20px;
+}
+
+.activation-subtitle {
+  text-align: center;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+.activation-form .form-group {
+  margin-bottom: 20px;
+}
+
+.activation-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #333;
+}
+
+.activation-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.activation-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #796c52;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.activation-button:hover {
+  background-color: #5f543f;
+}
+
+.activation-note {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 20px;
+  color: #ffffff;
+}
+
+/* Flash messages */
+
+.flash-activate-close {
+  margin-bottom: 20px;
+}
+
+.flash-activate-message {
+  position: relative;
+  background-color: #fff8f0;
+  border-left: 4px solid #796c52;
+  color: #5a4a2f;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.flash-success {
+  border-left-color: #4caf50;
+  background-color: #f0fff4;
+  color: #2e7d32;
+}
+
+.flash-error,
+.flash-danger {
+  border-left-color: #dc3545;
+  background-color: #fff0f0;
+  color: #721c24;
+}
+
+.flash-activate-icon {
+  margin-right: 8px;
+}
+
+.flash-activate-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: inherit;
+  cursor: pointer;
+}

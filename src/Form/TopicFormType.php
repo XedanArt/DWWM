@@ -57,7 +57,7 @@ class TopicFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Topic::class,
-            'preselected_tags' => [], // ✅ déclaration de l'option personnalisée
+            'preselected_tags' => [], // déclaration de l'option personnalisée
         ]);
     }
 

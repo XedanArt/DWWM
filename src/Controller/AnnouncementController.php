@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class AnnouncementController extends AbstractController
 {
@@ -24,8 +26,11 @@ class AnnouncementController extends AbstractController
     }
 
     #[Route('/admin/announcement/new', name: 'admin.announcement.new')]
-    public function new(Request $request, EntityManagerInterface $em): Response
-    {
+    public function new(
+        Request $request,
+        EntityManagerInterface $em,
+        #[Autowire(service: 'monolog.logger.admin_actions')] LoggerInterface $logger
+    ): Response {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $announcement = new Announcement();
@@ -38,6 +43,12 @@ class AnnouncementController extends AbstractController
             $em->persist($announcement);
             $em->flush();
 
+            $logger->info('Annonce créée par un administrateur', [
+                'admin_id' => $this->getUser()->getId(),
+                'title' => $announcement->getTitle(),
+                'created_at' => $announcement->getCreatedAt()?->format('Y-m-d H:i:s'),
+            ]);
+
             $this->addFlash('success', 'Annonce ajoutée avec succès.');
             return $this->redirectToRoute('forum.index');
         }
@@ -48,14 +59,23 @@ class AnnouncementController extends AbstractController
     }
 
     #[Route('/admin/announcement/delete/{id}', name: 'admin.announcement.delete', methods: ['POST'])]
-    public function delete(Announcement $announcement, EntityManagerInterface $em): Response
-    {
+    public function delete(
+        Announcement $announcement,
+        EntityManagerInterface $em,
+        #[Autowire(service: 'monolog.logger.admin_actions')] LoggerInterface $logger
+    ): Response {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $logger->warning('Annonce supprimée par un administrateur', [
+            'admin_id' => $this->getUser()->getId(),
+            'announcement_id' => $announcement->getId(),
+            'title' => $announcement->getTitle(),
+        ]);
 
         $em->remove($announcement);
         $em->flush();
 
         $this->addFlash('success', 'Annonce supprimée avec succès.');
-        return $this->redirectToRoute('admin.entry.delete');
+        return $this->redirectToRoute('forum.index'); // correction ici
     }
 }

@@ -1,37 +1,94 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Politique de confidentialité{% endblock %}
+
 {% block body %}
 <div class="legals-container">
   <div class="legals-main-back">
+
     <div class="legals-block">
-      <h2 class="legals-title">1. Données collectées</h2>
+      <h2 class="legals-title">1. Responsable du traitement</h2>
       <div class="legals-content">
-        <p>Lorsque vous naviguez sur notre site, certaines données sont automatiquement enregistrées comme votre adresse IP, le type de navigateur, et les pages visitées. Des informations supplémentaires peuvent être collectées via nos formulaires : nom, prénom, e-mail, téléphone, etc.</p>
-        <p>Ces données servent à améliorer l’expérience utilisateur, garantir le bon fonctionnement de nos services, et assurer le traitement de vos demandes.</p>
+        <p>Le responsable du traitement des données personnelles est Vincent Peltier, éditeur du site Morning Soul, situé à 29 Rue Boileau 91560 Crosne, joignable à l’adresse suivante : vincentpeltier.pro@outlook.fr.</p>
       </div>
     </div>
 
     <div class="legals-block">
-      <h2 class="legals-title">2. Finalité du traitement</h2>
+      <h2 class="legals-title">2. Données collectées</h2>
       <div class="legals-content">
-        <p>Les informations collectées sont utilisées pour vous fournir nos services, améliorer notre site, assurer la sécurité des échanges, et respecter nos obligations légales. Aucune donnée n’est vendue ou partagée avec des tiers sans votre consentement.</p>
-        <p>Tout traitement est réalisé conformément au RGPD, en garantissant la transparence et la protection de vos droits.</p>
+        <p>Lorsque vous naviguez sur notre site, certaines données sont automatiquement enregistrées : adresse IP, type de navigateur, pages consultées, durée de visite.</p>
+        <p>Des données supplémentaires peuvent être collectées via nos formulaires : nom, prénom, adresse e-mail, numéro de téléphone, pseudonyme, préférences utilisateur.</p>
       </div>
     </div>
 
     <div class="legals-block">
-      <h2 class="legals-title">3. Conservation des données</h2>
+      <h2 class="legals-title">3. Finalités et bases légales</h2>
       <div class="legals-content">
-        <p>Vos données sont conservées pendant une durée adaptée à leur finalité. Passé ce délai, elles sont supprimées ou anonymisées conformément aux exigences réglementaires.</p>
+        <p>Les données sont collectées pour :</p>
+        <ul>
+          <li>Assurer le bon fonctionnement du site et de ses services</li>
+          <li>Répondre à vos demandes et messages</li>
+          <li>Personnaliser votre expérience utilisateur</li>
+          <li>Analyser la fréquentation du site</li>
+          <li>Respecter nos obligations légales</li>
+        </ul>
+        <p>Les traitements reposent sur les bases légales suivantes : votre consentement, l’exécution d’un contrat, le respect d’une obligation légale ou notre intérêt légitime à améliorer nos services.</p>
       </div>
     </div>
 
     <div class="legals-block">
-      <h2 class="legals-title">4. Vos droits</h2>
+      <h2 class="legals-title">4. Destinataires et transferts</h2>
       <div class="legals-content">
-        <p>Vous avez le droit d'accéder à vos données, de les corriger, de demander leur suppression, ou de vous opposer à leur traitement. Pour exercer ces droits, contactez-nous via les informations fournies dans nos <a href="{{ path('legals.legal') }}">mentions légales.</a></p>
+        <p>Les données collectées sont destinées exclusivement à Morning Soul. Elles ne sont jamais vendues ni transmises à des tiers sans votre consentement.</p>
+        <p>Certains services tiers (hébergement, statistiques, emailing) peuvent traiter vos données. Dans ce cas, nous nous assurons qu’ils respectent les normes de protection en vigueur.</p>
+        <p>Des transferts hors de l’Union européenne peuvent avoir lieu, notamment via des outils comme Google Analytics ou Mailchimp. Ces transferts sont encadrés par des clauses contractuelles types ou des mécanismes reconnus par la Commission européenne.</p>
       </div>
     </div>
+
+    <div class="legals-block">
+      <h2 class="legals-title">5. Durée de conservation</h2>
+      <div class="legals-content">
+        <p>Les données sont conservées pendant une durée proportionnée à leur finalité :</p>
+        <ul>
+          <li>Données de navigation : 13 mois maximum</li>
+          <li>Données de formulaire : jusqu’à 3 ans après le dernier contact</li>
+          <li>Données de compte utilisateur : tant que le compte est actif</li>
+        </ul>
+        <p>Au-delà, elles sont supprimées ou anonymisées conformément aux exigences réglementaires.</p>
+      </div>
+    </div>
+
+    <div class="legals-block">
+      <h2 class="legals-title">6. Sécurité</h2>
+      <div class="legals-content">
+        <p>Nous mettons en œuvre des mesures techniques et organisationnelles pour garantir la sécurité, la confidentialité et l’intégrité de vos données personnelles.</p>
+        <p>Les accès sont limités, les données sont chiffrées lorsque nécessaire, et les sauvegardes sont régulières.</p>
+      </div>
+    </div>
+
+    <div class="legals-block">
+      <h2 class="legals-title">7. Vos droits</h2>
+      <div class="legals-content">
+        <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+        <ul>
+          <li>Droit d’accès à vos données</li>
+          <li>Droit de rectification</li>
+          <li>Droit à l’effacement</li>
+          <li>Droit d’opposition ou de limitation du traitement</li>
+          <li>Droit à la portabilité</li>
+        </ul>
+        <p>Pour exercer vos droits, contactez-nous via les informations disponibles dans nos <a href="{{ path('legals.legal') }}">mentions légales</a>.</p>
+      </div>
+    </div>
+
+    <div class="legals-block">
+      <h2 class="legals-title">8. Mise à jour</h2>
+      <div class="legals-content">
+        <p>Cette politique peut être modifiée à tout moment pour refléter l’évolution de nos pratiques ou de la réglementation. La date de dernière mise à jour est indiquée ci-dessous.</p>
+        <p><em>Dernière mise à jour : 11 septembre 2025</em></p>
+      </div>
+    </div>
+
   </div>
 </div>
 {% endblock %}

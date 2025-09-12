@@ -123,7 +123,7 @@ class __TwigTemplate_e4abf010759c289a3d91b1451387b82c extends Template
       <!-- Bouton Nous Rejoindre -->
       <a class=\"btn btn-primary custom-login-btn ms-auto\" href=\"";
         // line 50
-        yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("auth.login");
+        yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_login");
         yield "\">Nous Rejoindre</a>
     </div>
   </div>
@@ -212,7 +212,7 @@ class __TwigTemplate_e4abf010759c289a3d91b1451387b82c extends Template
       </ul>
 
       <!-- Bouton Nous Rejoindre -->
-      <a class=\"btn btn-primary custom-login-btn ms-auto\" href=\"{{ path('auth.login') }}\">Nous Rejoindre</a>
+      <a class=\"btn btn-primary custom-login-btn ms-auto\" href=\"{{ path('app_login') }}\">Nous Rejoindre</a>
     </div>
   </div>
 </nav>", "_inc/header.html.twig", "C:\\Users\\vinpe\\mon_projet\\templates\\_inc\\header.html.twig");

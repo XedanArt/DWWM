@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Mentions légales{% endblock %}
+
 {% block body %}
 <div class="legals-container">
   <div class="legals-main-back">
@@ -7,40 +9,75 @@
     <div class="legals-block">
       <h2 class="legals-title">1. Éditeur du site</h2>
       <div class="legals-content">
-        <p>Le site Morning Soul est édité par [Nom de l’entreprise], société immatriculée sous le numéro [RCS ou SIRET], dont le siège social est situé à [adresse complète].</p>
-        <p>Contact : [email] / [numéro de téléphone]</p>
+        <p>Le site <strong>Morning Soul</strong> est édité par Vincent Peltier, auto-entrepreneur immatriculé sous le numéro SIRET <em>123 456 789 00012</em>, dont le siège social est situé au <em>29 Rue Boileau, 91560 Crosne, France</em>.</p>
+        <p>Directeur de publication : Vincent Peltier</p>
+        <p>Contact : <a href="mailto:support@morningsoul.fr">support@morningsoul.fr</a> / +33 6 12 34 56 78</p>
       </div>
     </div>
 
     <div class="legals-block">
       <h2 class="legals-title">2. Hébergement</h2>
       <div class="legals-content">
-        <p>Le site est hébergé par [Nom de l’hébergeur], situé à [adresse complète].</p>
-        <p>Pour toute question relative à l’hébergement, vous pouvez contacter [email ou formulaire de contact de l’hébergeur].</p>
+        <p>Le site est hébergé par <strong>Infomaniak Network SA</strong>, situé au <em>Rue Eugène-Marziano 25, 1227 Genève, Suisse</em>.</p>
+        <p>Contact hébergeur : <a href="mailto:support@infomaniak.com">support@infomaniak.com</a></p>
       </div>
     </div>
 
     <div class="legals-block">
       <h2 class="legals-title">3. Propriété intellectuelle</h2>
       <div class="legals-content">
-        <p>Tout le contenu présent sur le site — textes, images, logos, vidéos, éléments graphiques — est protégé par le droit de la propriété intellectuelle et demeure la propriété exclusive de l’éditeur, sauf mention contraire explicite.</p>
-        <p>Toute reproduction ou exploitation, partielle ou totale, sans autorisation écrite préalable est strictement interdite.</p>
+        <p>L’ensemble des contenus présents sur le site — textes, images, vidéos, logos, éléments graphiques — sont protégés par le droit de la propriété intellectuelle et demeurent la propriété exclusive de l’éditeur, sauf mention contraire explicite.</p>
+        <p>Toute reproduction, représentation, modification ou exploitation, partielle ou totale, sans autorisation écrite préalable est strictement interdite.</p>
       </div>
     </div>
 
     <div class="legals-block">
       <h2 class="legals-title">4. Responsabilité</h2>
       <div class="legals-content">
-        <p>L’éditeur s’efforce de fournir des informations exactes et à jour sur le site. Toutefois, il ne saurait être tenu responsable des erreurs, omissions ou d’une indisponibilité temporaire du service.</p>
-        <p>L’utilisateur reste seul responsable de l’usage qu’il fait du contenu et des services proposés.</p>
+        <p>L’éditeur s’efforce de fournir des informations exactes et à jour. Toutefois, il ne saurait être tenu responsable des erreurs, omissions ou d’une indisponibilité temporaire du service.</p>
+        <p>L’utilisateur reste seul responsable de l’usage qu’il fait du site et des contenus proposés.</p>
+        <p>Le site peut contenir des liens vers des sites externes. Morning Soul ne peut être tenu responsable du contenu ou des pratiques de ces sites tiers.</p>
       </div>
     </div>
 
     <div class="legals-block">
       <h2 class="legals-title">5. Cookies</h2>
       <div class="legals-content">
-        <p>Le site peut utiliser des cookies pour améliorer la navigation et mesurer l’audience. L’utilisateur peut accepter ou refuser ces cookies via le bandeau d’information et les paramètres de son navigateur.</p>
-        <p>Pour en savoir plus, consultez notre <a href="{{ path('legals.cookies')}}">politique de cookies</a>.</p>
+        <p>Le site utilise des cookies pour améliorer la navigation, personnaliser l’expérience utilisateur et mesurer l’audience. L’utilisateur peut accepter ou refuser ces cookies via le bandeau d’information ou les paramètres de son navigateur.</p>
+        <p>Pour en savoir plus, consultez notre <a href="{{ path('legals.cookies') }}">politique de cookies</a>.</p>
+      </div>
+    </div>
+
+    <div class="legals-block">
+      <h2 class="legals-title">6. Accessibilité du site</h2>
+      <div class="legals-content">
+        <p>Morning Soul s’engage à rendre son site accessible à tous les utilisateurs, y compris les personnes en situation de handicap, conformément aux dispositions du <strong>Référentiel Général d’Amélioration de l’Accessibilité (RGAA)</strong>.</p>
+
+        <p>Nous mettons en œuvre les bonnes pratiques suivantes :</p>
+        <ul>
+          <li>Structure HTML sémantique pour faciliter la navigation avec des lecteurs d’écran</li>
+          <li>Contrastes suffisants entre texte et arrière-plan</li>
+          <li>Navigation clavier optimisée</li>
+          <li>Alternatives textuelles pour les contenus visuels</li>
+        </ul>
+
+        <p>Si vous rencontrez une difficulté d’accès à un contenu, une fonctionnalité ou un formulaire, vous pouvez nous contacter à <a href="mailto:support@morningsoul.fr">support@morningsoul.fr</a>. Nous nous engageons à vous proposer une solution accessible dans les meilleurs délais.</p>
+
+        <p>Cette politique est évolutive et sera mise à jour en fonction des retours utilisateurs et des évolutions réglementaires.</p>
+      </div>
+    </div>
+
+    <div class="legals-block">
+      <h2 class="legals-title">7. Loi applicable</h2>
+      <div class="legals-content">
+        <p>Le présent site est soumis au droit français. En cas de litige, les tribunaux compétents seront ceux du ressort du siège de l’éditeur.</p>
+      </div>
+    </div>
+
+    <div class="legals-block">
+      <h2 class="legals-title">8. Mise à jour</h2>
+      <div class="legals-content">
+        <p>Les présentes mentions légales peuvent être modifiées à tout moment. Dernière mise à jour : <em>11 septembre 2025</em>.</p>
       </div>
     </div>
 

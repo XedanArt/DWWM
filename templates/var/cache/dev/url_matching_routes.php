@@ -17,7 +17,7 @@ return [
         '/_profiler/open' => [[['_route' => '_profiler_open_file', '_controller' => 'web_profiler.controller.profiler::openAction'], null, null, null, false, false, null]],
         '/account' => [[['_route' => 'app_account', '_controller' => 'App\\Controller\\AccountController::index'], null, null, null, false, false, null]],
         '/account/profile' => [[['_route' => 'app_account_profile', '_controller' => 'App\\Controller\\AccountController::profile'], null, null, null, false, false, null]],
-        '/auth/login' => [[['_route' => 'auth.login', '_controller' => 'App\\Controller\\AuthController::login'], null, null, null, false, false, null]],
+        '/auth/login' => [[['_route' => 'app_login', '_controller' => 'App\\Controller\\AuthController::login'], null, null, null, false, false, null]],
         '/auth/register' => [[['_route' => 'auth.register', '_controller' => 'App\\Controller\\AuthController::register'], null, null, null, false, false, null]],
         '/debug-auth' => [[['_route' => 'debug_auth', '_controller' => 'App\\Controller\\AuthDebugController::debug'], null, null, null, false, false, null]],
         '/dashboard' => [[['_route' => 'dashboard', '_controller' => 'App\\Controller\\DashboardController::index'], null, null, null, false, false, null]],

@@ -22,8 +22,6 @@ security:
     main:
       lazy: true # Authentification paresseuse (optimisation perf)
       provider: app_user_provider
-
-      # Authentificateur personnalisé (LoginAuthenticator)
       custom_authenticators:
         - App\Security\LoginAuthenticator
 
@@ -39,24 +37,29 @@ security:
         lifetime: 604800 # Durée en secondes (7 jours)
         path: /
         name: REMEMBERME
-        always_remember_me: false
+        always_remember_me: true
 
   # Contrôle d’accès par URL et rôle
   access_control:
-    # Accès public aux pages d’authentification
+    # Accès public uniquement pour les utilisateurs non connectés
     - { path: ^/auth/login, roles: PUBLIC_ACCESS }
     - { path: ^/auth/register, roles: PUBLIC_ACCESS }
-    - { path: ^/auth/logout, roles: IS_AUTHENTICATED_FULLY }
-    - { path: ^/auth/logged-out, roles: PUBLIC_ACCESS }
+    - { path: ^/auth/forgot_password, roles: PUBLIC_ACCESS }
+    - { path: ^/auth/reset-password, roles: PUBLIC_ACCESS }
+    - { path: ^/auth/activate, roles: PUBLIC_ACCESS }
+    - { path: ^/auth/logged-out, roles: IS_ANONYMOUS }
 
     # Accès réservé aux utilisateurs connectés
+    - { path: ^/auth/logout, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/account/upload-avatar, roles: ROLE_USER }
+    - { path: ^/account, roles: ROLE_USER }
+
     # Accès réservé aux admins connectés
     - { path: ^/dashboard, roles: ROLE_ADMIN }
 
-    # Routes réservées aux admins ou super admins :
-    # - { path: ^/admin, roles: ROLE_ADMIN }
-    # - { path: ^/super-admin, roles: ROLE_SUPER_ADMIN }
+    # Routes réservées aux admins ou super admins
+    - { path: ^/admin, roles: ROLE_ADMIN }
+    - { path: ^/super-admin, roles: ROLE_SUPER_ADMIN }
 
   # Hiérarchie des rôles (héritage automatique)
   role_hierarchy:

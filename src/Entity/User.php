@@ -12,8 +12,8 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'Ce mail est déjà associé à un compte. <a href="/mot-de-passe-oublie">Mot de passe perdu ?</a>')]
-#[UniqueEntity(fields: ['username'], message: 'Ce pseudo existe déjà. Veuillez en choisir un autre.')]
+#[UniqueEntity('email', message: 'Ce mail est déjà associé à un compte.')]
+#[UniqueEntity('username', message: 'Ce pseudo existe déjà. Veuillez en choisir un autre.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -22,13 +22,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\NotBlank]
-    #[Assert\Email]
+    #[Assert\NotBlank(message: 'L’email est obligatoire.')]
+    #[Assert\Email(message: 'Format d’email invalide.')]
     private ?string $email = null;
 
     #[ORM\Column(length: 50, unique: true)]
-    #[Assert\NotBlank]
-    #[Assert\Length(min: 3)]
+    #[Assert\NotBlank(message: 'Le pseudo est obligatoire.')]
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: 'Le pseudo doit contenir au moins {{ limit }} caractères.',
+        maxMessage: 'Le pseudo ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $username = null;
 
     #[ORM\Column(type: 'json')]
@@ -49,6 +54,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $lastLogin = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $lastPasswordRequestAt = null;
+
+    #[Assert\NotBlank(message: 'Le mot de passe est obligatoire.')]
+    #[Assert\Length(
+        min: 8,
+        max: 64,
+        minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères.'
+    )]
+    #[Assert\Regex(
+        pattern: '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/',
+        message: 'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial.'
+    )]
+    private ?string $plainPassword = null;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Topic::class, orphanRemoval: true)]
     private Collection $topics;
@@ -129,6 +149,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getLastLogin(): ?\DateTimeInterface { return $this->lastLogin; }
     public function setLastLogin(?\DateTimeInterface $lastLogin): self { $this->lastLogin = $lastLogin; return $this; }
 
+    public function getLastPasswordRequestAt(): ?\DateTimeInterface { return $this->lastPasswordRequestAt; }
+    public function setLastPasswordRequestAt(?\DateTimeInterface $date): self { $this->lastPasswordRequestAt = $date; return $this; }
+
+    public function getPlainPassword(): ?string { return $this->plainPassword; }
+    public function setPlainPassword(?string $plainPassword): self { $this->plainPassword = $plainPassword; return $this; }
+
     public function getTopics(): Collection { return $this->topics; }
     public function addTopic(Topic $topic): self
     {
@@ -202,11 +228,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString(): string { return $this->getDisplayUsername(); }
 
-    public function getAvatarPath(): string { return $this->avatar ?? 'default-avatar.png'; }
+    public function getAvatarPath(): string
+    {
+        return $this->avatar ?? 'default-avatar.png';
+    }
 
-    public function getResetToken(): ?string { return $this->resetToken; }
-    public function setResetToken(?string $resetToken): self { $this->resetToken = $resetToken; return $this; }
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
 
-    public function getTokenExpiresAt(): ?\DateTimeInterface { return $this->tokenExpiresAt; }
-    public function setTokenExpiresAt(?\DateTimeInterface $tokenExpiresAt): self { $this->tokenExpiresAt = $tokenExpiresAt; return $this; }
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
+        return $this;
+    }
+
+    public function getTokenExpiresAt(): ?\DateTimeInterface
+    {
+        return $this->tokenExpiresAt;
+    }
+
+    public function setTokenExpiresAt(?\DateTimeInterface $tokenExpiresAt): self
+    {
+        $this->tokenExpiresAt = $tokenExpiresAt;
+        return $this;
+    }
 }

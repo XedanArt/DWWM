@@ -19,7 +19,7 @@ class PostController extends AbstractController
     {
         $user = $this->getUser();
         if (!$user) {
-            return $this->redirectToRoute('auth.login');
+            return $this->redirectToRoute('app_login');
         }
 
         $topic = $topicRepo->find($topicId);

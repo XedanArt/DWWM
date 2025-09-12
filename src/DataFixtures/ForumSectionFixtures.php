@@ -18,8 +18,8 @@ class ForumSectionFixtures extends Fixture
             ['Lore & Théories', 'Hypothèses sur l’univers du jeu, secrets et interprétations.'],
             ['Boss & Ennemis', 'Stratégies de combat et analyse des créatures redoutables.'],
             ['Builds & Équipement', 'Partage de configurations, optimisation et objets légendaires.'],
-            ['Zones & Level Design', 'Exploration, secrets et architecture des lieux maudits.'],
-            ['Discussion', 'Espace libre pour échanger autour du jeu et de ses émotions.'],
+            ['Zones & Level Design', 'Exploration, secrets et architecture des lieux.'],
+            ['Discussion', 'Espace libre pour échanger autour de tout et n’importe quoi.'],
             ['Suggestions & Améliorations', 'Propositions pour faire évoluer le projet et affiner le gameplay.'],
             ['Sanctuaire du Code', 'Espace technique : bugs, moteur, alpha/bêta et retours devs.'],
         ];

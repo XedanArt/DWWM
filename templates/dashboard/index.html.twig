@@ -15,7 +15,7 @@
               <button class="user-toggle" onclick="toggleUserMenu('{{ user.id }}')">▼</button>
 
               <div id="user-menu-{{ user.id }}" class="user-menu hidden">
-                <p>Dernière connexion : 
+                <p>Dernière connexion :
                   {% if user.lastLogin is not null %}
                     {{ user.lastLogin|date('d/m/Y H:i') }}
                   {% else %}
@@ -27,9 +27,21 @@
 
                 <div class="user-actions">
                   <a href="{{ path('dashboard.contact_user', { id: user.id }) }}">Contacter</a>
-                  <a href="{{ path('dashboard.ban_user', { id: user.id, duration: 24 }) }}">Bannir 24h</a>
-                  <a href="{{ path('dashboard.ban_user', { id: user.id, duration: 48 }) }}">Bannir 48h</a>
-                  <a href="{{ path('dashboard.delete_user', { id: user.id }) }}" class="danger">Supprimer</a>
+
+                  <form method="post" action="{{ path('dashboard.ban_user', { id: user.id, duration: 24 }) }}" class="confirm-action">
+                    <input type="hidden" name="_token" value="{{ csrf_token('ban-24-' ~ user.id) }}">
+                    <button type="submit" class="btn btn-warning btn-sm">Bannir 24h</button>
+                  </form>
+
+                  <form method="post" action="{{ path('dashboard.ban_user', { id: user.id, duration: 48 }) }}" class="confirm-action">
+                    <input type="hidden" name="_token" value="{{ csrf_token('ban-48-' ~ user.id) }}">
+                    <button type="submit" class="btn btn-warning btn-sm">Bannir 48h</button>
+                  </form>
+
+                  <form method="post" action="{{ path('dashboard.delete_user', { id: user.id }) }}" class="confirm-action">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete-' ~ user.id) }}">
+                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                  </form>
                 </div>
               </div>
             </li>
@@ -75,8 +87,8 @@
     <section class="dashboard-section super-admin-panel">
       <h2>Panel Super Admin</h2>
       <ul class="dashboard-actions">
-        <li><a href="{{ path('superadmin.create_admin') }}" class="btn btn-primary"> Créer un administrateur</a></li>
-        <li><a href="{{ path('superadmin.revoke_admin') }}" class="btn btn-danger"> Révoquer un administrateur</a></li>
+        <li><a href="{{ path('superadmin.create_admin') }}" class="btn btn-primary">Créer un administrateur</a></li>
+        <li><a href="{{ path('superadmin.revoke_admin') }}" class="btn btn-danger">Révoquer un administrateur</a></li>
       </ul>
     </section>
   {% endif %}
@@ -100,5 +112,15 @@ function resetUserFilter() {
   const users = document.querySelectorAll('.user-item');
   users.forEach(user => user.style.display = 'block');
 }
+
+// Confirmation pour les actions sensibles
+document.querySelectorAll('form.confirm-action').forEach(form => {
+  form.addEventListener('submit', function (e) {
+    const confirmed = confirm("Êtes-vous sûr de vouloir effectuer cette action ?");
+    if (!confirmed) {
+      e.preventDefault();
+    }
+  });
+});
 </script>
 {% endblock %}

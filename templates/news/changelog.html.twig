@@ -22,7 +22,7 @@
             </div>
             <div class="changelog-last-image-wrapper">
               {% if latest.image %}
-                <img src="{{ asset('img/' ~ latest.image) }}" alt="Illustration {{ latest.version }}" class="changelog-last-image">
+                <img src="{{ asset('img/changelog/' ~ latest.image) }}" alt="Illustration {{ latest.version }}" class="changelog-last-image">
               {% endif %}
               <div class="changelog-last-content">
                 <h4>{{ latest.date|date('d F Y') }}</h4>

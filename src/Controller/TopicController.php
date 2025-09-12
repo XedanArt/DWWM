@@ -104,7 +104,7 @@ class TopicController extends AbstractController
         $post->setContent($content);
         $post->setTopic($topic);
         $post->setUser($this->getUser());
-        $post->setCreatedAt(new \DateTimeImmutable());
+        $post->getCreatedAt(new \DateTimeImmutable());
 
         $em->persist($post);
         $em->flush();

@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+
 
 class RegistrationFormType extends AbstractType
 {
@@ -40,9 +42,10 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', PasswordType::class, [
                 'label' => 'Mot de passe',
                 'mapped' => false,
+                'required' => true,
                 'attr' => ['placeholder' => '••••••••'],
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'Le mot de passe est requis.']),
+                    new Assert\NotBlank(['message' => 'Le mot de passe est obligatoire.']),
                     new Assert\Length([
                         'min' => 6,
                         'minMessage' => 'Minimum {{ limit }} caractères.',

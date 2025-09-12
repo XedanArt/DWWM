@@ -1,5 +1,9 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+  resource:
+    path: ../src/Controller/
+    namespace: App\Controller
+  type: attribute
+
+cookies.preferences:
+  path: /cookies/preferences
+  controller: App\Controller\CookieController::preferences

@@ -8,7 +8,7 @@
         <ul class="footer-custom-top-list">
           <li><a href="{{ path('homepage.index') }}" class="footer-custom-link">Accueil</a></li>
           <li><a href="{{ path('game.discover') }}" class="footer-custom-link">Découvrir</a></li>
-          <li><a href="#" class="footer-custom-link">Tutoriels</a></li>
+          <li><a href="{{ path('forum.index') }}" class="footer-custom-link">Tutoriels</a></li>
           <li><a href="{{ path('news.changelog') }}" class="footer-custom-link">Changelog</a></li>
           <li><a href="{{ path('news.devblog') }}" class="footer-custom-link">Devblog</a></li>
         </ul>
@@ -18,8 +18,8 @@
         <h5 class="footer-custom-top-title">INFORMATIONS</h5>
         <ul class="footer-custom-top-list">
           <li><a href="{{ path('forum.rules') }}" class="footer-custom-link">Règles de la communauté</a></li>
-          <li><a href="#" class="footer-custom-link">Nouveautés</a></li>
-          <li><a href="/forum" class="footer-custom-link">Forum</a></li>
+          <li><a href="{{ path('news.changelog') }}" class="footer-custom-link">Nouveautés</a></li>
+          <li><a href="{{ path('forum.index') }}" class="footer-custom-link">Forum</a></li>
           <li><a href="{{ path('contact.support') }}" class="footer-custom-link">Nous contacter</a></li>
         </ul>
       </div>
@@ -29,13 +29,14 @@
         <ul class="footer-custom-top-list">
           {% if app.user %}
             <li><a href="{{ path('account.profile') }}" class="footer-custom-link">Mon Profil</a></li>
+            <li><a href="{{ path('cookies.preferences') }}" class="footer-custom-link">Gérer les cookies</a></li>
 
             {% if 'ROLE_ADMIN' in app.user.roles or 'ROLE_SUPER_ADMIN' in app.user.roles %}
               <li><a href="{{ path('dashboard') }}" class="footer-custom-link">Dashboard</a></li>
             {% endif %}
 
           {% else %}
-            <li><a href="{{ path('auth.login') }}" class="footer-custom-link">Se connecter</a></li>
+            <li><a href="{{ path('app_login') }}" class="footer-custom-link">Se connecter</a></li>
             <li><a href="{{ path('auth.register') }}" class="footer-custom-link">S'inscrire</a></li>
           {% endif %}
         </ul>

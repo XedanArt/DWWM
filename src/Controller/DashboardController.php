@@ -20,8 +20,8 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class DashboardController extends AbstractController
 {
-    #[Route('/dashboard', name: 'dashboard')]
     #[IsGranted('ROLE_ADMIN')]
+    #[Route('/dashboard', name: 'dashboard')]
     public function index(UserRepository $userRepository): Response
     {
         $users = $userRepository->findAllWithRelations();
@@ -33,8 +33,8 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    #[Route('/dashboard/contact/{id}', name: 'dashboard.contact_user')]
     #[IsGranted('ROLE_ADMIN')]
+    #[Route('/dashboard/contact/{id}', name: 'dashboard.contact_user')]
     public function contactUser(User $user): Response
     {
         return $this->render('dashboard/contact_user.html.twig', [
@@ -42,8 +42,9 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    #[Route('/dashboard/ban/{id}/{duration}', name: 'dashboard.ban_user')]
     #[IsGranted('ROLE_ADMIN')]
+    #[Route('/dashboard/ban/{id}/{duration}', name: 'dashboard.ban_user')]
+
     public function banUser(User $user, int $duration, EntityManagerInterface $em): Response
     {
         $banUntil = new \DateTimeImmutable("+{$duration} hours");
@@ -60,20 +61,27 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    #[Route('/dashboard/delete/{id}', name: 'dashboard.delete_user')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function deleteUser(User $user, EntityManagerInterface $em): Response
+    #[Route('/dashboard/delete-user/{id}', name: 'dashboard.delete_user', methods: ['POST'])]
+    public function deleteUser(int $id, EntityManagerInterface $em): Response
     {
+        $user = $em->getRepository(User::class)->find($id);
+
+        if (!$user) {
+            $this->addFlash('error', 'Utilisateur introuvable.');
+            return $this->redirectToRoute('dashboard');
+        }
+
         $em->remove($user);
         $em->flush();
 
-        return $this->render('dashboard/delete_user.html.twig', [
-            'deletedUser' => $user
-        ]);
-    }
+        $this->addFlash('success', 'Utilisateur supprimé avec succès.');
+        return $this->redirectToRoute('dashboard');
+    } 
 
-    #[Route('/dashboard/delete-entries', name: 'admin.entry.delete')]
+
+
     #[IsGranted('ROLE_ADMIN')]
+    #[Route('/dashboard/delete-entries', name: 'admin.entry.delete')]
     public function deleteEntries(
         DevblogRepository $devblogRepo,
         ChangelogRepository $changelogRepo,
@@ -106,8 +114,8 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    #[Route('/dashboard/delete-entry/{type}/{id}', name: 'admin.entry.delete_item', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN')]
+    #[Route('/dashboard/delete-entry/{type}/{id}', name: 'admin.entry.delete_item', methods: ['POST'])]
     public function deleteEntry(string $type, int $id, EntityManagerInterface $em): Response
     {
         $classMap = [

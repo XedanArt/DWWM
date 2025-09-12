@@ -169,11 +169,12 @@
 
 /* Image bien contenue */
 .changelog-show-container img {
-  border-radius: 8px;
-  object-fit: cover;
-  max-height: 400px;
   width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
   display: block;
+  border-radius: 8px;
 }
 
 /* Contenu du changelog */

@@ -203,7 +203,7 @@ class __TwigTemplate_095743e37f33a83524814ccc2fbf9c82 extends Template
                 Déjà inscrit ?
                 <a href=\"";
         // line 44
-        yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("auth.login");
+        yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_login");
         yield "\">Connexion</a>
             </p>
         </div>
@@ -288,7 +288,7 @@ class __TwigTemplate_095743e37f33a83524814ccc2fbf9c82 extends Template
 
             <p class=\"register-link\">
                 Déjà inscrit ?
-                <a href=\"{{ path('auth.login') }}\">Connexion</a>
+                <a href=\"{{ path('app_login') }}\">Connexion</a>
             </p>
         </div>
     </div>

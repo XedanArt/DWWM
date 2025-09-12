@@ -15,32 +15,58 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 #[IsGranted('ROLE_USER')]
 class AccountController extends AbstractController
 {
     #[Route('/account', name: 'account.profile')]
-    public function profile(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
-    {
+    public function profile(
+        Request $request,
+        EntityManagerInterface $em,
+        SluggerInterface $slugger,
+        #[Autowire(service: 'monolog.logger.account')] LoggerInterface $accountLogger,
+        #[Autowire(service: 'monolog.logger.content_modif')] LoggerInterface $contentLogger
+    ): Response {
         /** @var User $user */
         $user = $this->getUser();
 
-        // Créer les formulaires
+        $accountLogger->info('Accès au profil utilisateur', [
+            'user_id' => $user->getId(),
+            'username' => $user->getUsername(),
+        ]);
+
         $usernameForm = $this->createForm(UsernameFormType::class, $user);
         $emailForm    = $this->createForm(EmailFormType::class, $user);
         $avatarForm   = $this->createForm(AvatarFormType::class);
         $bioForm      = $this->createForm(BioFormType::class, $user);
 
-        // Gérer les soumissions
         $usernameForm->handleRequest($request);
         $emailForm->handleRequest($request);
         $avatarForm->handleRequest($request);
         $bioForm->handleRequest($request);
 
+        if ($usernameForm->isSubmitted()) {
+            $contentLogger->info('Tentative de modification du pseudo', [
+                'user_id' => $user->getId(),
+                'ancien_pseudo' => $user->getUsername(),
+                'valide' => $usernameForm->isValid(),
+            ]);
+        }
+
         if ($usernameForm->isSubmitted() && $usernameForm->isValid()) {
             $em->flush();
             $this->addFlash('success', 'Pseudo mis à jour !');
             return $this->redirectToRoute('account.profile');
+        }
+
+        if ($emailForm->isSubmitted()) {
+            $contentLogger->info('Tentative de modification de l’email', [
+                'user_id' => $user->getId(),
+                'ancien_email' => $user->getEmail(),
+                'valide' => $emailForm->isValid(),
+            ]);
         }
 
         if ($emailForm->isSubmitted() && $emailForm->isValid()) {
@@ -49,22 +75,35 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('account.profile');
         }
 
+        if ($avatarForm->isSubmitted()) {
+            $contentLogger->info('Tentative de modification de l’avatar', [
+                'user_id' => $user->getId(),
+                'valide' => $avatarForm->isValid(),
+            ]);
+        }
+
         if ($avatarForm->isSubmitted() && $avatarForm->isValid()) {
             $file = $avatarForm->get('avatar')->getData();
+
             if ($file) {
+                $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!in_array($file->getMimeType(), $allowedMimeTypes)) {
+                    $this->addFlash('danger', 'Format d’image non autorisé.');
+                    return $this->redirectToRoute('account.profile');
+                }
+
                 $safeName = $slugger->slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
                 $filename = $safeName . '-' . uniqid() . '.' . $file->guessExtension();
 
                 try {
                     $file->move($this->getParameter('avatars_directory'), $filename);
 
-                    // Supprimer l’ancien avatar
                     $oldAvatar = $user->getAvatar();
                     if ($oldAvatar && $oldAvatar !== 'default-avatar.png') {
-                      $oldPath = $this->getParameter('avatars_directory') . '/' . $oldAvatar;
-                      if (file_exists($oldPath)) {
-                      unlink($oldPath);
-                      }
+                        $oldPath = $this->getParameter('avatars_directory') . '/' . $oldAvatar;
+                        if (file_exists($oldPath)) {
+                            unlink($oldPath);
+                        }
                     }
 
                     $user->setAvatar($filename);
@@ -80,13 +119,19 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('account.profile');
         }
 
+        if ($bioForm->isSubmitted()) {
+            $contentLogger->info('Tentative de modification de la biographie', [
+                'user_id' => $user->getId(),
+                'valide' => $bioForm->isValid(),
+            ]);
+        }
+
         if ($bioForm->isSubmitted() && $bioForm->isValid()) {
             $em->flush();
             $this->addFlash('success', 'Biographie mise à jour !');
             return $this->redirectToRoute('account.profile');
         }
 
-        // Rendu du template avec tout ce qu’il faut
         return $this->render('account/profile.html.twig', [
             'usernameForm' => $usernameForm->createView(),
             'emailForm'    => $emailForm->createView(),

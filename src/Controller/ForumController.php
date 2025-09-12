@@ -76,7 +76,7 @@ class ForumController extends AbstractController
             $topic->setAuthor($this->getUser());
             $topic->updateLastActivity();
 
-            $submittedTags = $form->get('tags')->getData(); // ✅ tableau direct
+            $submittedTags = $form->get('tags')->getData(); // tableau direct
 
             foreach ($submittedTags as $tagName) {
                 $tagName = trim($tagName);
@@ -97,7 +97,7 @@ class ForumController extends AbstractController
             $em->persist($topic);
             $em->flush();
 
-            $this->addFlash('success', '✅ Topic créé dans la section "' . $topic->getSection()->getTitle() . '"');
+            $this->addFlash('success', 'Topic créé dans la section "' . $topic->getSection()->getTitle() . '"');
             return $this->redirectToRoute('topic.show', ['id' => $topic->getId()]);
         }
 

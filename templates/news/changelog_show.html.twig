@@ -11,7 +11,7 @@
 
     {% if changelog.image %}
       <div class="text-center mb-4 overflow-hidden rounded" style="max-height: 400px;">
-        <img src="{{ asset('img/' ~ changelog.image) }}" alt="Illustration {{ changelog.version }}" class="img-fluid w-100" style="object-fit: cover; height: 100%; display: block;">
+        <img src="{{ asset('img/changelog/' ~ changelog.image) }}" alt="Illustration {{ changelog.version }}" class="img-fluid w-100" style="object-fit: cover; height: 100%; display: block;">
       </div>
     {% endif %}
 

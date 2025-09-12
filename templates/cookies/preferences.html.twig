@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Préférences Cookies{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <style>
+    .cookie-preferences-wrapper {
+      background: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+      padding: 3rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .cookie-preferences-title {
+      background-color: #343a40;
+      color: #fff;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1.8rem;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .accordion-button:not(.collapsed) {
+      background-color: #dee2e6;
+    }
+
+    .form-check {
+      margin-bottom: 1rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  <div class="container py-5">
+    <div class="cookie-preferences-wrapper">
+      <h1 class="cookie-preferences-title mb-4">Gérer mes préférences de cookies</h1>
+
+      <form id="cookie-preferences-form">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="cookie-functional" checked disabled>
+          <label class="form-check-label" for="cookie-functional">
+            Cookies fonctionnels (obligatoires)
+          </label>
+        </div>
+        <div class="accordion mb-3" id="accordionFunctional">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFunctional">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFunctional">
+                En savoir plus
+              </button>
+            </h2>
+            <div id="collapseFunctional" class="accordion-collapse collapse" data-bs-parent="#accordionFunctional">
+              <div class="accordion-body">
+                Ces cookies sont essentiels au bon fonctionnement du site (connexion, sécurité, navigation).  
+                <br><strong>Actuellement, le site enregistre ce type de cookies.</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="cookie-statistics">
+          <label class="form-check-label" for="cookie-statistics">
+            Cookies statistiques
+          </label>
+        </div>
+        <div class="accordion mb-3" id="accordionStatistics">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingStatistics">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStatistics">
+                En savoir plus
+              </button>
+            </h2>
+            <div id="collapseStatistics" class="accordion-collapse collapse" data-bs-parent="#accordionStatistics">
+              <div class="accordion-body">
+                Ces cookies permettent de mesurer l’audience du site, comprendre comment les visiteurs interagissent avec les pages.  
+                <br><strong>Actuellement, le site n’enregistre pas ce type de cookies.</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="cookie-marketing">
+          <label class="form-check-label" for="cookie-marketing">
+            Cookies marketing
+          </label>
+        </div>
+        <div class="accordion mb-3" id="accordionMarketing">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingMarketing">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMarketing">
+                En savoir plus
+              </button>
+            </h2>
+            <div id="collapseMarketing" class="accordion-collapse collapse" data-bs-parent="#accordionMarketing">
+              <div class="accordion-body">
+                Ces cookies sont utilisés pour afficher des publicités personnalisées ou suivre les visiteurs sur plusieurs sites.  
+                <br><strong>Actuellement, le site n'enregistre pas ce type de cookies.</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Enregistrer mes préférences</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const stored = localStorage.getItem('cookieConsent');
+
+      try {
+        const preferences = JSON.parse(stored);
+
+        if (preferences.statistics) {
+          document.getElementById('cookie-statistics').checked = true;
+        }
+
+        if (preferences.marketing) {
+          document.getElementById('cookie-marketing').checked = true;
+        }
+      } catch (e) {
+        // Si le consentement est vide ou mal formé, on ne coche rien
+      }
+
+      document.getElementById('cookie-preferences-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const stats = document.getElementById('cookie-statistics').checked;
+        const marketing = document.getElementById('cookie-marketing').checked;
+
+        const preferences = {
+          statistics: stats,
+          marketing: marketing
+        };
+
+        localStorage.setItem('cookieConsent', JSON.stringify(preferences));
+        alert("Vos préférences ont été enregistrées.");
+      });
+    });
+  </script>
+{% endblock %}

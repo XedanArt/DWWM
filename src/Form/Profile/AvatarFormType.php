@@ -18,8 +18,8 @@ class AvatarFormType extends AbstractType
             'constraints' => [
                 new File([
                     'maxSize' => '2M',
-                    'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'],
-                    'mimeTypesMessage' => 'Format autorisé : JPEG, PNG ou WEBP',
+                    'mimeTypes' => ['image/jpeg', 'image/png'],
+                    'mimeTypesMessage' => 'Format autorisé : JPEG, PNGP',
                 ])
             ],
             'attr' => ['accept' => 'image/*'],

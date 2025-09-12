@@ -18,7 +18,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
 class LoginAuthenticator extends AbstractLoginFormAuthenticator
 {
-    public const LOGIN_ROUTE = 'auth.login';
+    public const LOGIN_ROUTE = 'app_login';
 
     private EntityManagerInterface $entityManager;
     private UrlGeneratorInterface $urlGenerator;
@@ -32,6 +32,12 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->passwordHasher = $passwordHasher;
+    }
+
+    public function supports(Request $request): bool
+    {
+        return $request->attributes->get('_route') === self::LOGIN_ROUTE
+            && $request->isMethod('POST');
     }
 
     public function authenticate(Request $request): Passport
@@ -52,7 +58,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         return new Passport(
-            new UserBadge($email),
+            new UserBadge($email, fn() => $user),
             new PasswordCredentials($password),
             [new CsrfTokenBadge('authenticate', $csrfToken)]
         );
@@ -62,10 +68,21 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
     {
         $user = $token->getUser();
 
-        if ($user instanceof User) {
-            $user->setLastLogin(new \DateTimeImmutable());
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
+        if (!$user instanceof User) {
+            // Échec silencieux → on redirige vers une page neutre ou on lève une exception
+            throw new \LogicException('Utilisateur non reconnu après authentification.');
+        }
+
+        $user->setLastLogin(new \DateTimeImmutable());
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        if ($user->isSuperAdmin()) {
+            return new RedirectResponse($this->urlGenerator->generate('dashboard'));
+        }
+
+        if ($user->isAdmin()) {
+            return new RedirectResponse($this->urlGenerator->generate('dashboard'));
         }
 
         return new RedirectResponse($this->urlGenerator->generate('account.profile'));

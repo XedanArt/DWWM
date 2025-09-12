@@ -3,29 +3,37 @@
 {% block title %}Activation du compte{% endblock %}
 
 {% block body %}
-<div class="auth-activation-container container mt-5" style="max-width: 500px;">
-  <div class="card shadow-sm border-0">
-    <div class="card-body">
-      <h2 class="mb-4 text-center" style="color: #796c52;">🔐 Activation du compte</h2>
-      <p class="text-muted text-center">Définissez votre mot de passe pour activer votre accès administrateur.</p>
+<div class="activation-container">
+  <div class="activation-card">
+    <div class="activation-card-body">
+      <h2 class="activation-title">🔐 Activation du compte</h2>
+      <p class="activation-subtitle">Définissez votre mot de passe pour activer votre accès administrateur.</p>
 
-      <form method="post">
-        <div class="mb-3">
-          <label for="newPassword" class="form-label">Mot de passe</label>
-          <input type="password" name="newPassword" id="newPassword" class="form-control" placeholder="••••••••">
+      {# Flash messages #}
+      <div class="flash-activate-container">
+      {% for label, messages in app.flashes %}
+        {% for message in messages %}
+          <div class="flash-activate-message flash-{{ label }}">
+            <span class="flash-activate-icon">⚠️</span> {{ message }}
+            <button class="flash-activate-close" onclick="this.parentElement.style.display='none';">×</button>
+          </div>
+        {% endfor %}
+      {% endfor %}
+      </div>
+
+      <form method="post" class="activation-form">
+        <div class="form-group">
+          <label for="newPassword">Mot de passe</label>
+          <input type="password" name="newPassword" id="newPassword" placeholder="••••••••">
         </div>
-        <div class="mb-3">
-          <label for="confirmPassword" class="form-label">Confirmer le mot de passe</label>
-          <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" placeholder="••••••••">
+        <div class="form-group">
+          <label for="confirmPassword">Confirmer le mot de passe</label>
+          <input type="password" name="confirmPassword" id="confirmPassword" placeholder="••••••••">
         </div>
-        <button type="submit" class="btn w-100" style="background-color: #796c52; color: white;">
-          Activer mon compte
-        </button>
+        <button type="submit" class="activation-button">Activer mon compte</button>
       </form>
     </div>
   </div>
-  <p class="text-center text-muted mt-3" style="font-size: 0.9rem;">
-    Ce formulaire est sécurisé. Votre mot de passe ne sera jamais partagé.
-  </p>
+  <p class="activation-note">Ce formulaire est sécurisé. Votre mot de passe ne sera jamais partagé.</p>
 </div>
 {% endblock %}

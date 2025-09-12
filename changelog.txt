@@ -1,0 +1,25 @@
+12/09/2025 :
+Résumé des améliorations et sécurisations du projet Sécurité & conformité
+- Refonte des obligations légales : mentions légales, cookies, conditions d'utilisation, politique de confidentialité
+- Gestion personnalisée des cookies avec bannière d’acceptation
+- Redirection sécurisée à la sortie du site
+- Page 404 personnalisée
+- Ajout de tokens CSRF sur tous les formulaires sensibles
+- Vérification des rôles (ROLE_ADMIN, utilisateur connecté) sur les routes critiques
+- Sécurisation des uploads : type MIME, taille, suppression des fichiers obsolètes Contrôleurs & formulaires
+- AccountController : accès restreint au profil, sécurisation des avatars via AvatarFormType, contraintes sur email/pseudo
+- AnnouncementController : accès aux routes new() et delete() limité à l’admin, contraintes sur les annonces
+- AuthController : redirection des utilisateurs déjà connectés, validation forte des mots de passe, token sécurisé pour la réinitialisation
+- ChangelogController : ajout de l’upload d’image, slug unique, contraintes sur le formulaire via ChangelogType Validation & entités
+- Contraintes sur les champs : NotBlank, Length, Regex, Image, File, Email, UniqueEntity
+- Ajout de lastPasswordRequestAt pour limiter les demandes de réinitialisation
+- Sécurisation des formulaires : validation côté serveur + contraintes Symfony Logs & monitoring
+- Mise en place de fichiers de log dédiés via Monolog :
+- account.log : connexions au profil
+- content_modif.log : modifications de l’utilisateur
+- admin_actions.log : actions d’administration
+- security.log : connexions, déconnexions, erreurs via SecurityLoggerListener Interface & expérience utilisateur
+- Vérification du style des flash messages : activation, reset-password, forgot-password
+- Téléchargement d’image via formulaire au lieu d’un champ texte
+- Affichage conditionnel des images dans les vues
+- Prévisualisation possible avant soumission
