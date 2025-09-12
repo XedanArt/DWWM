@@ -152,7 +152,11 @@
     }) }}
 
       {{ form_row(form.section, {'attr': {'class': 'forum-input'}}) }}
-      {{ form_row(form.title, {'attr': {'class': 'forum-input', 'maxlength': 150}}) }}
+      <div class="form-group">
+  {{ form_label(form.title) }}
+  {{ form_widget(form.title, {'attr': {'class': 'forum-input', 'maxlength': 150}}) }}
+  {{ form_errors(form.title) }}
+      </div>
       {{ form_row(form.content, {'attr': {'class': 'forum-textarea', 'maxlength': 5000}}) }}
       {{ form_row(form.tags, {'attr': {'class': 'form-input tag-select'}}) }}
       <small class="form-hint">Ajoutez jusqu’à 10 tags composés uniquement de lettres.</small>

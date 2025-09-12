@@ -7,9 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 #[ORM\Entity(repositoryClass: TopicRepository::class)]
-#[ORM\Table(name: 'topic')]
+#[UniqueEntity(fields: ['title'], message: 'Un topic avec ce titre existe déjà.')]
 class Topic
 {
     #[ORM\Id]
@@ -17,7 +19,7 @@ class Topic
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column(length: 150)]
+    #[ORM\Column(length: 150, unique: true)]
     #[Assert\NotBlank(message: "Le titre du topic est obligatoire.")]
     #[Assert\Length(
         max: 150,

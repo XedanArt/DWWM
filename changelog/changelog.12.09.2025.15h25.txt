@@ -1,4 +1,4 @@
-12/09/2025 :
+12/09/2025 : 15h25
 Résumé des améliorations et sécurisations du projet Sécurité & conformité
 - Refonte des obligations légales : mentions légales, cookies, conditions d'utilisation, politique de confidentialité
 - Gestion personnalisée des cookies avec bannière d’acceptation

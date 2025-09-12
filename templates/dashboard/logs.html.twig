@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container py-4">
+  <h1 class="mb-4 text-white">Logs</h1>
+
+  {% if logs is not empty %}
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white">
+        Dernières actions enregistrées
+      </div>
+      <div class="card-body p-0">
+        <table class="table table-striped table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">Horodatage</th>
+              <th scope="col">Niveau</th>
+              <th scope="col">Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for line in logs %}
+              {% set parts = line|split('] ') %}
+              {% set timestamp = parts[0]|replace({'[': ''}) %}
+              {% set level = parts[1]|split('.')|last %}
+              {% set message = parts|slice(2)|join('] ') %}
+              <tr>
+                <td><small>{{ timestamp }}</small></td>
+                <td>{% set levelColor = {
+                        'INFO': 'bg-primary text-white',
+                        'WARNING': 'bg-warning text-dark',
+                        'ERROR': 'bg-danger text-white',
+                        'CRITICAL': 'bg-dark text-white'
+                   }[level] ?? 'bg-secondary text-white' %}
+
+<span class="badge {{ levelColor }}">{{ level }}</span></td>
+                <td><code>{{ message }}</code></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {% else %}
+    <div class="alert alert-warning mt-4">Aucun log à afficher pour le moment.</div>
+  {% endif %}
+
+  <a href="{{ path('dashboard') }}" class="btn btn-secondary mt-4">← Retour au dashboard</a>
+</div>
+{% endblock %}

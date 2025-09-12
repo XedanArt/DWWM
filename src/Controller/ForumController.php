@@ -68,13 +68,25 @@ class ForumController extends AbstractController
                 foreach ($form->getErrors(true) as $error) {
                     dump($error->getOrigin()->getName(), $error->getMessage());
                 }
-                die('Formulaire invalide');
             }
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $topic->setAuthor($this->getUser());
             $topic->updateLastActivity();
+
+            // Vérification d'unicité du titre (insensible à la casse)
+            $normalizedTitle = mb_strtolower($topic->getTitle());
+            $existing = $topicRepository->createQueryBuilder('t')
+                ->where('LOWER(t.title) = :title')
+                ->setParameter('title', $normalizedTitle)
+                ->getQuery()
+                ->getOneOrNullResult();
+
+            if ($existing) {
+                $this->addFlash('danger', 'Un topic avec ce titre existe déjà.');
+                return $this->redirectToRoute('forum.index');
+            }
 
             $submittedTags = $form->get('tags')->getData(); // tableau direct
 

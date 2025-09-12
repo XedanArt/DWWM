@@ -68,6 +68,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         pattern: '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/',
         message: 'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial.'
     )]
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $banUntil = null;
+
+    public function getBanUntil(): ?\DateTimeImmutable 
+    {
+        return $this->banUntil;
+    }
+
+    public function setBanUntil(?\DateTimeImmutable $banUntil): self
+    {
+        $this->banUntil = $banUntil;
+        return $this;
+    } 
+
+    public function isBanned(): bool
+    {
+        return $this->banUntil !== null && $this->banUntil > new \DateTimeImmutable();
+    }
+
     private ?string $plainPassword = null;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Topic::class, orphanRemoval: true)]

@@ -89,19 +89,21 @@
       {% include "_inc/footer.html.twig" %}
     </div>
 
-    <div id="cookie-banner" class="cookie-banner d-none">
-      <div class="cookie-content bg-light p-3 border rounded shadow-sm">
-        <p class="mb-2">
-          Morning Soul utilise des cookies pour améliorer votre expérience.
-          Vous pouvez accepter, refuser ou personnaliser vos préférences.
-        </p>
-        <div class="d-flex gap-2">
-          <button id="cookie-accept" class="btn btn-success btn-sm">Tout accepter</button>
-          <button id="cookie-refuse" class="btn btn-danger btn-sm">Tout refuser</button>
-          <button id="cookie-customize" class="btn btn-secondary btn-sm">Personnaliser</button>
-        </div>
+{% if app.request.attributes.get('_route') not in ['cookies.preferences', 'legal.privacy'] %}
+  <div id="cookie-banner" class="cookie-banner d-none">
+    <div class="cookie-content bg-light p-3 border rounded shadow-sm">
+      <p class="mb-2">
+        Morning Soul utilise des cookies pour améliorer votre expérience.
+        Vous pouvez accepter, refuser ou personnaliser vos préférences.
+      </p>
+      <div class="d-flex gap-2">
+        <button id="cookie-accept" class="btn btn-success btn-sm">Tout accepter</button>
+        <button id="cookie-refuse" class="btn btn-danger btn-sm">Tout refuser</button>
+        <button id="cookie-customize" class="btn btn-secondary btn-sm">Personnaliser</button>
       </div>
     </div>
+  </div>
+{% endif %}
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -149,17 +151,37 @@
             deactivateCookies();
           }
 
-          document.getElementById("cookie-accept").addEventListener("click", function () {
-            localStorage.setItem("cookieConsent", "accepted");
-            banner.classList.add("d-none");
-            activateCookies();
-          });
+document.getElementById("cookie-accept").addEventListener("click", function () {
+  localStorage.setItem("cookieConsent", "accepted");
 
-          document.getElementById("cookie-refuse").addEventListener("click", function () {
-            localStorage.setItem("cookieConsent", "refused");
-            banner.classList.add("d-none");
-            deactivateCookies();
-          });
+  fetch("/cookies/save", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({ consent: "accepted" })
+  });
+
+  banner.style.opacity = '0';
+  banner.style.transition = 'opacity 0.5s ease';
+  setTimeout(() => banner.classList.add("d-none"), 500);
+
+  activateCookies();
+});
+
+document.getElementById("cookie-refuse").addEventListener("click", function () {
+  localStorage.setItem("cookieConsent", "refused");
+
+  fetch("/cookies/save", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({ consent: "refused" })
+  });
+
+  banner.style.opacity = '0';
+  banner.style.transition = 'opacity 0.5s ease';
+  setTimeout(() => banner.classList.add("d-none"), 500);
+
+  deactivateCookies();
+});
 
           document.getElementById("cookie-customize").addEventListener("click", function () {
             window.location.href = "{{ path('cookies.preferences') }}";

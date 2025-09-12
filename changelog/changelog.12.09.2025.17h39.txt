@@ -1,0 +1,21 @@
+12/09/2025 : 17h39
+Forum
+- Ajout d'une contrainte sur l'entité Topic : interdiction de doublons de titre (insensible à la casse via LOWER).
+- Vérification du titre existant dans ForumController avec redirection et flash message.
+- Mise à jour de la vue forum/index.html.twig pour gérer les retours d'erreur.
+Cookies
+- Mise en conformité RGPD : bannière de consentement reliée à une gestion personnalisée.
+- Stockage des préférences cookies en base de données au lieu du localStorage.
+- Implémentation dans CookiesController et cookies/preferences.html.twig.
+Dashboard
+- Sécurisation complète des routes via IS_GRANTED.
+- Actions sensibles protégées par POST et jeton CSRF.
+- Ajout d'une colonne banUntil dans l'entité User pour remplacer l'approche par rôle.
+- Mise à jour des méthodes de bannissement dans DashboardController.
+- Affichage du statut de bannissement dans la vue utilisateur (badge + date).
+- Journalisation des actions sensibles (ban, delete, create/delete entries) via LoggerInterface avec tags explicites.
+- Intégration des logs dans DashboardController, ChangelogController et DevblogController.
+- Ajout d'une vue des logs dans le dashboard.
+- Refonte du dashboard avec nouveaux panels de gestion et filtres dynamiques.
+
+Tu veux que je te le reformule en anglais ou que je t’aide à le intégrer dans un fichier CHANGELOG.md ?

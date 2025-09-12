@@ -5,13 +5,37 @@
   <h1 class="dashboard-title">Tableau de bord</h1>
 
   {% if is_granted('ROLE_ADMIN') %}
+    <section class="dashboard-section dashboard-stats">
+      <h2>Statistiques</h2>
+      <ul class="dashboard-stats-list">
+        <li>Total utilisateurs : {{ users|length }}</li>
+        <li>Bannis : {{ users|filter(u => u.isBanned())|length }}</li>
+        <li>Admins : {{ users|filter(u => 'ROLE_ADMIN' in u.roles)|length }}</li>
+        <li><a href="{{ path('dashboard.logs') }}" class="btn btn-outline-secondary btn-sm">Voir les logs admin</a></li>
+      </ul>
+    </section>
+
     <section class="dashboard-section">
       <h2>Gestion des utilisateurs</h2>
+
+      <div class="dashboard-filters mb-3">
+        <input type="text" id="search-user" class="form-control" placeholder="Rechercher un pseudo ou email...">
+        <select id="role-filter" class="form-select mt-2">
+          <option value="">Tous les rôles</option>
+          <option value="ROLE_USER">Utilisateurs</option>
+          <option value="ROLE_ADMIN">Admins</option>
+          <option value="banned">Bannis</option>
+        </select>
+      </div>
+
       {% if users is defined and users|length > 0 %}
         <ul class="user-list scrollable-user-list">
           {% for user in users %}
-            <li class="user-item">
+            <li class="user-item" data-username="{{ user.username|lower }}" data-email="{{ user.email|lower }}" data-role="{{ user.roles|join(',') }}" data-banned="{{ user.isBanned() ? 'true' : 'false' }}">
               <span>{{ user.displayUsername }}</span>
+              {% if user.isBanned() %}
+                <span class="badge bg-danger ms-2">Banni jusqu’au {{ user.banUntil|date('d/m/Y H:i') }}</span>
+              {% endif %}
               <button class="user-toggle" onclick="toggleUserMenu('{{ user.id }}')">▼</button>
 
               <div id="user-menu-{{ user.id }}" class="user-menu hidden">
@@ -22,21 +46,25 @@
                     Jamais
                   {% endif %}
                 </p>
-                <p>Derniers topics : {{ user.topics is defined ? user.topics|length : 0 }}</p>
-                <p>Derniers posts : {{ user.posts is defined ? user.posts|length : 0 }}</p>
+                <p>Derniers topics : {{ user.topics|length }}</p>
+                <p>Derniers posts : {{ user.posts|length }}</p>
 
                 <div class="user-actions">
-                  <a href="{{ path('dashboard.contact_user', { id: user.id }) }}">Contacter</a>
+                  {% if not user.isBanned() %}
+                    <a href="{{ path('dashboard.contact_user', { id: user.id }) }}">Contacter</a>
 
-                  <form method="post" action="{{ path('dashboard.ban_user', { id: user.id, duration: 24 }) }}" class="confirm-action">
-                    <input type="hidden" name="_token" value="{{ csrf_token('ban-24-' ~ user.id) }}">
-                    <button type="submit" class="btn btn-warning btn-sm">Bannir 24h</button>
-                  </form>
+                    <form method="post" action="{{ path('dashboard.ban_user', { id: user.id, duration: 24 }) }}" class="confirm-action">
+                      <input type="hidden" name="_token" value="{{ csrf_token('ban-24-' ~ user.id) }}">
+                      <button type="submit" class="btn btn-warning btn-sm">Bannir 24h</button>
+                    </form>
 
-                  <form method="post" action="{{ path('dashboard.ban_user', { id: user.id, duration: 48 }) }}" class="confirm-action">
-                    <input type="hidden" name="_token" value="{{ csrf_token('ban-48-' ~ user.id) }}">
-                    <button type="submit" class="btn btn-warning btn-sm">Bannir 48h</button>
-                  </form>
+                    <form method="post" action="{{ path('dashboard.ban_user', { id: user.id, duration: 48 }) }}" class="confirm-action">
+                      <input type="hidden" name="_token" value="{{ csrf_token('ban-48-' ~ user.id) }}">
+                      <button type="submit" class="btn btn-warning btn-sm">Bannir 48h</button>
+                    </form>
+                  {% else %}
+                    <div class="text-muted">Actions désactivées (utilisateur banni)</div>
+                  {% endif %}
 
                   <form method="post" action="{{ path('dashboard.delete_user', { id: user.id }) }}" class="confirm-action">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete-' ~ user.id) }}">
@@ -50,9 +78,10 @@
       {% else %}
         <p>Aucun utilisateur à afficher pour le moment.</p>
       {% endif %}
-      <div class="alphabet-filter">
+
+      <div class="alphabet-filter mt-3">
         {% for letter in 'A'..'Z' %}
-        <button class="alphabet-button" onclick="filterUsersByLetter('{{ letter }}')">{{ letter }}</button>
+          <button class="alphabet-button" onclick="filterUsersByLetter('{{ letter }}')">{{ letter }}</button>
         {% endfor %}
         <button class="alphabet-button reset" onclick="resetUserFilter()">Tous</button>
       </div>
@@ -103,17 +132,39 @@ function toggleUserMenu(id) {
 function filterUsersByLetter(letter) {
   const users = document.querySelectorAll('.user-item');
   users.forEach(user => {
-    const username = user.querySelector('span').textContent.trim().toUpperCase();
+    const username = user.dataset.username.toUpperCase();
     user.style.display = username.startsWith(letter) ? 'block' : 'none';
   });
 }
 
 function resetUserFilter() {
-  const users = document.querySelectorAll('.user-item');
-  users.forEach(user => user.style.display = 'block');
+  document.querySelectorAll('.user-item').forEach(user => user.style.display = 'block');
 }
 
-// Confirmation pour les actions sensibles
+document.getElementById('search-user').addEventListener('input', function () {
+  const query = this.value.toLowerCase();
+  document.querySelectorAll('.user-item').forEach(user => {
+    const username = user.dataset.username;
+    const email = user.dataset.email;
+    user.style.display = (username.includes(query) || email.includes(query)) ? 'block' : 'none';
+  });
+});
+
+document.getElementById('role-filter').addEventListener('change', function () {
+  const role = this.value;
+  document.querySelectorAll('.user-item').forEach(user => {
+    const roles = user.dataset.role;
+    const banned = user.dataset.banned === 'true';
+    if (role === '') {
+      user.style.display = 'block';
+    } else if (role === 'banned') {
+      user.style.display = banned ? 'block' : 'none';
+    } else {
+      user.style.display = roles.includes(role) ? 'block' : 'none';
+    }
+  });
+});
+
 document.querySelectorAll('form.confirm-action').forEach(form => {
   form.addEventListener('submit', function (e) {
     const confirmed = confirm("Êtes-vous sûr de vouloir effectuer cette action ?");
