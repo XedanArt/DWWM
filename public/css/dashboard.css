@@ -156,21 +156,6 @@
   gap: 1rem;
 }
 
-/* .dashboard-actions li a {
-  display: inline-block;
-  padding: 0.6rem 1rem;
-  background-color: rgb(24,20,20);
-  color: white;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.2s;
-}
-
-.dashboard-actions li a:hover {
-  background-color: rgb(58, 53, 53); */
-}
-
 /* Super Admin Panel */
 .super-admin-panel {
   border-left-color: rgb(24,20,20);
@@ -226,4 +211,17 @@
 
 .delete-entries-main {
   margin-bottom: 15rem;
+}
+
+/* ////////// ANNONCES NEWS ////////// */
+/* ////////// ANNONCES NEWS ////////// */
+/* ////////// ANNONCES NEWS ////////// */
+.announcement-new-container {
+  padding-top: 5rem;
+  margin-bottom: 25rem;
+}
+
+.quarantine-new-container {
+  margin-top: 10rem;
+  margin-bottom: 25rem;
 }

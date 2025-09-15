@@ -1,9 +1,9 @@
 /* === CREATE ADMIN VIEW === */
 .create-admin-container {
   max-width: 700px;
-  margin: 0 auto;
+  margin-top: 15rem;
+  margin-bottom: 27rem;
   padding: 2rem;
-  margin-bottom: 100px; /* éloigne du footer */
   background-color: #fdfdfd;
   border-radius: 12px;
   box-shadow: 0 0 20px rgba(0,0,0,0.08);
@@ -19,7 +19,7 @@
 /* === REVOKE ADMIN VIEW === */
 .revoke-admin-container {
   max-width: 700px;
-  margin: 0 auto;
+  margin: auto;
   padding: 2rem;
   margin-bottom: 100px; /* éloigne du footer */
   background-color: #fff8f8;

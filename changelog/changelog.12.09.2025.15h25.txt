@@ -1,6 +1,6 @@
 12/09/2025 : 15h25
 Résumé des améliorations et sécurisations du projet Sécurité & conformité
-- Refonte des obligations légales : mentions légales, cookies, conditions d'utilisation, politique de confidentialité
+- Refonte des obligations légales (conformité): mentions légales, cookies, conditions d'utilisation, politique de confidentialité
 - Gestion personnalisée des cookies avec bannière d’acceptation
 - Redirection sécurisée à la sortie du site
 - Page 404 personnalisée
