@@ -7,6 +7,7 @@ use App\Entity\ForumSection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,23 +33,23 @@ class TopicFormType extends AbstractType
                     'class' => 'form-control',
                 ],
             ])
-            ->add('content', TextType::class, [
+            ->add('content', TextareaType::class, [
                 'label' => 'Contenu',
+                'required' => false, // important pour TinyMCE
                 'attr' => [
                     'placeholder' => 'Décrivez votre sujet ici...',
                     'rows' => 8,
-                    'class' => 'form-control',
+                    'class' => 'form-control tinymce',
                 ],
             ])
-            ->add('tags', ChoiceType::class, [
+            ->add('tags', TextType::class, [
                 'label' => 'Tags',
-                'mapped' => false,
                 'required' => false,
-                'multiple' => true,
-                'choices' => $options['preselected_tags'],
+                'mapped' => false,
                 'attr' => [
-                    'class' => 'form-control tag-select',
-                    'placeholder' => 'Entrez vos tags',
+                    'class' => 'tag-input-hidden',
+                    'style' => 'display:none',
+                    'placeholder' => 'Sélectionnez ou créez des tags',
                 ],
             ]);
     }
@@ -57,7 +58,7 @@ class TopicFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Topic::class,
-            'preselected_tags' => [], // déclaration de l'option personnalisée
+            'available_tags' => [],
         ]);
     }
 

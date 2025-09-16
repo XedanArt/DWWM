@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="profile-main-container">
+  <div class="profile-card-container">
+
+    <!-- Onglets -->
+    <div class="profile-buttons-container tab-buttons-right">
+      <a href="{{ path('account.profile') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.profile' %}active{% endif %}">Profil</a>
+      <a href="{{ path('account.favorites') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.favorites' %}active{% endif %}">Favoris</a>
+      <a href="{{ path('account.history') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.history' %}active{% endif %}">Historique</a>
+      <a href="{{ path('account.security') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.security' %}active{% endif %}">Sécurité</a>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="profile-mycard-container card-container-large">
+      <h2>Sécurité</h2>
+
+      <div class="security-feature-block">
+        <h3>Fonctionnalités à venir</h3>
+        <ul class="security-feature-list">
+          <li><strong>Modifier ton mot de passe</strong></li>
+          <li><strong>Activer la double authentification</strong></li>
+          <li><strong>Gérer les alertes de connexion</strong></li>
+        </ul>
+        <p class="security-note">Ces options seront bientôt disponibles pour renforcer la sécurité de ton compte.</p>
+
+        <a href="{{ path('contact.support') }}" class="support-button">Pour plus d'information : contacter le support</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

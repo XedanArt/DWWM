@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="profile-main-container">
+  <div class="profile-card-container">
+
+    <!-- Onglets -->
+    <div class="profile-buttons-container tab-buttons-right">
+      <a href="{{ path('account.profile') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.profile' %}active{% endif %}">Profil</a>
+      <a href="{{ path('account.favorites') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.favorites' %}active{% endif %}">Favoris</a>
+      <a href="{{ path('account.history') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.history' %}active{% endif %}">Historique</a>
+      <a href="{{ path('account.security') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.security' %}active{% endif %}">Sécurité</a>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="profile-mycard-container card-container-large">
+      <h2>Favoris</h2>
+
+      <div class="profile-secondcard-main">
+        <div class="profile-secondcard-favorites">
+          <div class="profile-secondcard-favlist">
+            {% if favorites|length > 0 %}
+              <ul class="fav-scroll-list">
+                {% for topic in favorites %}
+                  <li class="fav-item">
+                    <a href="{{ path('topic.show', { id: topic.id }) }}">{{ topic.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+              <div class="pagination-block">
+                {{ knp_pagination_render(favorites) }}
+              </div>
+            {% else %}
+              <p class="fav-empty">Tu n'as encore aucun favoris.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

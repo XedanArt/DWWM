@@ -1,0 +1,13 @@
+15/09/2025 : 02H00
+Profil
+- refonte visuelle de la vue account/profile.html.twig
+- amélioration du responsive du Dashboard
+- refonte du style+responsive des vues de création d'entrées via le dashboard (formulaires)
+  - mise en quarantaine 
+  - créer un devblog
+  - créer un changelog
+  - créer une annonce
+  - créer un administrateur
+Cookies
+- refonte visuelle de la vue preferences.html.twig pour correspondre à l'identité visuelle du site
+- amélioration responsive

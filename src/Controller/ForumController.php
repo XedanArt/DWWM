@@ -20,7 +20,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ForumController extends AbstractController
 {
-    #[Route('/forum', name: 'forum.index')]
+    #[Route('/forum', name: 'forum.index', methods: ['GET', 'POST'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function index(
         AnnouncementRepository $announcementRepository,
@@ -38,38 +38,11 @@ class ForumController extends AbstractController
 
         $sections = array_values(array_filter($rawSections, fn($s) => $s instanceof ForumSection));
 
-        // Préparer les tags soumis pour affichage dans Select2
-        $preselectedTags = [];
-
-        if ($request->isMethod('POST')) {
-            $formData = $request->request->all('topic');
-            $rawTags = $formData['tags'] ?? [];
-
-            if (is_array($rawTags)) {
-                foreach ($rawTags as $tag) {
-                    if (is_scalar($tag)) {
-                        $tag = trim($tag);
-                        if ($tag !== '') {
-                            $preselectedTags[$tag] = $tag;
-                        }
-                    }
-                }
-            }
-        }
-
         $topic = new Topic();
         $form = $this->createForm(TopicFormType::class, $topic, [
-            'preselected_tags' => $preselectedTags,
+            'available_tags' => $tags
         ]);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            if (!$form->isValid()) {
-                foreach ($form->getErrors(true) as $error) {
-                    dump($error->getOrigin()->getName(), $error->getMessage());
-                }
-            }
-        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $topic->setAuthor($this->getUser());
@@ -88,12 +61,21 @@ class ForumController extends AbstractController
                 return $this->redirectToRoute('forum.index');
             }
 
-            $submittedTags = $form->get('tags')->getData(); // tableau direct
+            // Traitement des tags
+            $rawTags = $form->get('tags')->getData();
+            $submittedTags = is_array($rawTags)
+                ? array_filter(array_map('trim', $rawTags))
+                : array_filter(array_map('trim', explode(',', $rawTags)));
+
+            $submittedTags = array_unique($submittedTags);
+
+            if (count($submittedTags) > 10) {
+                $this->addFlash('danger', 'Vous ne pouvez pas ajouter plus de 10 tags.');
+                return $this->redirectToRoute('forum.index');
+            }
 
             foreach ($submittedTags as $tagName) {
-                $tagName = trim($tagName);
-                if (!preg_match('/^[\p{L}0-9\-_\s]+$/u', $tagName)) continue;
-                if ($tagName === '') continue;
+                if (!preg_match('/^[\p{L}0-9\-_\s]{2,30}$/u', $tagName)) continue;
 
                 $existingTag = $tagRepository->findOneBy(['name' => $tagName]);
                 if ($existingTag) {

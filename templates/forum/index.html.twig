@@ -144,90 +144,102 @@
     Nouveau Topic
   </div>
 
-  <!-- FORMULAIRE FIXÉ -->
-  <div id="forum-new-topic-form" class="forum-new-topic-form">
-    {{ form_start(form, {
-      'action': path('forum.index'),
-      'attr': {'class': 'forum-form'}
-    }) }}
+<!-- FORMULAIRE FIXÉ -->
+<div id="forum-new-topic-form" class="forum-new-topic-form">
+  {{ form_start(form, {
+    'action': path('forum.index'),
+    'attr': {'class': 'forum-form', 'method': 'POST'}
+  }) }}
 
-      {{ form_row(form.section, {'attr': {'class': 'forum-input'}}) }}
-      <div class="form-group">
-  {{ form_label(form.title) }}
-  {{ form_widget(form.title, {'attr': {'class': 'forum-input', 'maxlength': 150}}) }}
-  {{ form_errors(form.title) }}
-      </div>
-      {{ form_row(form.content, {'attr': {'class': 'forum-textarea', 'maxlength': 5000}}) }}
-      {{ form_row(form.tags, {'attr': {'class': 'form-input tag-select'}}) }}
+    {{ form_row(form.section, {'attr': {'class': 'forum-input'}}) }}
+
+    <div class="form-group">
+      {{ form_label(form.title) }}
+      {{ form_widget(form.title, {'attr': {'class': 'forum-input', 'maxlength': 150}}) }}
+      {{ form_errors(form.title) }}
+    </div>
+
+    {{ form_row(form.content, {'attr': {'class': 'forum-textarea', 'maxlength': 5000}}) }}
+
+    {# Champ masqué pour les tags #}
+    <div style="display:none;">
+      {{ form_widget(form.tags) }}
+    </div>
+
+    {# Select2 visible #}
+    <div class="form-group">
+      <label for="tag-select2" class="forum-label">Tags</label>
+      <select id="tag-select2" multiple="multiple" class="tag-select" style="width:100%;">
+        {% for tag in tags %}
+          <option value="{{ tag.name }}">{{ tag.name }}</option>
+        {% endfor %}
+      </select>
       <small class="form-hint">Ajoutez jusqu’à 10 tags composés uniquement de lettres.</small>
+    </div>
 
-      <div class="forum-new-topic-actions">
-        <button type="submit" class="forum-submit">Créer</button>
-      </div>
+    <div class="forum-new-topic-actions">
+      <button type="submit" class="forum-submit">Créer</button>
+    </div>
 
-    {{ form_end(form) }}
-  </div>
+    <div class="quick-topic-form">
+      <a href="{{ path('topic_new') }}" class="btn btn-secondary">
+        ✍️ Créer un sujet complet
+      </a>
+    </div>
+
+  {{ form_end(form) }}
+</div>
   {% endif %}
 </section>
 
 <!-- Script Select2 -->
 <script>
-function toggleSection(button) {
-  const parentDiv = button.closest('div');
-  const body = parentDiv.querySelector('.collapsible-body');
-  if (!body) return;
-
-  const isVisible = window.getComputedStyle(body).display !== 'none';
-  body.style.display = isVisible ? 'none' : 'block';
-  button.textContent = isVisible ? '+' : '−';
-}
-
 document.addEventListener('DOMContentLoaded', function () {
-  // Champ de création de tags (formulaire de création de topic)
-  const $tagInput = $('.tag-select');
+  // Collapse toggle
+  function toggleSection(button) {
+    const parentDiv = button.closest('div');
+    const body = parentDiv.querySelector('.collapsible-body');
+    if (!body) return;
 
-  $tagInput.select2({
+    const isVisible = window.getComputedStyle(body).display !== 'none';
+    body.style.display = isVisible ? 'none' : 'block';
+    button.textContent = isVisible ? '+' : '−';
+  }
+  window.toggleSection = toggleSection;
+
+  // Select2 pour création de tags (champ visible)
+  const $tagSelect2 = $('#tag-select2');
+  $tagSelect2.select2({
     placeholder: "Sélectionnez ou créez des tags",
     allowClear: true,
     width: '100%',
     tags: true,
     maximumSelectionLength: 10,
-
     createTag: function (params) {
       const term = $.trim(params.term);
       const isValid = /^[\p{L}0-9\-_\s]+$/u.test(term);
-      const isTooLong = term.length > 15;
-
+      const isTooLong = term.length > 30;
       if (term === '' || !isValid || isTooLong) return null;
-
-      return {
-        id: term,
-        text: term,
-        newTag: true
-      };
+      return { id: term, text: term, newTag: true };
     },
-
     templateResult: function (data) {
       if (data.loading) return $('<span>Chargement...</span>');
-      if (data.newTag) {
-        return $('<span><strong>Créer :</strong> ' + data.text + '</span>');
-      }
+      if (data.newTag) return $('<span><strong>Créer :</strong> ' + data.text + '</span>');
       return $('<span>' + data.text + '</span>');
     },
-
     escapeMarkup: function (markup) {
       return markup;
     }
   });
 
-  // Correction visuelle : convertir chaîne en bulles
-  const rawValue = $tagInput.val();
-  if (rawValue && typeof rawValue === 'string' && rawValue.includes(',')) {
-    const tags = rawValue.split(',').map(t => t.trim()).filter(t => t !== '');
-    $tagInput.val(tags).trigger('change');
+  // Conversion chaîne → tableau (si tags déjà présents dans le champ masqué)
+  const hiddenInput = document.querySelector('.tag-input-hidden');
+  if (hiddenInput && hiddenInput.value.includes(',')) {
+    const tags = hiddenInput.value.split(',').map(t => t.trim()).filter(t => t !== '');
+    $tagSelect2.val(tags).trigger('change');
   }
 
-  // Champ de recherche de tags (autre contexte, ex. filtre)
+  // Select2 pour recherche de tags
   $('.tag-search-select').select2({
     placeholder: "Rechercher un tag...",
     allowClear: true,
@@ -238,14 +250,10 @@ document.addEventListener('DOMContentLoaded', function () {
       dataType: 'json',
       delay: 250,
       data: function (params) {
-        return {
-          term: params.term
-        };
+        return { term: params.term };
       },
       processResults: function (data) {
-        return {
-          results: data.results
-        };
+        return { results: data.results };
       },
       cache: true
     }
@@ -271,8 +279,9 @@ document.addEventListener('DOMContentLoaded', function () {
     titleInput.addEventListener('input', updateCounter);
     updateCounter();
   }
+
   // Compteur de caractères pour le champ contenu
-  const contentInput = document.querySelector('textarea[name="content"]')
+  const contentInput = document.querySelector('textarea[name="topic[content]"]');
   if (contentInput) {
     const counter = document.createElement('small');
     counter.className = 'char-counter';
@@ -282,15 +291,26 @@ document.addEventListener('DOMContentLoaded', function () {
     counter.style.color = '#666';
     contentInput.insertAdjacentElement('afterend', counter);
 
-  function updateCounter() {
-    const length = contentInput.value.length;
-    counter.textContent = `${length}/5000 caractères`;
-    counter.style.color = length > 5000 ? 'red' : '#666';
+    function updateCounter() {
+      const length = contentInput.value.length;
+      counter.textContent = `${length}/5000 caractères`;
+      counter.style.color = length > 5000 ? 'red' : '#666';
+    }
+
+    contentInput.addEventListener('input', updateCounter);
+    updateCounter();
   }
 
-  contentInput.addEventListener('input', updateCounter);
-  updateCounter();
-}
+  // Synchronisation des tags avant soumission
+  const form = document.querySelector('.forum-form');
+  if (form && $tagSelect2.length && hiddenInput) {
+    form.addEventListener('submit', () => {
+      const selectedTags = $tagSelect2.val();
+      if (selectedTags) {
+        hiddenInput.value = selectedTags.join(',');
+      }
+    });
+  }
 });
 </script>
 {% endblock %}

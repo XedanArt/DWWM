@@ -5,6 +5,9 @@ namespace App\Repository;
 use App\Entity\Topic;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\User;
+
+
 
 class TopicRepository extends ServiceEntityRepository
 {
@@ -56,4 +59,14 @@ class TopicRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findFavoritesByUser(User $user): \Doctrine\ORM\QueryBuilder
+    {
+        return $this->createQueryBuilder('t')
+            ->innerJoin('t.favoritedBy', 'u') // Assure-toi que 'favoritedBy' est bien le nom de la relation ManyToMany dans Topic
+            ->where('u = :user')
+            ->setParameter('user', $user)
+            ->orderBy('t.createdAt', 'DESC');
+    }
+
 }

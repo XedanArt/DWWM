@@ -485,3 +485,104 @@
 .forum-submit:hover {
   background-color: rgb(97, 47, 47);
 }
+
+/* ////////// FORUM NEW (CREATION COMPLETE) ////////// */
+/* ////////// FORUM NEW (CREATION COMPLETE) ////////// */
+/* ////////// FORUM NEW (CREATION COMPLETE) ////////// */
+/* Conteneur principal */
+.newtopic-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.6); /* Fond noir transparent */
+  border-radius: 12px;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
+  font-family: 'Segoe UI', sans-serif;
+  color: #FFD7A1; /* Couleur principale du texte */
+}
+
+/* Titre principal */
+.newtopic-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  background-color: rgb(24, 20, 20); /* Marron foncé */
+  padding: 1rem;
+  border-radius: 8px;
+  color: #FFD7A1;
+  text-align: center;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
+}
+
+/* Groupes de champs */
+.newtopic-group {
+  margin-bottom: 1.5rem;
+  background-color: rgb(255, 240, 206); /* Fond clair */
+  padding: 1rem;
+  border-radius: 8px;
+  color: #333;
+}
+
+/* Labels */
+.newtopic-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+/* Inputs, selects, textarea */
+.newtopic-input,
+.newtopic-select,
+.newtopic-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #fff8e7; /* Sous-titre clair */
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+.newtopic-input:focus,
+.newtopic-select:focus,
+.newtopic-textarea:focus {
+  border-color: #FFD7A1;
+  outline: none;
+}
+
+/* Hint text */
+.newtopic-hint {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: #7f8c8d;
+}
+
+/* Bouton de soumission */
+.newtopic-submit {
+  display: inline-block;
+  background-color: #FFD7A1;
+  color: #2c1c0f;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.newtopic-submit:hover {
+  background-color: #e6b77f;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .newtopic-container {
+    padding: 1rem;
+  }
+
+  .newtopic-title {
+    font-size: 1.5rem;
+  }
+}

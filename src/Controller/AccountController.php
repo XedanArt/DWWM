@@ -17,6 +17,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[IsGranted('ROLE_USER')]
 class AccountController extends AbstractController
@@ -133,14 +134,63 @@ class AccountController extends AbstractController
         }
 
         return $this->render('account/profile.html.twig', [
-            'usernameForm' => $usernameForm->createView(),
-            'emailForm'    => $emailForm->createView(),
-            'avatarForm'   => $avatarForm->createView(),
-            'bioForm'      => $bioForm->createView(),
-            'currentAvatar'=> $user->getAvatar(),
-            'topics'       => $user?->getTopics() ?? [],
-            'posts'        => $user?->getPosts() ?? [],
-            'favorites'    => $user?->getFavoriteTopics() ?? [],
+            'usernameForm'   => $usernameForm->createView(),
+            'emailForm'      => $emailForm->createView(),
+            'avatarForm'     => $avatarForm->createView(),
+            'bioForm'        => $bioForm->createView(),
+            'currentAvatar'  => $user->getAvatar(),
         ]);
+    }
+
+    #[Route('/account/favorites', name: 'account.favorites')]
+    #[IsGranted('ROLE_USER')]
+    public function favorites(Request $request, PaginatorInterface $paginator): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $favoritesPagination = $paginator->paginate(
+            $user->getFavoriteTopics()->toArray(),
+            $request->query->getInt('page', 1),
+            5
+        );
+
+        return $this->render('account/favorites.html.twig', [
+            'favorites' => $favoritesPagination,
+        ]);
+    }
+
+    #[Route('/account/history', name: 'account.history')]
+    #[IsGranted('ROLE_USER')]
+    public function history(Request $request, PaginatorInterface $paginator): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $topicsPagination = $paginator->paginate(
+            $user->getTopics()->toArray(),
+            $request->query->getInt('topicPage', 1),
+            5,
+            ['pageParameterName' => 'topicPage']
+        );
+
+        $postsPagination = $paginator->paginate(
+            $user->getPosts()->toArray(),
+            $request->query->getInt('postPage', 1),
+            5,
+            ['pageParameterName' => 'postPage']
+        );
+
+        return $this->render('account/history.html.twig', [
+            'topics' => $topicsPagination,
+            'posts'  => $postsPagination,
+        ]);
+    }
+
+    #[Route('/account/security', name: 'account.security')]
+    #[IsGranted('ROLE_USER')]
+    public function security(): Response
+    {
+        return $this->render('account/security.html.twig');
     }
 }

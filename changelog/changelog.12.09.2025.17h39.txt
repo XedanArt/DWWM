@@ -17,5 +17,3 @@ Dashboard
 - Intégration des logs dans DashboardController, ChangelogController et DevblogController.
 - Ajout d'une vue des logs dans le dashboard.
 - Refonte du dashboard avec nouveaux panels de gestion et filtres dynamiques.
-
-Tu veux que je te le reformule en anglais ou que je t’aide à le intégrer dans un fichier CHANGELOG.md ?

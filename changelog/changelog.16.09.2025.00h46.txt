@@ -1,0 +1,41 @@
+16/09/2025 : 00h46
+
+Topic.new :
+- Création d'une vue dédiée à la création de topic accessible via le bouton dans la vue 
+- refonte css complète de la vue
+
+TinyMCE API (hosted) :
+- insertion de l'API TinyMCE, d'abord dans la base.html.twig avec la balise <script> et la API Key : <script src="https://cdn.tiny.cloud/1/2alakapq0ipw1xihyg7nl2ghkm2fhzig3bnwgbauv1nby4w5/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+  - insertion dans la vue new.html.twig via la balise <script>, on peut égalementi insérer l'API ici mais la supprimer dans <head> (ici version no-api-key, non fonctionnelle depuis v.8): 
+  {# Script TinyMCE version gratuite #}
+  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      tinymce.init({
+        selector: '.newtopic-textarea',
+        plugins: 'link emoticons code table lists wordcount',
+        toolbar: 'undo redo | bold italic underline | link emoticons | bullist numlist | table | code',
+        menubar: false,
+        height: 300
+      });
+    });
+  </script>
+- vérification des fonctionnalités "free trial" et de base dans l'API pour éviter des problèmes d'indisponibilité le jour de l'examen, désactivation de toutes les fonctionnalités demandant un abonnement ou payantes
+
+TinyMCE (self-hosted) :
+- API trop instable, installation en local (public/js/tinymce)
+- pas de balise <head>, tout dans la vue
+- configuration TinyMCE dans la vue new.html.twig
+
+Formulaire de création de topic :
+- dans forum/index.html.twig et dans forum/topic/new.html.twig, restructuration complète, correction d'un conflit entre les formulaires symfony et Select2
+- correction des bugs liés aux tags (doux Jésus 8h passé dessus)
+- correction des bugs liés à la création de topics qui n'était plus fonctionnelle
+- correction des bugs liés à la création de posts qui n'était plus fonctionnelle
+
+Profil :
+- refonte complète de la vue profil, séparation des fonctionnalités
+- profil/favoris/historique/sécurité
+- ajout du composant paginator pour paginer les favoris/historique
+- séparation en deux paginations bien distinctes (AccountController + vues) pour pouvoir utiliser deux paginations dans une seule vue (historique : topics/posts)
+- refonte css security + lien vers support

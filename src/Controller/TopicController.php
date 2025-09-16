@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Topic;
 use App\Entity\Post;
+use App\Entity\Tag;
+use App\Form\TopicFormType;
 use App\Repository\TopicRepository;
 use App\Repository\PostRepository;
+use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +19,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TopicController extends AbstractController
 {
-    #[Route('/forum/topic/{id}', name: 'topic.show', methods: ['GET'])]
+    #[Route('/forum/topic/{id}', name: 'topic.show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(
         int $id,
         TopicRepository $topicRepo,
@@ -50,6 +53,76 @@ class TopicController extends AbstractController
         return $this->render('forum/topic.show.html.twig', [
             'topic' => $topic,
             'pagination' => $pagination,
+        ]);
+    }
+
+    #[Route('/forum/topic/new', name: 'topic_new', methods: ['GET', 'POST'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function new(Request $request, EntityManagerInterface $em, TagRepository $tagRepo): Response
+    {
+        $topic = new Topic();
+
+        // Injecter les tags existants
+        $existingTags = $tagRepo->findAll();
+        $form = $this->createForm(TopicFormType::class, $topic, [
+            'available_tags' => $existingTags
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $rawTags = $form->get('tags')->getData();
+
+            if (is_array($rawTags)) {
+                $submittedTags = array_filter(array_map('trim', $rawTags));
+            } elseif (is_string($rawTags)) {
+                $submittedTags = array_filter(array_map('trim', explode(',', $rawTags)));
+            } else {
+                $submittedTags = [];
+            }
+
+            $submittedTags = array_unique($submittedTags);
+
+            if (count($submittedTags) > 10) {
+                $this->addFlash('danger', 'Vous ne pouvez pas ajouter plus de 10 tags.');
+                return $this->redirectToRoute('topic_new');
+            }
+
+            foreach ($submittedTags as $tagName) {
+                if (!preg_match('/^[\p{L}0-9\-_\s]{2,30}$/u', $tagName)) continue;
+
+                $tag = $tagRepo->findOneBy(['name' => $tagName]);
+                if (!$tag) {
+                    $tag = new Tag();
+                    $tag->setName($tagName);
+                    $em->persist($tag);
+                }
+
+                $topic->addTag($tag);
+            }
+
+            // Nettoyage du contenu TinyMCE, très important pour éviter les balises parasites
+            $content = $topic->getContent();
+            // Supprime les balises p, span, englobantes
+            $content = preg_replace('/^<(p|span)[^>]*>(.*?)<\/\1>$/is', '$2', trim($content));
+            // Supprime les balises vides ou parasites
+            $content = strip_tags($content, '<b><strong><i><em><br>');
+
+            $topic->setContent($content);
+
+            $topic->setAuthor($this->getUser());
+            $topic->setCreatedAt(new \DateTimeImmutable());
+
+            $em->persist($topic);
+            $em->flush();
+
+            $this->addFlash('success', 'Sujet créé avec succès !');
+            return $this->redirectToRoute('topic.show', ['id' => $topic->getId()]);
+        }
+
+        return $this->render('forum/new.html.twig', [
+            'form' => $form,
+            'tags' => $tagRepo->findAll(),
         ]);
     }
 
@@ -104,7 +177,6 @@ class TopicController extends AbstractController
         $post->setContent($content);
         $post->setTopic($topic);
         $post->setUser($this->getUser());
-        $post->getCreatedAt(new \DateTimeImmutable());
 
         $em->persist($post);
         $em->flush();
