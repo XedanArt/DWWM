@@ -1,0 +1,16 @@
+17/09/2025 : 22h32
+
+Topic :
+- problème de caractères résiduels ou rajouté par le navigateur et TinyMCE, le compteur de 5000 caractères, même si respecté, ne fonctionnait pas lors du post, obligé de passer l'entité Topic.php à 6000 de limite pour être tranquille et attribuer des limites (js) à TinyMCE.
+
+Dashboard :
+- attribution de limites/contraintes aux formulaires de création d'entrées : quarantaine, annonce, devblog et changelog.
+- changelog : ok
+- annonce : ok
+- devblog : gros bug d'affichage de l'image (devblog + devblog_show) lié à l'appel dans la vue principale qui n'affichait pas le bon chemin (idem dans devblog_show)
+
+Devblog :
+- refonte css complète
+
+Devblog_show :
+- refonte css complète

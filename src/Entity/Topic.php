@@ -22,7 +22,9 @@ class Topic
     #[ORM\Column(length: 150, unique: true)]
     #[Assert\NotBlank(message: "Le titre du topic est obligatoire.")]
     #[Assert\Length(
+        min: 10,
         max: 150,
+        minMessage: "Le titre du topic doit faire au minimum {{ limit }} caractères",
         maxMessage: "Le titre du topic ne peut pas dépasser {{ limit }} caractères."
     )]
     private ?string $title = null;
@@ -30,7 +32,9 @@ class Topic
     #[ORM\Column(type: 'text')]
     #[Assert\NotBlank(message: "Le contenu du topic est obligatoire.")]
     #[Assert\Length(
-        max: 5000,
+        min: 20,
+        max: 6000,
+        minMessage: "Votre message doit contenir au minimum {{ limit }} caractères",
         maxMessage: "Votre message ne peut pas dépasser {{ limit }} caractères."
     )]
     private ?string $content = null;

@@ -21,13 +21,16 @@
 
         <div class="mb-3">
           {{ form_label(form.title, 'Titre', {'label_attr': {'class': 'form-label fw-bold'}}) }}
-          {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Maintenance prévue ce weekend'}}) }}
+          {{ form_widget(form.title, {'attr': {'class': 'form-control', 'maxlength': 100,'placeholder': 'Ex: Maintenance prévue ce weekend'}}) }}
+          <small class="char-counter" data-max="100">0/100 caractères</small>
           {{ form_errors(form.title) }}
         </div>
 
         <div class="mb-3">
           {{ form_label(form.content, 'Contenu', {'label_attr': {'class': 'form-label fw-bold'}}) }}
-          {{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': '6', 'placeholder': 'Détaillez le message à transmettre à la communauté'}}) }}
+          {{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': '6', 'maxlength': 1000, 'placeholder': 'Détaillez le message à transmettre à la communauté'}}) }}
+          <small class="char-counter announcement-counter" data-max="1000">0/1000 caractères</small>
+
           {{ form_errors(form.content) }}
         </div>
 
@@ -41,4 +44,24 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const counters = document.querySelectorAll('.char-counter');
+
+    counters.forEach(counter => {
+      const input = counter.previousElementSibling;
+      const max = parseInt(counter.dataset.max);
+
+      const updateCounter = () => {
+        const length = input.value.length;
+        counter.textContent = `${length}/${max} caractères`;
+        counter.style.color = length > max ? 'red' : '#666';
+      };
+
+      input.addEventListener('input', updateCounter);
+      updateCounter();
+    });
+  });
+</script>
 {% endblock %}

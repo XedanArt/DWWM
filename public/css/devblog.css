@@ -1,234 +1,267 @@
-/* ////////// CONTENEUR DU TITRE ////////// */
-.devblog-title-container {
-  /* background-image: url('');
-  background-repeat: no-repeat;
-  background-position: center; */
-  padding-top: 160px;
-  padding-bottom: 20px;
-  text-align: center;
-  font-size: 2.4rem;
-  position: relative;
-  z-index: 10;
-}
-/* titre principal du site */
-.devblog-title {
-  font-family: 'Cinzel';
-  color: #FFD7A1;
-  background-color: rgba(0, 0, 0, 0.6);
-  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
-  transition: box-shadow 0.3s ease;
-  border: 1px solid transparent;
+
+/* SECTION */
+.devblog-section {
+  padding: 100px 40px;
+  background: linear-gradient(to bottom, #0f0f0f, #1a1a1a);
+  color: #fff;
 }
 
-/* Zone carousel */
-.devblog-carousel {
+/* HEADER */
+.devblog-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.devblog-heading {
+  font-family: 'Cinzel', serif;
+  font-size: 3rem;
+  color: #FFD7A1;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+}
+
+.devblog-subheading {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin-top: 10px;
+}
+
+/* GRID */
+.devblog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+}
+
+/* CARD */
+.devblog-card {
   position: relative;
-  padding-bottom: 10rem;
-  height: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease;
+  background-color: #000;
+  text-decoration: none;
+}
+
+.devblog-card:hover {
+  transform: scale(1.02);
+}
+
+/* IMAGE */
+.devblog-image-wrapper {
+  position: relative;
+  height: 400px;
+}
+
+.devblog-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.8);
+  transition: filter 0.3s ease;
+}
+
+.devblog-card:hover .devblog-image {
+  filter: brightness(1);
+}
+
+/* OVERLAY */
+.devblog-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.3));
+  color: #fff;
+}
+
+.devblog-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+}
+
+.devblog-date {
+  font-size: 0.9rem;
+  color: #bbb;
+  margin-bottom: 10px;
+}
+
+.devblog-excerpt {
+  font-size: 1rem;
+  line-height: 1.6;
+  max-height: 4.8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.devblog-readmore {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #FFD7A1;
+  font-weight: bold;
+}
+
+
+
+/* SECTION PRINCIPALE */
+.devblog-article {
+  background: linear-gradient(to bottom, #0f0f0f, #1a1a1a);
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* BANNIÈRE */
+.devblog-banner {
+  position: relative;
+  height: 450px;
   overflow: hidden;
 }
 
-/* Cartes empilées */
-.devblog-card {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%) scale(0.9);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 1;
-  width: 80vw;
-  max-width: 900px;
-  height: 100%;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
-
-@keyframes fadeSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Dégradé vertical */
-.devblog-card::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 40%;
-  width: 100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
-  z-index: 3;
-  pointer-events: none;
-}
-
-/* Ombre portée */
-.devblog-card.prev,
-.devblog-card.next {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-}
-
-.devblog-card.active img {
-  animation: zoomIn 0.6s ease-out;
-}
-
-/* Animation d'entrée sur l'image */
-@keyframes zoomIn {
-  from {
-    transform: scale(1.05);
-    opacity: 0.8;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.devblog-card.active .devblog-description {
-  animation: fadeSlideUp 0.6s ease-out;
-}
-
-.devblog-card.active {
-  transform: translateX(-50%) scale(1);
-  opacity: 1;
-  z-index: 10;
-  pointer-events: auto;
-}
-
-.devblog-card.prev {
-  transform: translateX(-130%) scale(0.85);
-  opacity: 0.3;
-  z-index: 5;
-}
-
-.devblog-card.next {
-  transform: translateX(30%) scale(0.85);
-  opacity: 0.3;
-  z-index: 5;
-}
-
-.devblog-card.hidden {
-  opacity: 0;
-  z-index: 0;
-}
-
-/* Image dans chaque carte */
-.devblog-card img {
+.devblog-banner-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
+  filter: brightness(0.6);
   display: block;
+}
+
+.devblog-banner-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 40px;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+  text-align: center;
+}
+
+.devblog-banner-title {
+  font-size: 2.8rem;
+  font-family: 'Cinzel', serif;
+  color: #FFD7A1;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+}
+
+.devblog-banner-date {
+  font-size: 1rem;
+  color: #ccc;
+}
+
+/* WRAPPER POUR CENTRAGE STABLE */
+.devblog-article-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 1px;
+}
+
+/* CONTENU CENTRÉ */
+.devblog-article-content {
+  width: 100%;
+  max-width: 900px;
+  position: relative; /* important pour contenir les enfants */
+  margin-top: 5rem;
+  margin-bottom: 20rem;
+}
+
+
+/* BLOC ARTICLE */
+.devblog-body {
+  background-color: rgba(0, 0, 0, 0.85);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  visibility: hidden;
+  animation: fadeInVisible 0.6s ease-out forwards;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+/* TEXTE */
+.devblog-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  white-space: pre-line;
+  color: #f1f1f1;
+}
+
+/* BOUTON RETOUR */
+.devblog-back {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.btn-return {
+  padding: 0.6rem 1.2rem;
+  font-weight: bold;
+  border-radius: 6px;
+  background-color: transparent;
+  border: 2px solid #FFD7A1;
+  color: #FFD7A1;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.btn-return:hover {
+  background-color: #FFD7A1;
+  color: #000;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .devblog-banner-title {
+    font-size: 2rem;
+  }
+
+  .devblog-article-wrapper {
+    padding: 30px 20px;
+  }
+
+  .devblog-body {
+    padding: 20px;
+  }
+
+  .devblog-text {
+    font-size: 1rem;
+  }
+}
+
+@keyframes fadeInVisible {
+  from { visibility: hidden; opacity: 0; }
+  to { visibility: visible; opacity: 1; }
+}
+
+.devblog-body-image {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.devblog-body-image img {
+  max-width: 100%;
+  width: 500px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
   transition: transform 0.3s ease;
 }
 
-/* Texte */
-.devblog-description {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.6);
-  animation: gradientShift 15s ease infinite;
-}
-
-.devblog-description h3 {
-  margin: 0 0 10px;
-  font-size: 1.4rem;
-  color: #fff;
-}
-
-.devblog-description p {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #fff;
-}
-
-/* Flèches */
-.devblog-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 2rem;
-  padding: 10px 14px;
-  cursor: pointer;
-  z-index: 9999;
-}
-
-.devblog-nav:hover {
-  background-color: #555;
-}
-
-.devblog-nav.prev { left: 10px; }
-.devblog-nav.next { right: 10px; }
-
-.carousel-spacer {
-  margin-bottom: 15rem;
-}
-
-/* ////////// SLUGS ////////// */
-/* ////////// SLUGS ////////// */
-/* ////////// SLUGS ////////// */
-.devblog-show-container {
-  max-width: 800px;
-  width: 100%;
-  background-color: #000000c5;
-  color: #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  margin-bottom: 15rem;
-}
-
-.devblog-show-image {
-  width: 100%;
-  max-height: 400px;
-  object-fit: cover;
-  display: block;
-  border-radius: 8px;
-}
-
-.devblog-content {
-  font-size: 1.1rem;
-  white-space: pre-line;
-  line-height: 1.6;
-}
-
-/* Responsive tweaks */
-@media (max-width: 768px) {
-  .devblog-show-container {
-    padding: 1.5rem;
-  }
-
-  .devblog-content {
-    font-size: 1rem;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-  }
-}
-
-/* Optional fade-in animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ////////// DEVBLOG NEWS ////////// */
-/* ////////// DEVBLOG NEWS ////////// */
-/* ////////// DEVBLOG NEWS ////////// */
-.devblog-new-container {
-  margin-bottom: 15rem;
+.devblog-body-image img:hover {
+  transform: scale(1.02);
 }

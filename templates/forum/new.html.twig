@@ -27,15 +27,14 @@
   <div class="newtopic-group">
     {{ form_label(form.content, null, {'label_attr': {'class': 'newtopic-label'}}) }}
     {{ form_widget(form.content, {'attr': {'class': 'newtopic-textarea'}}) }}
+    <small id="content-count" class="newtopic-hint">0/5000 caractères</small>
     {{ form_errors(form.content) }}
   </div>
 
-  {# Champ masqué pour les tags #}
   <div class="newtopic-group" style="display:none;">
-    {{ form_widget(form.tags) }}
+    {{ form_widget(form.tags, {'attr': {'class': 'tag-input-hidden'}}) }}
   </div>
 
-  {# Select2 visible #}
   <div class="newtopic-group">
     <label for="tag-select2" class="newtopic-label">Tags</label>
     <select id="tag-select2" multiple="multiple" class="tag-select" style="width:100%;">
@@ -51,10 +50,13 @@
   {{ form_end(form) }}
 </div>
 
-{# TinyMCE #}
+<!-- TinyMCE -->
 <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('.newtopic-form');
+    const contentCounter = document.getElementById('content-count');
+
     tinymce.init({
       selector: '.newtopic-textarea',
       license_key: 'gpl',
@@ -67,35 +69,59 @@
       forced_root_block: false,
       force_br_newlines: true,
       force_p_newlines: false,
-      valid_elements: "b, strong, i, em, br",
+      valid_elements: "b,strong,i,em,br",
       extended_valid_elements: "",
       skin_url: '/js/tinymce/skins/ui/oxide',
       content_css: '/js/tinymce/skins/content/default/content.min.css',
       theme: 'silver',
-      icons: 'default'
-    });
-  });
-</script>
+      icons: 'default',
+      setup: function (editor) {
+        editor.on('input', () => {
+          const rawContent = editor.getContent({ format: 'raw' });
+          const length = rawContent.length;
+          contentCounter.textContent = `${length}/5000 caractères`;
+          contentCounter.style.color = length > 5000 ? 'red' : '#666';
+        });
 
-{# Décompte caractères titre #}
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
+        editor.on('change', () => {
+          editor.save();
+        });
+      }
+    });
+
+    // Validation JS à la soumission
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        const editor = tinymce.get('topic_content');
+        if (editor) {
+          const rawContent = editor.getContent({ format: 'raw' });
+          const plainText = editor.getContent({ format: 'text' }).trim();
+
+          if (plainText.length === 0) {
+            e.preventDefault();
+            alert('⛔ Le contenu ne peut pas être vide.');
+            return;
+          }
+
+          if (rawContent.length > 5000) {
+            e.preventDefault();
+            alert('⛔ Le contenu dépasse la limite de 5000 caractères.');
+          }
+        }
+      });
+    }
+
+    // Décompte caractères titre
     const titleInput = document.getElementById('{{ form.title.vars.id }}');
     const titleCount = document.getElementById('title-count');
-
     if (titleInput && titleCount) {
       titleInput.addEventListener('input', () => {
         const remaining = 150 - titleInput.value.length;
         titleCount.textContent = `${remaining} caractères restants`;
       });
     }
-  });
-</script>
 
-{# Select2 + synchronisation tags #}
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('.newtopic-form');
+    // Select2 + synchronisation tags
     const tagSelect2 = $('#tag-select2');
     const hiddenInput = document.querySelector('.tag-input-hidden');
 
@@ -118,10 +144,6 @@
 
     if (form && tagSelect2.length && hiddenInput) {
       form.addEventListener('submit', () => {
-        if (typeof tinymce !== 'undefined') {
-          tinymce.triggerSave();
-        }
-
         const selectedTags = tagSelect2.val();
         if (selectedTags) {
           hiddenInput.value = selectedTags.join(',');

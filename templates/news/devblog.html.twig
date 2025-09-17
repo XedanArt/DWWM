@@ -3,35 +3,30 @@
 {% block title %}Devblog de l'équipe{% endblock %}
 
 {% block body %}
-<div class="devblog-title-container">
-  <h2 class="devblog-title">Devblog de l'équipe : Voici les dernières nouveautés</h2>
-</div>
+<section class="devblog-section">
+  <div class="devblog-header">
+    <h1 class="devblog-heading">Devblog de l'équipe</h1>
+    <p class="devblog-subheading">Les coulisses du développement, révélées chaque semaine</p>
+  </div>
 
-<div class="devblog-carousel">
-  <button class="devblog-nav prev" type="button">❮</button>
-
-  {% for devblog in devblogs|reverse %}
-    <a href="{{ path('news.devblog.show', { slug: devblog.slug }) }}" class="devblog-card-link">
-      <div class="devblog-card">
-        {% if devblog.image %}
-          <img src="{{ asset('img/' ~ devblog.image) }}" alt="{{ devblog.title }}">
-        {% endif %}
-        <div class="devblog-description">
-          <h3>DEVBLOG du {{ devblog.date|date('d/m/Y') }} : {{ devblog.title }}</h3>
-          <p>{{ devblog.content|nl2br }}</p>
+  <div class="devblog-grid">
+    {% for devblog in devblogs|reverse %}
+      <a href="{{ path('news.devblog.show', { slug: devblog.slug }) }}" class="devblog-card">
+        <div class="devblog-image-wrapper">
+          {% if devblog.image %}
+            <img src="{{ asset(devblog.imagePath) }}" alt="{{ devblog.title }}" class="devblog-image">
+          {% endif %}
+          <div class="devblog-overlay">
+            <h2 class="devblog-title">{{ devblog.title }}</h2>
+            <p class="devblog-date">🕒 {{ devblog.date|date('d/m/Y') }}</p>
+            <p class="devblog-excerpt">{{ devblog.content|striptags }}</p>
+            <span class="devblog-readmore">→ Lire la suite</span>
+          </div>
         </div>
-      </div>
-    </a>
-  {% else %}
-    <p class="text-muted">Aucun devblog disponible pour le moment.</p>
-  {% endfor %}
-
-  <button class="devblog-nav next" type="button">❯</button>
-</div>
-
-<div class="carousel-spacer"></div>
-{% endblock %}
-
-{% block javascripts %}
-<script src="{{ asset('js/devblog.js') }}"></script>
+      </a>
+    {% else %}
+      <p class="text-muted">Aucun devblog disponible pour le moment.</p>
+    {% endfor %}
+  </div>
+</section>
 {% endblock %}

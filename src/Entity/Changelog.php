@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ChangelogRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ChangelogRepository::class)]
 class Changelog
@@ -19,6 +20,13 @@ class Changelog
     #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $date = null;
 
+    #[Assert\NotBlank(message: "Le contenu du changelog est obligatoire.")]
+    #[Assert\Length(
+        min: 100,
+        max: 5000,
+        minMessage: "Le contenu ne peut pas faire moins de {{ limit }} caractères",
+        maxMessage: "Le contenu ne peut pas dépasser {{ limit }} caractères."
+    )] 
     #[ORM\Column(type: 'text')]
     private ?string $content = null;
 

@@ -3,27 +3,39 @@
 {% block title %}{{ devblog.title }}{% endblock %}
 
 {% block body %}
-<div class="container mt-5 d-flex justify-content-center">
-  <div class="devblog-show-container p-4 shadow rounded">
-    
-    {% if devblog.image %}
-      <div class="text-center mb-4">
-        <img src="{{ asset('img/' ~ devblog.image) }}" alt="{{ devblog.title }}" class="devblog-show-image rounded">
+<section class="devblog-article">
+  {% if devblog.image %}
+    <div class="devblog-banner">
+      <img src="{{ asset(devblog.imagePath) }}" alt="{{ devblog.title }}" class="devblog-banner-image">
+      <div class="devblog-banner-overlay">
+        <h1 class="devblog-banner-title">{{ devblog.title }}</h1>
+        <p class="devblog-banner-date">🕒 Publié le {{ devblog.date|date('d/m/Y') }}</p>
       </div>
-    {% endif %}
-
-    <h1 class="text-center mb-3">{{ devblog.title }}</h1>
-    <p class="text-center">Publié le {{ devblog.date|date('d/m/Y') }}</p>
-
-    <hr>
-
-    <div class="devblog-content" style="white-space: pre-line; font-size: 1.1rem;">
-      {{ devblog.content }}
     </div>
+  {% endif %}
 
-    <div class="text-center mt-4">
-      <a href="{{ path('news.devblog') }}" class="btn btn-secondary">← Retour au devblog</a>
+  <div class="devblog-article-wrapper">
+    <div class="devblog-article-content">
+      <div class="devblog-body">
+
+        {% if devblog.image %}
+          <div class="devblog-body-image">
+            <img src="{{ asset(devblog.imagePath) }}" alt="{{ devblog.title }}">
+          </div>
+        {% endif %}
+
+        <h2 class="devblog-body-title">{{ devblog.title }}</h2>
+        <p class="devblog-body-date">🕒 Publié le {{ devblog.date|date('d/m/Y') }}</p>
+
+        <div class="devblog-text">
+          {{ devblog.content|nl2br }}
+        </div>
+
+        <div class="devblog-back">
+          <a href="{{ path('news.devblog') }}" class="btn btn-return">← Retour aux devblogs</a>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 {% endblock %}

@@ -193,12 +193,12 @@ body {
 }
 
 .fav-item a:hover {
-  color: #ffffff;
+  color: #333333cb;
   text-shadow: 0 0 5px rgba(255, 215, 161, 0.6);
 }
 
 .fav-item a:active {
-  color: #ffffff;
+  color: #333333cb;
 }
 
 .fav-empty {
@@ -233,12 +233,12 @@ body {
 }
 
 .history-list a:hover {
-  color: #ffffff;
+  color: #333333cb;
   text-shadow: 0 0 5px rgba(255, 215, 161, 0.6);
 }
 
 .history-list a:active {
-  color: #ffffff;
+  color: #333333cb;
 }
 
 .history-date {
@@ -316,4 +316,10 @@ body {
 
 .support-button:hover {
   background-color: rgba(24, 20, 20, 0.712);
+}
+
+.tab-button,
+.tab-button:hover,
+.tab-button:focus {
+  text-decoration: none;
 }

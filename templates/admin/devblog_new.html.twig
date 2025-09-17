@@ -21,7 +21,14 @@
 
         <div class="mb-3">
           {{ form_label(form.title, 'Titre', {'label_attr': {'class': 'form-label fw-bold'}}) }}
-          {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Nouveau Raid : Kraken'}}) }}
+          {{ form_widget(form.title, {
+            'attr': {
+              'class': 'form-control',
+              'maxlength': 100,
+              'placeholder': 'Ex: Nouveau Raid : Kraken'
+            }
+          }) }}
+          <small class="char-counter" data-max="100">0/100 caractères</small>
           {{ form_errors(form.title) }}
         </div>
 
@@ -33,14 +40,36 @@
 
         <div class="mb-3">
           {{ form_label(form.content, 'Contenu', {'label_attr': {'class': 'form-label fw-bold'}}) }}
-          {{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': '6', 'placeholder': 'Décrivez les nouveautés...'}}) }}
+          {{ form_widget(form.content, {
+            'attr': {
+              'class': 'form-control',
+              'rows': '6',
+              'maxlength': 5000,
+              'placeholder': 'Décrivez les nouveautés...'
+            }
+          }) }}
+          <small class="char-counter" data-max="5000">0/5000 caractères</small>
           {{ form_errors(form.content) }}
         </div>
 
+        {% if devblog is defined and devblog.image is not empty %}
+          <div class="mb-3">
+            <label class="form-label fw-bold">Image actuelle</label>
+            <img src="{{ asset(devblog.imagePath) }}" alt="Image du Devblog" class="img-fluid rounded border" style="max-height: 300px;">
+          </div>
+        {% endif %}
+
         <div class="mb-3">
-          {{ form_label(form.image, 'Nom du fichier image', {'label_attr': {'class': 'form-label fw-bold'}}) }}
-          {{ form_widget(form.image, {'attr': {'class': 'form-control', 'placeholder': 'Ex: devblog_07.png'}}) }}
-          {{ form_errors(form.image) }}
+          {{ form_label(form.imageFile, 'Illustration du Devblog', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+          {{ form_widget(form.imageFile, {
+            'attr': {
+              'class': 'form-control',
+              'accept': 'image/*',
+              'maxlength': 100
+            }
+          }) }}
+          <small class="char-counter" data-max="100">0/100 caractères</small>
+          {{ form_errors(form.imageFile) }}
         </div>
 
         <div class="text-end">
@@ -53,4 +82,32 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const counters = document.querySelectorAll('.char-counter');
+
+    counters.forEach(counter => {
+      const input = counter.previousElementSibling;
+      const max = parseInt(counter.dataset.max);
+
+      const updateCounter = () => {
+        const length = input.value?.length || 0;
+        counter.textContent = `${length}/${max} caractères`;
+
+        if (input.name.includes('content')) {
+          if (length < 100) {
+            counter.textContent += ' (minimum 100 requis)';
+          }
+          counter.style.color = length > max ? 'red' : '#666';
+        } else {
+          counter.style.color = length > max ? 'red' : '#666';
+        }
+      };
+
+      input.addEventListener('input', updateCounter);
+      updateCounter();
+    });
+  });
+</script>
 {% endblock %}

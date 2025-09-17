@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
     createTag: function (params) {
       const term = $.trim(params.term);
       const isValid = /^[\p{L}0-9\-_\s]+$/u.test(term);
-      const isTooLong = term.length > 30;
+      const isTooLong = term.length > 15;
       if (term === '' || !isValid || isTooLong) return null;
       return { id: term, text: term, newTag: true };
     },

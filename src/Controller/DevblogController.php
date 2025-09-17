@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -31,7 +32,7 @@ class DevblogController extends AbstractController
 
         if (!$devblog) {
             throw $this->createNotFoundException('Devblog introuvable.');
-    }
+        }
 
         return $this->render('news/devblog_show.html.twig', [
             'devblog' => $devblog
@@ -41,9 +42,7 @@ class DevblogController extends AbstractController
     #[Route('/admin/devblog/new', name: 'admin.devblog.new')]
     public function new(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_SUPER_ADMIN')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $devblog = new Devblog();
         $form = $this->createForm(DevblogType::class, $devblog);
@@ -53,6 +52,26 @@ class DevblogController extends AbstractController
             $slug = $slugger->slug($devblog->getTitle())->lower();
             $devblog->setSlug($slug);
 
+            $imageFile = $form->get('imageFile')->getData();
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('devblog_images_directory'),
+                        $newFilename
+                    );
+                    
+                    $devblog->setImage($newFilename);
+                } catch (FileException $e) {
+                    $this->addFlash('danger', 'Erreur lors de l\'upload de l\'image.');
+                    return $this->redirectToRoute('admin.devblog.new');
+                }
+
+            }
+
             $em->persist($devblog);
             $em->flush();
 
@@ -61,7 +80,8 @@ class DevblogController extends AbstractController
         }
 
         return $this->render('admin/devblog_new.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'devblog' => $devblog
         ]);
     }
 }
