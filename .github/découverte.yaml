@@ -1,7 +1,4 @@
-
-# clé: valeur
 name: découverte de github actions
-
 # événemment, quand est-ce que github doit le déclencher
 on:
   push:
