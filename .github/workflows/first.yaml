@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Say hello
-        run: echo 'hello'
+        run: ech 'hello'
 
       - name: Cowsay hello
         run: |
