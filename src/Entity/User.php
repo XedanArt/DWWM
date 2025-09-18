@@ -58,16 +58,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $lastPasswordRequestAt = null;
 
-    #[Assert\NotBlank(message: 'Le mot de passe est obligatoire.')]
-    #[Assert\Length(
-        min: 8,
-        max: 64,
-        minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères.'
-    )]
-    #[Assert\Regex(
-        pattern: '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/',
-        message: 'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial.'
-    )]
+    private ?string $plainPassword = null;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $banUntil = null;
@@ -87,8 +78,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->banUntil !== null && $this->banUntil > new \DateTimeImmutable();
     }
-
-    private ?string $plainPassword = null;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Topic::class, orphanRemoval: true)]
     private Collection $topics;

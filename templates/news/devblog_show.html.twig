@@ -9,7 +9,7 @@
       <img src="{{ asset(devblog.imagePath) }}" alt="{{ devblog.title }}" class="devblog-banner-image">
       <div class="devblog-banner-overlay">
         <h1 class="devblog-banner-title">{{ devblog.title }}</h1>
-        <p class="devblog-banner-date">🕒 Publié le {{ devblog.date|date('d/m/Y') }}</p>
+        <p class="devblog-banner-date">Publié le {{ devblog.date|date('d/m/Y') }}</p>
       </div>
     </div>
   {% endif %}
@@ -25,7 +25,7 @@
         {% endif %}
 
         <h2 class="devblog-body-title">{{ devblog.title }}</h2>
-        <p class="devblog-body-date">🕒 Publié le {{ devblog.date|date('d/m/Y') }}</p>
+        <p class="devblog-body-date">Publié le {{ devblog.date|date('d/m/Y') }}</p>
 
         <div class="devblog-text">
           {{ devblog.content|nl2br }}

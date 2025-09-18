@@ -28,10 +28,17 @@
     </div>
 
     <div class="mb-3">
-      {{ form_label(form.plainPassword) }}
-      {{ form_widget(form.plainPassword, { attr: { class: 'form-control', placeholder: 'Mot de passe initial' } }) }}
-      {{ form_errors(form.plainPassword) }}
+      {{ form_label(form.plainPassword.first) }}
+      {{ form_widget(form.plainPassword.first, { attr: { class: 'form-control', placeholder: 'Mot de passe initial' } }) }}
+      {{ form_errors(form.plainPassword.first) }}
     </div>
+
+    <div class="mb-3">
+      {{ form_label(form.plainPassword.second) }}
+      {{ form_widget(form.plainPassword.second, { attr: { class: 'form-control', placeholder: 'Confirmation du mot de passe' } }) }}
+      {{ form_errors(form.plainPassword.second) }}
+    </div>
+
 
     <button type="submit" class="btn btn-primary">
       <i class="bi bi-person-plus-fill me-1"></i> Créer l’administrateur

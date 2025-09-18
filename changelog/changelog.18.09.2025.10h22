@@ -1,0 +1,8 @@
+18/09/2025 : 12h29
+
+Formulaire de création d'admin :
+- bug lors de la création, erreur renvoyée par symfony en lien avec le mot de passe et banUntil
+  - problème lié aux contraintes affectées à l'entité et au formulaire : - Le champ `plainPassword` était configuré avec `mapped: false`, donc Symfony ne validait pas les contraintes placées dans l’entité. De plus, les contraintes appliquées au champ global `RepeatedType` ne s’appliquaient pas correctement aux sous-champs. En déplaçant les contraintes dans `first_options` et `second_options` du formulaire, et en supprimant celles de l’entité, la validation s’est faite correctement et l’erreur a disparu.
+
+Devblog :
+- test mise en page de devblogs de test

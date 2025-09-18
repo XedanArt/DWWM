@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\User;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -38,14 +39,21 @@ class AdminCreationType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('plainPassword', PasswordType::class, [
-                'mapped' => true,
-                'label' => 'Mot de passe initial',
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'mapped' => false,
                 'required' => true,
-                'attr' => [
-                    'placeholder' => 'Mot de passe sécurisé',
-                    'autocomplete' => 'new-password',
+                'empty_data' => '',
+                'property_path' => 'plainPassword',
+                'first_options' => [
+                    'label' => 'Mot de passe',
+                    'attr' => ['placeholder' => 'Mot de passe sécurisé', 'autocomplete' => 'new-password'],
                 ],
+                'second_options' => [
+                    'label' => 'Confirmation du mot de passe',
+                    'attr' => ['placeholder' => 'Répétez le mot de passe'],
+                ],
+                'invalid_message' => 'Les mots de passe ne correspondent pas.',
                 'constraints' => [
                     new NotBlank(['message' => 'Le mot de passe est requis']),
                     new Length([
@@ -64,6 +72,7 @@ class AdminCreationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'validation_groups' => ['Default'],
         ]);
     }
 }
