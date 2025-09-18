@@ -1,0 +1,30 @@
+
+# clé: valeur
+name: découverte de github actions
+
+# événemment, quand est-ce que github doit le déclencher
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# les tâches de github
+jobs:
+
+# tâche
+  cowsay:
+
+  # runs-on: = machine virtuelle à base de docker
+    runs-on: ubuntu-latest
+
+    # deux étapes
+    steps:
+      - name: Say hello
+        run: echo 'hello'
+
+      - name: Cowsay hello
+        run: |
+          sudo apt update
+          sudo apt install -y cowsay
+          cowsay Hello

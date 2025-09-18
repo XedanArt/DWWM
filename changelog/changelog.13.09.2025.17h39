@@ -1,4 +1,4 @@
-12/09/2025 : 17h39
+13/09/2025 : 17h39
 Forum
 - Ajout d'une contrainte sur l'entité Topic : interdiction de doublons de titre (insensible à la casse via LOWER).
 - Vérification du titre existant dans ForumController avec redirection et flash message.
