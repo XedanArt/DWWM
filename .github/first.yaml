@@ -1,0 +1,26 @@
+name: découverte de github actions
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+
+jobs:
+
+
+  cowsay:
+
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Say hello
+        run: echo 'hello'
+
+      - name: Cowsay hello
+        run: |
+          sudo apt update
+          sudo apt install -y cowsay
+          cowsay Hello
