@@ -61,7 +61,7 @@
       selector: '.newtopic-textarea',
       license_key: 'gpl',
       toolbar: 'undo redo | bold italic underline | link emoticons | bullist numlist | table | code',
-      plugin: '',
+      plugins: 'link',
       menubar: false,
       height: 300,
       entities: '160,nbsp,38,amp,60,lt,62,gt',
@@ -69,8 +69,8 @@
       forced_root_block: false,
       force_br_newlines: true,
       force_p_newlines: false,
-      valid_elements: "b,strong,i,em,br",
-      extended_valid_elements: "",
+      valid_elements: "a[href|target], b,strong,i,em,br",
+      extended_valid_elements: "a[href|target|rel]",
       skin_url: '/js/tinymce/skins/ui/oxide',
       content_css: '/js/tinymce/skins/content/default/content.min.css',
       theme: 'silver',
@@ -92,20 +92,20 @@
     // Validation JS à la soumission
     if (form) {
       form.addEventListener('submit', (e) => {
-        const editor = tinymce.get('topic_content');
+        const editor = tinymce.get(document.querySelector('.newtopic-textarea').id);
         if (editor) {
           const rawContent = editor.getContent({ format: 'raw' });
           const plainText = editor.getContent({ format: 'text' }).trim();
 
           if (plainText.length === 0) {
             e.preventDefault();
-            alert('⛔ Le contenu ne peut pas être vide.');
+            alert('Le contenu ne peut pas être vide.');
             return;
           }
 
           if (rawContent.length > 5000) {
             e.preventDefault();
-            alert('⛔ Le contenu dépasse la limite de 5000 caractères.');
+            alert('Le contenu dépasse la limite de 5000 caractères.');
           }
         }
       });

@@ -106,7 +106,7 @@ class TopicController extends AbstractController
             // Supprime les balises p, span, englobantes
             $content = preg_replace('/^<(p|span)[^>]*>(.*?)<\/\1>$/is', '$2', trim($content));
             // Supprime les balises vides ou parasites
-            $content = strip_tags($content, '<b><strong><i><em><br>');
+            $content = strip_tags($content, '<a><b><strong><i><em><br>');
 
             $topic->setContent($content);
 
