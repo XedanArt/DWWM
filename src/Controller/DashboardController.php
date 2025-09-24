@@ -45,7 +45,7 @@ class DashboardController extends AbstractController
     }
 
     #[IsGranted('ROLE_ADMIN')]
-    #[Route('/dashboard/ban/{id}/{duration}', name: 'dashboard.ban_user')]
+    #[Route('/dashboard/ban/{id}/{duration}', name: 'dashboard.ban_user', methods: ['POST'])]
     public function banUser(
         User $user,
         int $duration,
@@ -56,6 +56,11 @@ class DashboardController extends AbstractController
     ): Response {
         if (!$this->isCsrfTokenValid('ban-' . $duration . '-' . $user->getId(), $request->request->get('_token'))) {
             throw $this->createAccessDeniedException('Jeton CSRF invalide.');
+        }
+
+        if ($user->getId() === 1) {
+            $this->addFlash('error', 'Impossible de bannir le superadmin.');
+            return $this->redirectToRoute('dashboard');
         }
 
         $banUntil = new \DateTimeImmutable("+{$duration} hours");
@@ -73,6 +78,7 @@ class DashboardController extends AbstractController
     #[Route('/dashboard/delete-user/{id}', name: 'dashboard.delete_user', methods: ['POST'])]
     public function deleteUser(
         int $id,
+        Request $request,
         EntityManagerInterface $em,
         #[Autowire(service: 'monolog.logger.admin_actions')]
         LoggerInterface $adminLogger
@@ -81,6 +87,15 @@ class DashboardController extends AbstractController
 
         if (!$user) {
             $this->addFlash('error', 'Utilisateur introuvable.');
+            return $this->redirectToRoute('dashboard');
+        }
+
+        if (!$this->isCsrfTokenValid('delete-user-' . $user->getId(), $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Jeton CSRF invalide.');
+        }
+
+        if ($user->getId() === 1) {
+            $this->addFlash('error', 'Ce compte est protégé et ne peut pas être supprimé.');
             return $this->redirectToRoute('dashboard');
         }
 
@@ -132,6 +147,7 @@ class DashboardController extends AbstractController
     public function deleteEntry(
         string $type,
         int $id,
+        Request $request,
         EntityManagerInterface $em,
         #[Autowire(service: 'monolog.logger.admin_actions')]
         LoggerInterface $adminLogger
@@ -152,6 +168,11 @@ class DashboardController extends AbstractController
             throw $this->createNotFoundException('Entrée introuvable.');
         }
 
+        // Si le jeton CSRF reçu ne correspond pas à celui attendu pour cette suppression d’entrée, alors on bloque l’action et on affiche une erreur de sécurité
+        if (!$this->isCsrfTokenValid('delete-entry-' . $type . '-' . $id, $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Jeton CSRF invalide.');
+        }
+
         $adminLogger->info("[DELETE_ENTRY] Admin {$this->getUser()->getUsername()} a supprimé un(e) {$type} (ID: {$entry->getId()}).");
 
         $em->remove($entry);
@@ -163,20 +184,19 @@ class DashboardController extends AbstractController
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/dashboard/logs', name: 'dashboard.logs')]
-    public function viewLogs(): Response 
+    public function viewLogs(): Response
     {
         $logPath = $this->getParameter('kernel.logs_dir') . '/controllers/admin_actions.log';
 
         if (!file_exists($logPath)) {
-           $logs = ['Fichier de log introuvable.'];
-        }    
-        else {
-           $lines = file($logPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-          $logs = array_reverse(array_slice($lines, -100)); // les 100 dernières lignes
+            $logs = ['Fichier de log introuvable.'];
+        } else {
+            $lines = file($logPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            $logs = array_reverse(array_slice($lines, -100));
         }
 
         return $this->render('dashboard/logs.html.twig', [
             'logs' => $logs
-    ]);
-}
+        ]);
+    }
 }

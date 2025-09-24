@@ -137,21 +137,4 @@ class SuperAdminController extends AbstractController
         return $this->redirectToRoute('superadmin.revoke_admin');
     }
 
-    #[Route('/delete-user/{id}', name: 'superadmin.delete_user', methods: ['POST'])]
-    public function deleteUser(
-        User $user,
-        EntityManagerInterface $em,
-        AdminAuditLogger $auditLogger
-    ): Response {
-        if ($user === $this->getUser()) {
-            $this->addFlash('danger', 'Vous ne pouvez pas supprimer votre propre compte.');
-        } else {
-            $em->remove($user);
-            $em->flush();
-            $this->addFlash('success', 'Utilisateur supprimé.');
-            $auditLogger->logAdminRevoked($user);
-        }
-
-        return $this->redirectToRoute('dashboard');
-    }
 }

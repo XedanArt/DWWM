@@ -195,8 +195,9 @@
 /* ////////// TITRES DES VUES D'AJOUT D'ENTRÉES ////////// */
 /* ////////// TITRES DES VUES D'AJOUT D'ENTRÉES ////////// */
 /* ////////// TITRES DES VUES D'AJOUT D'ENTRÉES ////////// */
-.announcement-title,
-.changelog-title,
+.dashboard-main-title,
+.dashboard-announce-title,
+.dashboard-changelog-title,
 .dashboard-devblog-title {
   font-family: 'Segoe UI', sans-serif;
   font-size: 1.8rem;

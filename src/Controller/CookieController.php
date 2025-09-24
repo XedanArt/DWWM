@@ -12,6 +12,7 @@ class CookieController extends AbstractController
     #[Route('/cookies/preferences', name: 'cookies.preferences', methods: ['GET'])]
     public function preferences(Request $request): Response
     {
+        // Récupère les préférences depuis la session
         $preferences = $request->getSession()->get('cookieConsent', [
             'statistics' => false,
             'marketing' => false
@@ -25,29 +26,21 @@ class CookieController extends AbstractController
     #[Route('/cookies/save', name: 'cookies.save', methods: ['POST'])]
     public function save(Request $request): Response
     {
-        $consent = $request->request->get('consent');
+        // Récupère les valeurs envoyées par le formulaire JS
+        $statistics = filter_var($request->request->get('statistics'), FILTER_VALIDATE_BOOLEAN);
+        $marketing = filter_var($request->request->get('marketing'), FILTER_VALIDATE_BOOLEAN);
 
-        $preferences = match ($consent) {
-            'accepted' => [
-                'statistics' => true,
-                'marketing' => true,
-                'status' => 'accepted',
-            ],
-            'refused' => [
-                'statistics' => false,
-                'marketing' => false,
-                'status' => 'refused',
-            ],
-            default => [
-                'statistics' => false,
-                'marketing' => false,
-                'status' => 'unknown',
-            ]
-    };
+        // Construit l'objet de consentement
+        $preferences = [
+            'statistics' => $statistics,
+            'marketing' => $marketing,
+            'status' => ($statistics || $marketing) ? 'accepted' : 'refused',
+            'acceptedAt' => (new \DateTimeImmutable())->format('Y-m-d H:i:s'),
+        ];
 
-    $preferences['acceptedAt'] = (new \DateTimeImmutable())->format('Y-m-d H:i:s');
-    $request->getSession()->set('cookieConsent', $preferences);
+        // Enregistre en session
+        $request->getSession()->set('cookieConsent', $preferences);
 
-    return new Response('Consentement enregistré', 200);
-}
+        return new Response('Consentement enregistré', 200);
+    }
 }

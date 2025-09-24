@@ -1,0 +1,38 @@
+23/09/2025 : 14h03
+
+AuthController :
+- bug lors de l'inscription, modification du champ : $plainPassword = $form->get('plainPassword')->getData();
+
+Superadmin - DashboardController :
+- hyper protection du superadmin
+
+Contrôle NVDA :
+- pas du tout au point, accessibilité à prévoir comme prévu
+
+Contrôle Lighthouse : 
+- ordinateur : Performances 80, Accessibilité 94, Bonnes pratiques 96, SEA 54 (site pas encore hébergé)
+- mobile : Performances 61, Accessibilité 85, Bonne pratiques 96, SEO 54 (site pas encore hébergé)
+
+Référencement : 
+- balise meta description rajoutée
+
+PurifyCSS :
+- refactoration du css :
+  - auth.css (refactoré) (login, register, forgot_password, activate)
+  - footer.css (refactoré)
+  - forgot_password.css (supprimé)
+  - changelog.css (refactoré) (changelog, changelog_show)
+  - devblog.css (refactoré) (devblog, devblog_show)
+  - discover.css (refactoré) 
+  - download.css (refactoré)
+  - forum.css (refactoré) (forum.index, new)
+  - home.css (refactoré)
+  - legals.css (refactoré)
+  - navbar.css (refactoré)
+  - profile.css (refactoré) (favorites, history, security)
+  - sections.css (refactoré)
+  - socials.css (refactoré)
+  - superadmin.css (refactoré) (create, revoke)
+  - support.css (refactoré)
+  - tag.results.css (refactoré)
+  - topic_show.css (refactoré)

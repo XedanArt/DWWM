@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="delete-entries-main container mt-5">
-  <h2 class="mb-4 text-center changelog-title">Historique des entrées</h2>
+  <h2 class="mb-4 text-center dashboard-main-title">Historique des entrées</h2>
 
   {# Devblogs #}
   <div class="mb-5">
@@ -18,7 +18,7 @@
             <small class="text-muted">{{ entry.date|date('d/m/Y') }}</small>
           </div>
           <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'devblog' }) }}" onsubmit="return confirm('Confirmer la suppression ?');">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entry.id) }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-devblog-' ~ entry.id) }}">
             <button class="btn btn-danger btn-sm">
               <i class="bi bi-trash-fill me-1"></i> Supprimer
             </button>
@@ -26,7 +26,7 @@
         </div>
       </div>
     {% else %}
-      <p>Aucun devblog disponible.</p>
+      <p style="color: white;">Aucun devblog disponible.</p>
     {% endfor %}
 
     {{ knp_pagination_render(devblogs) }}
@@ -34,7 +34,7 @@
 
   {# Changelogs #}
   <div class="mb-5">
-    <h3 class="mb-3 devblog-title">Changelogs</h3>
+    <h3 class="mb-3 dashboard-changelog-title">Changelogs</h3>
 
     {% for entry in changelogs %}
       <div class="card mb-2 shadow-sm">
@@ -44,7 +44,7 @@
             <small class="text-muted">{{ entry.date|date('d/m/Y') }}</small>
           </div>
           <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'changelog' }) }}" onsubmit="return confirm('Confirmer la suppression ?');">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entry.id) }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-changelog-' ~ entry.id) }}">
             <button class="btn btn-danger btn-sm">
               <i class="bi bi-trash-fill me-1"></i> Supprimer
             </button>
@@ -52,7 +52,7 @@
         </div>
       </div>
     {% else %}
-      <p>Aucun changelog disponible.</p>
+      <p style="color: white;">Aucun changelog disponible.</p>
     {% endfor %}
 
     {{ knp_pagination_render(changelogs) }}
@@ -60,7 +60,7 @@
 
   {# Annonces #}
   <div class="mb-5">
-    <h3 class="mb-3 devblog-title">Annonces</h3>
+    <h3 class="mb-3 dashboard-announce-title">Annonces</h3>
 
     {% for entry in announcements %}
       <div class="card mb-2 shadow-sm">
@@ -70,7 +70,7 @@
             <small class="text-muted">{{ entry.createdAt|date('d/m/Y') }}</small>
           </div>
           <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'announcement' }) }}" onsubmit="return confirm('Confirmer la suppression ?');">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entry.id) }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-announcement-' ~ entry.id) }}">
             <button class="btn btn-danger btn-sm">
               <i class="bi bi-trash-fill me-1"></i> Supprimer
             </button>

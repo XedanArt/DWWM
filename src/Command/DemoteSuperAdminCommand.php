@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-// php bin/console app:demote-super-admin ton@email.com
+// php bin/console app:demote-super-admin superadmin@superadmin.com
 #[AsCommand(
     name: 'app:demote-super-admin',
     description: 'Retire le rôle ROLE_SUPER_ADMIN à un utilisateur.',

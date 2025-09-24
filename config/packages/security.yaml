@@ -20,7 +20,7 @@ security:
 
     # Zone principale sécurisée
     main:
-      lazy: true # Authentification paresseuse (optimisation perf)
+      lazy: true
       provider: app_user_provider
       custom_authenticators:
         - App\Security\LoginAuthenticator
