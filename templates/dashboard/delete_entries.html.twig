@@ -1,87 +1,94 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/delete_entries.css') }}">
+{% endblock %}
+
 {% block title %}Historique des entrées supprimables{% endblock %}
 
 {% block body %}
-<div class="delete-entries-main container mt-5">
-  <h2 class="mb-4 text-center dashboard-main-title">Historique des entrées</h2>
+<div class="delete-entries-container">
+  <h2 class="delete-entries-title">Historique des entrées supprimables</h2>
 
-  {# Devblogs #}
-  <div class="mb-5">
-    <h3 class="mb-3 dashboard-devblog-title">Devblogs</h3>
+  <div class="delete-entries-wrapper">
+    {# Devblogs #}
+    <section class="delete-entries-section">
+      <h3 class="delete-entries-section-title">Devblogs</h3>
 
-    {% for entry in devblogs %}
-      <div class="card mb-2 shadow-sm">
-        <div class="card-body d-flex justify-content-between align-items-center">
-          <div>
-            <strong>{{ entry.title }}</strong><br>
-            <small class="text-muted">{{ entry.date|date('d/m/Y') }}</small>
+      {% for entry in devblogs %}
+        <div class="delete-entries-card">
+          <div class="delete-entries-card-content">
+            <div class="delete-entries-card-info">
+              <strong class="delete-entries-card-title">{{ entry.title }}</strong>
+              <span class="delete-entries-card-date">{{ entry.date|date('d/m/Y') }}</span>
+            </div>
+            <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'devblog' }) }}" onsubmit="return confirm('Confirmer la suppression ?');">
+              <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-devblog-' ~ entry.id) }}">
+              <button class="delete-entries-btn">Supprimer</button>
+            </form>
           </div>
-          <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'devblog' }) }}" onsubmit="return confirm('Confirmer la suppression ?');">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-devblog-' ~ entry.id) }}">
-            <button class="btn btn-danger btn-sm">
-              <i class="bi bi-trash-fill me-1"></i> Supprimer
-            </button>
-          </form>
         </div>
+      {% else %}
+        <p class="delete-entries-empty">Aucun devblog disponible.</p>
+      {% endfor %}
+
+      <div class="delete-entries-pagination">
+        {{ knp_pagination_render(devblogs) }}
       </div>
-    {% else %}
-      <p style="color: white;">Aucun devblog disponible.</p>
-    {% endfor %}
+    </section>
 
-    {{ knp_pagination_render(devblogs) }}
-  </div>
+    {# Changelogs #}
+    <section class="delete-entries-section">
+      <h3 class="delete-entries-section-title">Changelogs</h3>
 
-  {# Changelogs #}
-  <div class="mb-5">
-    <h3 class="mb-3 dashboard-changelog-title">Changelogs</h3>
-
-    {% for entry in changelogs %}
-      <div class="card mb-2 shadow-sm">
-        <div class="card-body d-flex justify-content-between align-items-center">
-          <div>
-            <strong>Version {{ entry.version }}</strong><br>
-            <small class="text-muted">{{ entry.date|date('d/m/Y') }}</small>
+      {% for entry in changelogs %}
+        <div class="delete-entries-card">
+          <div class="delete-entries-card-content">
+            <div class="delete-entries-card-info">
+              <strong class="delete-entries-card-title">Version {{ entry.version }}</strong>
+              <span class="delete-entries-card-date">{{ entry.date|date('d/m/Y') }}</span>
+            </div>
+            <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'changelog' }) }}" onsubmit="return confirm('Confirmer la suppression ?');">
+              <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-changelog-' ~ entry.id) }}">
+              <button class="delete-entries-btn">Supprimer</button>
+            </form>
           </div>
-          <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'changelog' }) }}" onsubmit="return confirm('Confirmer la suppression ?');">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-changelog-' ~ entry.id) }}">
-            <button class="btn btn-danger btn-sm">
-              <i class="bi bi-trash-fill me-1"></i> Supprimer
-            </button>
-          </form>
         </div>
+      {% else %}
+        <p class="delete-entries-empty">Aucun changelog disponible.</p>
+      {% endfor %}
+
+      <div class="delete-entries-pagination">
+        {{ knp_pagination_render(changelogs) }}
       </div>
-    {% else %}
-      <p style="color: white;">Aucun changelog disponible.</p>
-    {% endfor %}
+    </section>
 
-    {{ knp_pagination_render(changelogs) }}
-  </div>
+    {# Annonces #}
+    <section class="delete-entries-section">
+      <h3 class="delete-entries-section-title">Annonces</h3>
 
-  {# Annonces #}
-  <div class="mb-5">
-    <h3 class="mb-3 dashboard-announce-title">Annonces</h3>
-
-    {% for entry in announcements %}
-      <div class="card mb-2 shadow-sm">
-        <div class="card-body d-flex justify-content-between align-items-center">
-          <div>
-            <strong>{{ entry.title }}</strong><br>
-            <small class="text-muted">{{ entry.createdAt|date('d/m/Y') }}</small>
+      {% for entry in announcements %}
+        <div class="delete-entries-card">
+          <div class="delete-entries-card-content">
+            <div class="delete-entries-card-info">
+              <strong class="delete-entries-card-title">{{ entry.title }}</strong>
+              <span class="delete-entries-card-date">{{ entry.createdAt|date('d/m/Y') }}</span>
+            </div>
+            <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'announcement' }) }}" onsubmit="return confirm('Confirmer la suppression ?');">
+              <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-announcement-' ~ entry.id) }}">
+              <button class="delete-entries-btn">Supprimer</button>
+            </form>
           </div>
-          <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'announcement' }) }}" onsubmit="return confirm('Confirmer la suppression ?');">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-announcement-' ~ entry.id) }}">
-            <button class="btn btn-danger btn-sm">
-              <i class="bi bi-trash-fill me-1"></i> Supprimer
-            </button>
-          </form>
         </div>
-      </div>
-    {% else %}
-      <p style="color: white;">Aucune annonce disponible.</p>
-    {% endfor %}
+      {% else %}
+        <p class="delete-entries-empty">Aucune annonce disponible.</p>
+      {% endfor %}
 
-    {{ knp_pagination_render(announcements) }}
+      <div class="delete-entries-pagination">
+        {{ knp_pagination_render(announcements) }}
+      </div>
+    </section>
   </div>
 </div>
 {% endblock %}

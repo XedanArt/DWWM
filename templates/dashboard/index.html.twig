@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+{% endblock %}
+
+{% block title %}Dashboard{% endblock %}
+
 {% block body %}
 <div class="dashboard-wrapper">
   <h1 class="dashboard-title">Tableau de bord</h1>

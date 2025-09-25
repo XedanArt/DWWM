@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+{% endblock %}
+
+{% block title %}Déconnexion{% endblock %}
+
 {% block body %}
 <section class="page-connexion">
   <div class="connexion-container">

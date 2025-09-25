@@ -9,7 +9,7 @@ Superadmin - DashboardController :
 Contrôle NVDA :
 - pas du tout au point, accessibilité à prévoir comme prévu
 
-Contrôle Lighthouse : 
+Contrôle Lighthouse I :
 - ordinateur : Performances 80, Accessibilité 94, Bonnes pratiques 96, SEA 54 (site pas encore hébergé)
 - mobile : Performances 61, Accessibilité 85, Bonne pratiques 96, SEO 54 (site pas encore hébergé)
 

@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/topic_show.css') }}">
+{% endblock %}
+
+{% block title %}{{ topic.title }}{% endblock %}
+
 {% block body %}
 <div class="topic-separator"></div>
 
@@ -100,8 +107,8 @@
           </div>
         {% endfor %}
 
-        <div class="forum-section-pagination mt-4">
-          {{ knp_pagination_render(pagination, 'pagination/custom_bootstrap_small.html.twig') }}
+        <div class="topic-show-pagination">
+          {{ knp_pagination_render(pagination) }}
         </div>
       {% else %}
         <p class="no-comments">Aucune réponse pour l’instant.</p>

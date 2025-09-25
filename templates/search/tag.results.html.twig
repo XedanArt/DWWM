@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/tag.results.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/topic_show.css') }}">
+{% endblock %}
+
 {% block title %}Résultats pour le tag #{{ tag.name }}{% endblock %}
 
 {% block body %}

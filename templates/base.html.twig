@@ -6,30 +6,11 @@
     <meta name="description" content="Morning Soul est une plateforme communautaire immersive mêlant jeu narratif, tutoriels, devblog et forum. Rejoignez l’aventure.">
     <title>{% block title %}- Morning Soul -{% endblock %}</title>
     <link rel="icon" type="image/png" href="{{ asset('/img/favicon_ms_00.png') }}">
-
-    {# Feuilles de style #}
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/discover.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/download.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/support.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/socials.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/changelog.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/devblog.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/forum.css') }}">
     <link rel="stylesheet" href="{{ asset('css/base.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/sections.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/topic_show.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/legals.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/tag.results.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/topic_create.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/superadmin.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     {% block stylesheets %}
@@ -61,10 +42,12 @@
         .cookie-banner {
           position: fixed;
           bottom: 20px;
-          left: 20px;
-          right: 20px;
+          width: 100%;
           z-index: 9999;
         }
+
+        .badge-admin{background-color:#2196f3;color:#fff;padding:2px 6px;font-size:.75rem;border-radius:4px;margin-left:6px}
+        .badge-super{background-color:#e91e63;color:#fff;padding:2px 6px;font-size:.75rem;border-radius:4px;margin-left:6px}
       </style>
     {% endblock %}
   </head>

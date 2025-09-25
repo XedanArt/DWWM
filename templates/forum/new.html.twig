@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/forum.css') }}">
+{% endblock %}
+
 {% block title %}Créer un nouveau sujet{% endblock %}
 
 {% block body %}

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+{% endblock %}
+
+{% block title %}Contacter {{ targetUser.displayUsername ?? targetUser.username }}{% endblock %}
+
+{% block body %}
+<div class="contact-user-container">
+  <h2>Contacter {{ targetUser.displayUsername ?? targetUser.username }}</h2>
+
+  {# Exemple de zone de message, à adapter selon ton formulaire #}
+  {{ form_start(form) }}
+    {{ form_row(form.message) }}
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+  {{ form_end(form) }}
+</div>
+{% endblock %}

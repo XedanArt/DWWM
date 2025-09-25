@@ -1,5 +1,10 @@
 {%  extends "base.html.twig" %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+{% endblock %}
+
 {% block body %}
 <!-- Conteneur principal de la page -->
 <div class="ms-site-wrapper d-flex flex-column min-vh-100">
@@ -53,7 +58,3 @@
 
 
 
-
-{# <a href="{{ path('contact.support') }}" class="btn ms-btn-custom">Support</a>
-<a href="{{ path('game.discover') }}" class="btn ms-btn-custom">Découvrir</a>
-<a href="{{ path('forum.index') }}" class="btn ms-btn-custom">Accéder au Forum</a> #}

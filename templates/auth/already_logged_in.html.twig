@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+{% endblock %}
+
+{% block title %}Vous êtes déjà connecté{% endblock %}
+
 {% block body %}
   <div style="display: flex; justify-content: center; align-items: center; height: 60vh;">
     <div class="alert alert-warning text-center">

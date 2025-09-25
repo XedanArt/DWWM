@@ -1,13 +1,18 @@
 {% extends "base.html.twig" %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/forum.css') }}">
+{% endblock %}
+
+{% block title %}Forum communautaire de Morning Soul{% endblock %}
+
 {% block body %}
 <section class="forum-section">
   <div class="forum-topics-container">
 
-    <!-- CONTENU PRINCIPAL -->
     <div class="forum-main">
 
-      <!-- EN-TÊTE -->
       <div class="forum-title">
         <div class="forum-title-header">
           <img src="{{ asset('img/favicon_ms_00.png') }}" alt="Logo Morning Soul" class="forum-logo">
@@ -15,7 +20,6 @@
         </div>
       </div>
 
-      <!-- À PROPOS -->
       <div class="forum-morningsoul">
         <h2 style="display: flex; justify-content: space-between; align-items: center;">
           À propos de Morning Soul
@@ -30,7 +34,6 @@
         </div>
       </div>
 
-      <!-- INFOS PRATIQUES -->
       <div class="forum-informations">
         <h2 style="display: flex; justify-content: space-between; align-items: center;">
           Infos pratiques
@@ -45,7 +48,6 @@
         </div>
       </div>
 
-      <!-- ANNONCES -->
       <div class="forum-announcement">
         <h2 style="display: flex; justify-content: space-between; align-items: center;">
           ANNONCES
@@ -64,7 +66,6 @@
         </div>
       </div>
 
-      <!-- À LA UNE -->
       <div class="forum-highlight">
         <h2 style="display: flex; justify-content: space-between; align-items: center;">
           À LA UNE
@@ -84,10 +85,8 @@
       </div>
     </div>
 
-    <!-- SIDEBAR -->
     <div class="forum-sidebar-container">
 
-      <!-- RECHERCHE PAR TAG -->
       <div class="forum-search">
         <h2 style="display: flex; justify-content: space-between; align-items: center;">Rechercher par tag
           <button class="collapse-btn" onclick="toggleSection(this)">−</button>
@@ -100,7 +99,6 @@
         </div>
       </div>
 
-      <!-- TABLE DES MATIÈRES -->
       <div class="forum-toc">
         <h2 style="display: flex; justify-content: space-between; align-items: center;">
           Table des matières
@@ -121,7 +119,6 @@
         </div>
       </div>
 
-      <!-- DERNIERS SUJETS -->
       <div class="forum-allcategory">
         <h2 style="display: flex; justify-content: space-between; align-items: center;">
           Derniers sujets créés
@@ -142,12 +139,10 @@
   </div>
 
   {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
-  <!-- BOUTON CRÉATION -->
   <div class="forum-new-topic-btn" onclick="document.querySelector('#forum-new-topic-form').classList.toggle('visible')">
     Nouveau Topic
   </div>
 
-<!-- FORMULAIRE FIXÉ -->
 <div id="forum-new-topic-form" class="forum-new-topic-form">
   {{ form_start(form, {
     'action': path('forum.index'),
@@ -164,12 +159,10 @@
 
     {{ form_row(form.content, {'attr': {'class': 'forum-textarea', 'maxlength': 5000}}) }}
 
-    {# Champ masqué pour les tags #}
     <div style="display:none;">
       {{ form_widget(form.tags) }}
     </div>
 
-    {# Select2 visible #}
     <div class="form-group">
       <label for="tag-select2" class="forum-label">Tags</label>
       <select id="tag-select2" multiple="multiple" class="tag-select" style="width:100%;">

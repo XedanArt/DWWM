@@ -19,6 +19,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Knp\Component\Pager\PaginatorInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\Mailer\MailerInterface;
+use App\Form\ContactUserType;
+use Symfony\Component\Mime\Email;
+
 
 class DashboardController extends AbstractController
 {
@@ -37,12 +41,41 @@ class DashboardController extends AbstractController
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/dashboard/contact/{id}', name: 'dashboard.contact_user')]
-    public function contactUser(User $user): Response
-    {
+    public function contactUser(
+        User $user, 
+        Request $request, 
+        MailerInterface $mailer
+    ): Response {
+        $form = $this->createForm(ContactUserType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $html = $this->renderView('emails/contact_user.html.twig', [
+                'user' => $user,
+                'message' => $data['message']
+            ]);
+
+            $email = (new Email())
+                ->from('no-reply@morning-soul.fr')
+                ->to($user->getEmail())
+                ->subject('Message de l\'administration')
+                ->text($data['message'])
+                ->html($html);
+            
+            $mailer->send($email);
+
+            $this->addFlash('success', 'Message envoyé à' . $user->getDisplayUsername());
+            return $this->redirectToRoute('dashboard');
+        }
+
         return $this->render('dashboard/contact_user.html.twig', [
-            'targetUser' => $user
+            'targetUser' => $user,
+            'form' => $form->createView()
         ]);
     }
+
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/dashboard/ban/{id}/{duration}', name: 'dashboard.ban_user', methods: ['POST'])]
@@ -120,20 +153,26 @@ class DashboardController extends AbstractController
         $devblogs = $paginator->paginate(
             $devblogRepo->createQueryBuilder('d')->orderBy('d.date', 'DESC')->getQuery(),
             $request->query->getInt('page_devblog', 1),
-            5
+            5,
+            ['pageParameterName' => 'page_devblog']
         );
+
 
         $changelogs = $paginator->paginate(
             $changelogRepo->createQueryBuilder('c')->orderBy('c.date', 'DESC')->getQuery(),
             $request->query->getInt('page_changelog', 1),
-            5
+            5,
+            ['pageParameterName' => 'page_changelog']
         );
+
 
         $announcements = $paginator->paginate(
             $announcementRepo->createQueryBuilder('a')->orderBy('a.createdAt', 'DESC')->getQuery(),
             $request->query->getInt('page_announcement', 1),
-            5
+            5,
+            ['pageParameterName' => 'page_announcement']
         );
+
 
         return $this->render('dashboard/delete_entries.html.twig', [
             'devblogs' => $devblogs,
@@ -184,7 +223,7 @@ class DashboardController extends AbstractController
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/dashboard/logs', name: 'dashboard.logs')]
-    public function viewLogs(): Response
+    public function viewLogs(Request $request, PaginatorInterface $paginator): Response
     {
         $logPath = $this->getParameter('kernel.logs_dir') . '/controllers/admin_actions.log';
 
@@ -192,11 +231,17 @@ class DashboardController extends AbstractController
             $logs = ['Fichier de log introuvable.'];
         } else {
             $lines = file($logPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-            $logs = array_reverse(array_slice($lines, -100));
+            $logs = array_reverse($lines);
         }
 
+        $pagination = $paginator->paginate(
+            $logs,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('dashboard/logs.html.twig', [
-            'logs' => $logs
+            'logs' => $pagination
         ]);
     }
 }

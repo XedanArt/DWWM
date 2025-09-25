@@ -24,10 +24,11 @@ class ChangelogType extends AbstractType
                 ],
             ])
             ->add('date', DateTimeType::class, [
-                'widget' => 'single_text',
-                'disabled' => true,
                 'label' => 'Date de publication',
+                'widget' => 'single_text',
+                'data' => new \DateTimeImmutable(),
             ])
+
             ->add('content', TextareaType::class, [
                 'label' => 'Contenu du changelog',
                 'attr' => [

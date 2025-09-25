@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/legals.css') }}">
+{% endblock %}
+
 {% block title %}Mentions légales{% endblock %}
 
 {% block body %}

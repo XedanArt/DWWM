@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/superadmin.css') }}">
+{% endblock %}
+
 {% block title %}Créer un administrateur{% endblock %}
 
 {% block body %}

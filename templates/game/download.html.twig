@@ -1,4 +1,12 @@
 {%  extends "base.html.twig" %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/download.css') }}">
+{% endblock %}
+
+{% block title %}Téléchargement{% endblock %}
+
 {% block body %}
 <div class="download-separator">
 </div>

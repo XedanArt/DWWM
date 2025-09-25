@@ -1,43 +1,43 @@
-<footer class="footer-custom" role="contentinfo" aria-label="Pied de page du site">
+<footer class="footer-custom" role="contentinfo" aria-label="Pied de page du site Morning Soul">
   <div class="footer-custom-container">
 
     <!-- Partie haute -->
-    <div class="footer-custom-top" role="navigation" aria-label="Liens principaux du footer">
+    <div class="footer-custom-top" role="navigation" aria-label="Navigation principale du pied de page">
       <div class="footer-custom-top-col" aria-labelledby="footer-title-main">
-        <h5 id="footer-title-main" class="footer-custom-top-title">MORNING SOUL</h5>
-        <ul class="footer-custom-top-list">
-          <li><a href="{{ path('homepage.index') }}" class="footer-custom-link" aria-label="Accueil">Accueil</a></li>
-          <li><a href="{{ path('game.discover') }}" class="footer-custom-link" aria-label="Découvrir le jeu">Découvrir</a></li>
-          <li><a href="{{ path('forum.index') }}" class="footer-custom-link" aria-label="Accéder aux tutoriels">Tutoriels</a></li>
-          <li><a href="{{ path('news.changelog') }}" class="footer-custom-link" aria-label="Voir le changelog">Changelog</a></li>
-          <li><a href="{{ path('news.devblog') }}" class="footer-custom-link" aria-label="Lire le devblog">Devblog</a></li>
+        <h5 id="footer-title-main" class="footer-custom-top-title">MORNING SOUL</h2>
+        <ul class="footer-custom-top-list" role="list">
+          <li><a href="{{ path('homepage.index') }}" class="footer-custom-link" aria-label="Page d'accueil Morning Soul">Accueil</a></li>
+          <li><a href="{{ path('game.discover') }}" class="footer-custom-link" aria-label="Découvrir l'univers du jeu Morning Soul">Découvrir</a></li>
+          <li><a href="{{ path('forum.index') }}" class="footer-custom-link" aria-label="Accéder aux tutoriels du forum">Tutoriels</a></li>
+          <li><a href="{{ path('news.changelog') }}" class="footer-custom-link" aria-label="Voir les dernières mises à jour du projet">Changelog</a></li>
+          <li><a href="{{ path('news.devblog') }}" class="footer-custom-link" aria-label="Lire les articles du devblog Morning Soul">Devblog</a></li>
         </ul>
       </div>
 
       <div class="footer-custom-top-col" aria-labelledby="footer-title-info">
-        <h5 id="footer-title-info" class="footer-custom-top-title">INFORMATIONS</h5>
-        <ul class="footer-custom-top-list">
-          <li><a href="{{ path('forum.rules') }}" class="footer-custom-link" aria-label="Règles de la communauté">Règles de la communauté</a></li>
-          <li><a href="{{ path('news.changelog') }}" class="footer-custom-link" aria-label="Voir les nouveautés">Nouveautés</a></li>
-          <li><a href="{{ path('forum.index') }}" class="footer-custom-link" aria-label="Accéder au forum">Forum</a></li>
-          <li><a href="{{ path('contact.support') }}" class="footer-custom-link" aria-label="Contacter le support">Nous contacter</a></li>
+        <h5 id="footer-title-info" class="footer-custom-top-title">INFORMATIONS</h2>
+        <ul class="footer-custom-top-list" role="list">
+          <li><a href="{{ path('forum.rules') }}" class="footer-custom-link" aria-label="Consulter les règles de la communauté">Règles de la communauté</a></li>
+          <li><a href="{{ path('news.changelog') }}" class="footer-custom-link" aria-label="Voir les nouveautés du projet">Nouveautés</a></li>
+          <li><a href="{{ path('forum.index') }}" class="footer-custom-link" aria-label="Accéder au forum Morning Soul">Forum</a></li>
+          <li><a href="{{ path('contact.support') }}" class="footer-custom-link" aria-label="Contacter le support Morning Soul">Nous contacter</a></li>
         </ul>
       </div>
 
       <div class="footer-custom-top-col" aria-labelledby="footer-title-account">
-        <h5 id="footer-title-account" class="footer-custom-top-title">MON COMPTE</h5>
-        <ul class="footer-custom-top-list">
+        <h5 id="footer-title-account" class="footer-custom-top-title">MON COMPTE</h2>
+        <ul class="footer-custom-top-list" role="list">
           {% if app.user %}
-            <li><a href="{{ path('account.profile') }}" class="footer-custom-link" aria-label="Accéder à mon profil">Mon Profil</a></li>
+            <li><a href="{{ path('account.profile') }}" class="footer-custom-link" aria-label="Accéder à mon profil utilisateur">Mon Profil</a></li>
             <li><a href="{{ path('cookies.preferences') }}" class="footer-custom-link" aria-label="Gérer mes préférences de cookies">Gérer les cookies</a></li>
 
             {% if 'ROLE_ADMIN' in app.user.roles or 'ROLE_SUPER_ADMIN' in app.user.roles %}
-              <li><a href="{{ path('dashboard') }}" class="footer-custom-link" aria-label="Accéder au dashboard administrateur">Dashboard</a></li>
+              <li><a href="{{ path('dashboard') }}" class="footer-custom-link" aria-label="Accéder au tableau de bord administrateur">Dashboard</a></li>
             {% endif %}
 
           {% else %}
-            <li><a href="{{ path('app_login') }}" class="footer-custom-link" aria-label="Se connecter à mon compte">Se connecter</a></li>
-            <li><a href="{{ path('auth.register') }}" class="footer-custom-link" aria-label="Créer un compte">S'inscrire</a></li>
+            <li><a href="{{ path('app_login') }}" class="footer-custom-link" aria-label="Se connecter à mon compte Morning Soul">Se connecter</a></li>
+            <li><a href="{{ path('auth.register') }}" class="footer-custom-link" aria-label="Créer un compte Morning Soul">S'inscrire</a></li>
           {% endif %}
         </ul>
       </div>
@@ -47,31 +47,31 @@
     <hr class="footer-custom-divider" aria-hidden="true">
 
     <!-- Partie basse -->
-    <div class="footer-custom-bottom" role="contentinfo" aria-label="Informations légales et réseaux sociaux">
-      <div class="footer-custom-bottom-legals" role="navigation" aria-label="Liens légaux">
-        <a href="{{ path('legals.terms') }}" class="footer-custom-link" aria-label="Conditions d'utilisation">Conditions d'utilisation</a>
-        <a href="{{ path('legals.privacy') }}" class="footer-custom-link" aria-label="Politique de confidentialité">Politique de Confidentialité</a>
-        <a href="{{ path('legals.legal') }}" class="footer-custom-link" aria-label="Mentions légales">Mentions légales</a>
-        <a href="{{ path('legals.cookies') }}" class="footer-custom-link" aria-label="Gestion des cookies">Gestion des cookies</a>
-      </div>
+    <div class="footer-custom-bottom" role="contentinfo" aria-label="Informations légales et réseaux sociaux Morning Soul">
+      <nav class="footer-custom-bottom-legals" aria-label="Liens légaux du site">
+        <a href="{{ path('legals.terms') }}" class="footer-custom-link" aria-label="Lire les conditions d'utilisation">Conditions d'utilisation</a>
+        <a href="{{ path('legals.privacy') }}" class="footer-custom-link" aria-label="Lire la politique de confidentialité">Politique de Confidentialité</a>
+        <a href="{{ path('legals.legal') }}" class="footer-custom-link" aria-label="Lire les mentions légales">Mentions légales</a>
+        <a href="{{ path('legals.cookies') }}" class="footer-custom-link" aria-label="Lire la politique de gestion des cookies">Gestion des cookies</a>
+      </nav>
 
-      <div class="footer-custom-bottom-socials" role="navigation" aria-label="Réseaux sociaux">
-        <a href="https://instagram.com" target="_blank" aria-label="Suivez-nous sur Instagram">
+      <nav class="footer-custom-bottom-socials" aria-label="Suivez Morning Soul sur les réseaux sociaux">
+        <a href="https://instagram.com" target="_blank" aria-label="Suivez Morning Soul sur Instagram">
           <div class="footer-custom-social-box">
             <img src="{{ asset('img/socials_insta_logo.png') }}" alt="Logo Instagram" class="footer-custom-social-img">
           </div>
         </a>
-        <a href="https://discord.gg/dYv6WBetaU" target="_blank" aria-label="Rejoignez-nous sur Discord">
+        <a href="https://discord.gg/dYv6WBetaU" target="_blank" aria-label="Rejoignez la communauté Morning Soul sur Discord">
           <div class="footer-custom-social-box">
             <img src="{{ asset('img/socials_discord_logo.png') }}" alt="Logo Discord" class="footer-custom-social-img">
           </div>
         </a>
-        <a href="https://twitter.com" target="_blank" aria-label="Suivez-nous sur X (Twitter)">
+        <a href="https://twitter.com" target="_blank" aria-label="Suivez Morning Soul sur X (anciennement Twitter)">
           <div class="footer-custom-social-box">
             <img src="{{ asset('img/socials_x_logo.png') }}" alt="Logo X (Twitter)" class="footer-custom-social-img">
           </div>
         </a>
-      </div>
+      </nav>
 
       <div class="footer-custom-bottom-copyright">
         <span aria-label="Copyright Morning Soul">© 2025 Morning Soul</span>
