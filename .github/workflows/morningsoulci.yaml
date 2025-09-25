@@ -36,7 +36,7 @@ jobs:
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.4'
+        php-version: '8.3'
         extensions: bcmath, calendar, ctype, curl, dom, fileinfo, filter, hash, iconv, intl, json, libxml, mbstring, mysqlnd, openssl, pcre, PDO, pdo_mysql, Phar, random, readline, Reflection, session, SimpleXML, SPL, standard, tokenizer, xml, xmlreader, xmlwriter, zlib
         coverage: none
     - name: List active PHP modules
@@ -44,6 +44,9 @@ jobs:
 
     - name: Validate composer.json & composer.lock
       run: composer validate --strict
+      
+    - name : Debug Composer platform
+      run : composer diagnose
 
     - name: Install dependencies
       run: composer install --no-interaction --prefer-dist --optimize-autoloader
