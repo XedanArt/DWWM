@@ -14,9 +14,11 @@ class AdminAuditLogger
         $this->logger = $superAdminLogger;
     }
 
-    public function logAdminCreation(User $admin): void
+    public function logAdminCreation(User $admin): bool
     {
         $this->logger->info("Administrateur créé : " . $admin->getEmail());
+        
+        return true;
     }
 
     public function logAdminRevoked(User $admin): void

@@ -6,22 +6,22 @@ use App\Entity\User;
 use App\Entity\Devblog;
 use App\Entity\Changelog;
 use App\Entity\Announcement;
+use Psr\Log\LoggerInterface;
+use App\Form\ContactUserType;
+use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use App\Repository\DevblogRepository;
 use App\Repository\ChangelogRepository;
-use App\Repository\AnnouncementRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Repository\AnnouncementRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
-use App\Form\ContactUserType;
-use Symfony\Component\Mime\Email;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 class DashboardController extends AbstractController
@@ -101,8 +101,11 @@ class DashboardController extends AbstractController
 
         $em->persist($user);
         $em->flush();
+        /** @var User $user */
+        $user=$this->getUser();
+        
 
-        $adminLogger->warning("[BAN] Admin {$this->getUser()->getUsername()} a banni {$user->getUsername()} jusqu’au {$banUntil->format('Y-m-d H:i')}.");
+        $adminLogger->warning("[BAN] Admin {$user->getUsername()} a banni {$user->getUsername()} jusqu’au {$banUntil->format('Y-m-d H:i')}.");
 
         $this->addFlash('warning', "L’utilisateur {$user->getDisplayUsername()} a été banni pour {$duration}h.");
         return $this->redirectToRoute('dashboard');
@@ -131,8 +134,10 @@ class DashboardController extends AbstractController
             $this->addFlash('error', 'Ce compte est protégé et ne peut pas être supprimé.');
             return $this->redirectToRoute('dashboard');
         }
+        /** @var User $user */
+        $user=$this->getUser();
 
-        $adminLogger->info("[DELETE_USER] Admin {$this->getUser()->getUsername()} a supprimé l’utilisateur {$user->getUsername()} (ID: {$user->getId()}).");
+        $adminLogger->info("[DELETE_USER] Admin {$user->getUsername()} a supprimé l’utilisateur {$user->getUsername()} (ID: {$user->getId()}).");
 
         $em->remove($user);
         $em->flush();
@@ -211,8 +216,10 @@ class DashboardController extends AbstractController
         if (!$this->isCsrfTokenValid('delete-entry-' . $type . '-' . $id, $request->request->get('_token'))) {
             throw $this->createAccessDeniedException('Jeton CSRF invalide.');
         }
+        /** @var User $user */
+        $user=$this->getUser();
 
-        $adminLogger->info("[DELETE_ENTRY] Admin {$this->getUser()->getUsername()} a supprimé un(e) {$type} (ID: {$entry->getId()}).");
+        $adminLogger->info("[DELETE_ENTRY] Admin {$user->getUsername()} a supprimé un(e) {$type} (ID: {$entry->getId()}).");
 
         $em->remove($entry);
         $em->flush();
