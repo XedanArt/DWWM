@@ -50,7 +50,18 @@ jobs:
 
     - name: Cache Symfony
       run: php bin/console cache:clear
-
+    
+    - name: Wait for MySQL to be ready
+      run : |
+        for i in {1..30}; do
+          if mysqladmin ping -h 127.0.0.1 -uroot -proot --silent; then
+            echo "MySQL is up!"
+            break
+          fi
+          echo "Waiting for MySQL..."
+          sleep 2
+        done
+    
     - name: Test DB connection
       run: php bin/console doctrine:query:sql "SELECT 1"
      
