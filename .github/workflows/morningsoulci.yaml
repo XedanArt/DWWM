@@ -51,8 +51,14 @@ jobs:
     - name: Cache Symfony
       run: php bin/console cache:clear
 
+    - name: Test DB connection
+      run: php bin/console doctrine:query:sql "SELECT 1"
+     
+    - name: Check migration status
+      run: php bin/console doctrine:migrations:status
+      
     - name: Run migrations (optional)
-      run: php bin/console doctrine:migrations:migrate --no-interaction
+      run: php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
 
     - name: Build assets (if using Webpack Encore)
       run: |
