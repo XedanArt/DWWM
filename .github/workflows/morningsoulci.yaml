@@ -1,0 +1,72 @@
+name: Morning Soul CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  setup:
+    name: Setup & Build Symfony
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test_db
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    env:
+      DATABASE_URL: "mysql://root:root@127.0.0.1:3306/test_db"
+      APP_ENV: test
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.4'
+        extensions: bcmath, calendar, ctype, curl, dom, fileinfo, filter, hash, iconv, intl, json, libxml, mbstring, mysqlnd, openssl, pcre, PDO, pdo_mysql, Phar, random, readline, Reflection, session, SimpleXML, SPL, standard, tokenizer, xml, xmlreader, xmlwriter, zlib
+        coverage: none
+    - name: List active PHP modules
+      run: php -m
+
+    - name: Validate composer.json & composer.lock
+      run: composer validate --strict
+
+    - name: Install dependencies
+      run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    - name: Cache Symfony
+      run: php bin/console cache:clear
+
+    - name: Run migrations (optional)
+      run: php bin/console doctrine:migrations:migrate --no-interaction
+
+    - name: Build assets (if using Webpack Encore)
+      run: |
+        npm install
+        npm run build
+
+    - name: Run tests
+      run: php bin/phpunit
+
+    - name: Lint Twig templates
+      run: php bin/console lint:twig templates
+
+    - name: Lint YAML config
+      run: php bin/console lint:yaml config
+
+    - name: Check Symfony requirements
+      run: php bin/console about
