@@ -38,8 +38,18 @@
       {% if users is defined and users|length > 0 %}
         <ul class="user-list scrollable-user-list">
           {% for user in users %}
-            <li class="user-item" data-username="{{ user.username|lower }}" data-email="{{ user.email|lower }}" data-role="{{ user.roles|join(',') }}" data-banned="{{ user.isBanned() ? 'true' : 'false' }}">
+            {% set isPrivileged = 'ROLE_ADMIN' in user.roles or 'ROLE_SUPER_ADMIN' in user.roles %}
+            <li class="user-item"
+                data-username="{{ user.username|lower }}"
+                data-email="{{ user.email|lower }}"
+                data-role="{{ user.roles|join(',') }}"
+                data-banned="{{ user.isBanned() ? 'true' : 'false' }}">
               <span>{{ user.displayUsername }}</span>
+              {% if 'ROLE_SUPER_ADMIN' in user.roles %}
+                <span class="badge bg-warning text-dark ms-2">Superadmin</span>
+              {% elseif 'ROLE_ADMIN' in user.roles %}
+                <span class="badge bg-info text-dark ms-2">Admin</span>
+              {% endif %}
               {% if user.isBanned() %}
                 <span class="badge bg-danger ms-2">Banni jusqu’au {{ user.banUntil|date('d/m/Y H:i') }}</span>
               {% endif %}
@@ -57,27 +67,34 @@
                 <p>Derniers posts : {{ user.posts|length }}</p>
 
                 <div class="user-actions">
-                  {% if not user.isBanned() %}
-                    <a href="{{ path('dashboard.contact_user', { id: user.id }) }}">Contacter</a>
+  {% set isPrivilegedTarget = 'ROLE_ADMIN' in user.roles or 'ROLE_SUPER_ADMIN' in user.roles %}
+  {% set isSelf = user.id == app.user.id %}
 
-                    <form method="post" action="{{ path('dashboard.ban_user', { id: user.id, duration: 24 }) }}" class="confirm-action">
-                      <input type="hidden" name="_token" value="{{ csrf_token('ban-24-' ~ user.id) }}">
-                      <button type="submit" class="btn btn-warning btn-sm">Bannir 24h</button>
-                    </form>
+  {% if not isPrivilegedTarget %}
+    {% if not user.isBanned() %}
+      <a href="{{ path('dashboard.contact_user', { id: user.id }) }}">Contacter</a>
 
-                    <form method="post" action="{{ path('dashboard.ban_user', { id: user.id, duration: 48 }) }}" class="confirm-action">
-                      <input type="hidden" name="_token" value="{{ csrf_token('ban-48-' ~ user.id) }}">
-                      <button type="submit" class="btn btn-warning btn-sm">Bannir 48h</button>
-                    </form>
-                  {% else %}
-                    <div class="text-muted">Actions désactivées (utilisateur banni)</div>
-                  {% endif %}
+      <form method="post" action="{{ path('dashboard.ban_user', { id: user.id, duration: 24 }) }}" class="confirm-action">
+        <input type="hidden" name="_token" value="{{ csrf_token('ban-24-' ~ user.id) }}">
+        <button type="submit" class="btn btn-warning btn-sm">Bannir 24h</button>
+      </form>
 
-                  <form method="post" action="{{ path('dashboard.delete_user', { id: user.id }) }}" class="confirm-action">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete-user-' ~ user.id) }}">
-                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
-                  </form>
-                </div>
+      <form method="post" action="{{ path('dashboard.ban_user', { id: user.id, duration: 48 }) }}" class="confirm-action">
+        <input type="hidden" name="_token" value="{{ csrf_token('ban-48-' ~ user.id) }}">
+        <button type="submit" class="btn btn-warning btn-sm">Bannir 48h</button>
+      </form>
+    {% else %}
+      <div class="text-muted">Actions désactivées (utilisateur banni)</div>
+    {% endif %}
+
+    {% if not isSelf %}
+      <form method="post" action="{{ path('dashboard.delete_user', { id: user.id }) }}" class="confirm-action">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete-user-' ~ user.id) }}">
+        <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+      </form>
+    {% endif %}
+  {% endif %}
+</div>
               </div>
             </li>
           {% endfor %}
