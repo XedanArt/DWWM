@@ -119,32 +119,40 @@ class DashboardController extends AbstractController
         #[Autowire(service: 'monolog.logger.admin_actions')]
         LoggerInterface $adminLogger
     ): Response {
-        $user = $em->getRepository(User::class)->find($id);
+        $targetUser = $em->getRepository(User::class)->find($id);
 
-        if (!$user) {
+        if (!$targetUser) {
             $this->addFlash('error', 'Utilisateur introuvable.');
             return $this->redirectToRoute('dashboard');
         }
 
-        if (!$this->isCsrfTokenValid('delete-user-' . $user->getId(), $request->request->get('_token'))) {
+        if (!$this->isCsrfTokenValid('delete-user-' . $targetUser->getId(), $request->request->get('_token'))) {
             throw $this->createAccessDeniedException('Jeton CSRF invalide.');
         }
 
-        if ($user->getId() === 1) {
-            $this->addFlash('error', 'Ce compte est protégé et ne peut pas être supprimé.');
+        if ($targetUser->getId() === $this->getUser()->getId()) {
+            $this->addFlash('error', 'Vous ne pouvez pas vous supprimer vous-même.');
             return $this->redirectToRoute('dashboard');
         }
-        /** @var User $user */
-        $user=$this->getUser();
 
-        $adminLogger->info("[DELETE_USER] Admin {$user->getUsername()} a supprimé l’utilisateur {$user->getUsername()} (ID: {$user->getId()}).");
+        if (
+            in_array('ROLE_ADMIN', $targetUser->getRoles()) ||
+            in_array('ROLE_SUPERADMIN', $targetUser->getRoles())
+        ) {
+            $this->addFlash('error', 'Les comptes administrateurs ne peuvent pas être supprimés.');
+            return $this->redirectToRoute('dashboard');
+        }
 
-        $em->remove($user);
+
+        $adminLogger->info("[DELETE_USER] Admin {$this->getUser()->getUsername()} a supprimé l’utilisateur {$targetUser->getUsername()} (ID: {$targetUser->getId()}).");
+
+        $em->remove($targetUser);
         $em->flush();
 
         $this->addFlash('success', 'Utilisateur supprimé avec succès.');
         return $this->redirectToRoute('dashboard');
     }
+
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/dashboard/delete-entries', name: 'admin.entry.delete')]

@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 // php bin/console app:promote-super-admin superadmin@superadmin.fr
+// docker : docker exec -it symfony_php php bin/console app:promote-super-admin superadmin@superadmin.fr
 #[AsCommand(
     name: 'app:promote-super-admin',
     description: 'Attribue le rôle ROLE_SUPER_ADMIN à un utilisateur existant.',
