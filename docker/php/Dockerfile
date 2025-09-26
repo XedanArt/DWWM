@@ -16,6 +16,13 @@ RUN curl -sS -L https://github.com/symfony-cli/symfony-cli/releases/latest/downl
     -o /usr/local/bin/symfony \
     && chmod +x /usr/local/bin/symfony
 
+# OPCACHE
+RUN docker-php-ext-enable opcache
+COPY conf.d/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+
+# Configure les limites d'upload pour éviter l'erreur 413
+COPY conf.d/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+
 WORKDIR /var/www/html
 RUN chown -R www-data:www-data /var/www/html
 EXPOSE 9000
