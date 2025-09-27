@@ -31,8 +31,8 @@
                 {% for line in logs %}
                   {% set parts = line|split('] ') %}
                   {% set timestamp = parts[0]|replace({'[': ''}) %}
-                  {% set level = parts[1]|split('.')|last %}
-                  {% set message = parts|slice(2)|join('] ') %}
+                  {% set level = parts[1] is defined ? parts[1]|split('.')|last : 'UNKNOW' %}
+                  {% set message = parts|length > 2 ? parts|slice(2)|join('] ') : '' %}
                   {% set levelColor = {
                     'INFO': 'logs-badge-info',
                     'WARNING': 'logs-badge-warning',

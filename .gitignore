@@ -1,0 +1,21 @@
+# Symfony folders
+/vendor/
+/var/
+/node_modules/
+/public/build/
+/public/uploads/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE and OS files
+*.log
+*.DS_Store
+.idea/
+.vscode/
+
+# PHPUnit
+/phpunit.xml
+/phpunit.xml.dist
