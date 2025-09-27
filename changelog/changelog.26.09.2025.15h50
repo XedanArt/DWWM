@@ -1,8 +1,5 @@
 26/09/2025 : 
 
-Profil :
-- contrainte de temps avant de pouvoir changer d'email ou de pseudo
-
 Hébergement : 
 - mettre le site en ligne
 
@@ -11,11 +8,35 @@ Mail :
 
 Créer un superadmin en environnement de production
 
-Workflows : OK
+Workflows :
 - création d'un CI avancé 
 - (pour les composants symfony, le fichier composer.jso nest directement vérifié donc pas besoin de rentrer les composants/bundles à la main) 
 - (pour PHP il faut préciser les modules  extensions: bcmath, calendar, ctype, curl, dom, fileinfo, filter, hash, iconv, intl, json, libxml, mbstring, mysqlnd, openssl, pcre, PDO, pdo_mysql, Phar, random, readline, Reflection, session, SimpleXML, SPL, standard, tokenizer, xml, xmlreader, xmlwriter, zlib)
+- création d'un CD potentiel :
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: setup
+    if: github.ref == 'refs/heads/main'
 
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+          cd /var/www/morning-soul
+          git pull origin main
+          composer install --no-dev --optimize-autoloader
+          php bin/console cache:clear
+          php bin/console doctrine:migrations:migrate --no-interaction
+          php bin/console assets:install public
 
 
 
