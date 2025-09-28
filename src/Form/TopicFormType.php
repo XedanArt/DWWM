@@ -8,9 +8,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TopicFormType extends AbstractType
 {
@@ -32,14 +34,42 @@ class TopicFormType extends AbstractType
                     'placeholder' => 'Entrez le titre du sujet',
                     'class' => 'form-control',
                 ],
+                'constraints' => [
+                    new NotBlank(['message' => 'Le titre ne peut pas être vide.']),
+                    new Length([
+                        'max' => 150,
+                        'maxMessage' => 'Le titre ne doit pas dépasser 150 caractères.',
+                    ]),
+                    new Regex([
+                        'pattern' => '/<script\b[^>]*>(.*?)<\/script>/i',
+                        'match' => false,
+                        'message' => 'Le titre ne doit pas contenir de balises <script>.',
+                    ]),
+                    new Regex([
+                        'pattern' => '/https?:\/\/[^\s]+/i',
+                        'match' => false,
+                        'message' => 'Le titre ne doit pas contenir de lien URL.',
+                    ]),
+                ],
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'Contenu',
-                'required' => false, // important pour TinyMCE
+                'required' => false,
                 'attr' => [
                     'placeholder' => 'Décrivez votre sujet ici...',
                     'rows' => 8,
                     'class' => 'form-control tinymce',
+                ],
+                'constraints' => [
+                    new Length([
+                        'max' => 5000,
+                        'maxMessage' => 'Le contenu ne doit pas dépasser 5000 caractères.',
+                    ]),
+                    new Regex([
+                        'pattern' => '/<script\b[^>]*>(.*?)<\/script>/i',
+                        'match' => false,
+                        'message' => 'Le contenu ne doit pas contenir de balises <script>.',
+                    ]),
                 ],
             ])
             ->add('tags', TextType::class, [
@@ -50,6 +80,12 @@ class TopicFormType extends AbstractType
                     'class' => 'tag-input-hidden',
                     'style' => 'display:none',
                     'placeholder' => 'Sélectionnez ou créez des tags',
+                ],
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z0-9À-ÿ,\s\-]*$/u',
+                        'message' => 'Les tags ne doivent contenir que des lettres, chiffres, tirets ou virgules.',
+                    ]),
                 ],
             ]);
     }

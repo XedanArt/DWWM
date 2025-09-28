@@ -1,5 +1,23 @@
 {% extends 'base.html.twig' %}
 
+{% block seo %}
+  <meta name="description" content="Détails de la mise à jour {{ changelog.version }} publiée le {{ changelog.date|date('d/m/Y') }} pour Morning Soul.">
+  <meta name="robots" content="index, follow">
+
+  {# Open Graph #}
+  <meta property="og:title" content="Mise à jour {{ changelog.version }} - Morning Soul">
+  <meta property="og:description" content="Consultez les nouveautés et correctifs apportés dans la version {{ changelog.version }} du jeu Morning Soul.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="{{ app.request.uri }}">
+  <meta property="og:image" content="{{ asset('img/changelog/' ~ changelog.image) }}">
+
+  {# Twitter Card #}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mise à jour {{ changelog.version }} - Morning Soul">
+  <meta name="twitter:description" content="Découvrez les changements apportés dans la version {{ changelog.version }} du jeu Morning Soul.">
+  <meta name="twitter:image" content="{{ asset('img/changelog/' ~ changelog.image) }}">
+{% endblock %}
+
 {% block stylesheets %}
   {{ parent() }}
   <link rel="stylesheet" href="{{ asset('css/changelog.css') }}">
@@ -8,27 +26,29 @@
 {% block title %}MÀJ {{ changelog.version }}{% endblock %}
 
 {% block body %}
-<div class="container mt-5 d-flex justify-content-center">
-  <div class="changelog-show-container p-4 shadow rounded text-white" style="max-width: 800px; width: 100%; background-color: #1c1c1c;">
+<main class="container mt-5 d-flex justify-content-center" role="main" aria-label="Détails de la mise à jour {{ changelog.version }}">
+  <article class="changelog-show-container p-4 shadow rounded text-white" style="max-width: 800px; width: 100%; background-color: #1c1c1c;" aria-labelledby="changelog-title">
     
-    <h1 class="text-center mb-3">Mise à jour {{ changelog.version }}</h1>
-    <p class="text-center">Publié le {{ changelog.date|date('d/m/Y') }}</p>
+    <header>
+      <h1 id="changelog-title" class="text-center mb-3">Mise à jour {{ changelog.version }}</h1>
+      <p class="text-center">Publié le {{ changelog.date|date('d/m/Y') }}</p>
+    </header>
 
     {% if changelog.image %}
-      <div class="text-center mb-4 overflow-hidden rounded" style="max-height: 400px;">
-        <img src="{{ asset('img/changelog/' ~ changelog.image) }}" alt="Illustration {{ changelog.version }}" class="img-fluid w-100" style="object-fit: cover; height: 100%; display: block;">
-      </div>
+      <figure class="text-center mb-4 overflow-hidden rounded" style="max-height: 400px;">
+        <img src="{{ asset('img/changelog/' ~ changelog.image) }}" alt="Illustration de la mise à jour {{ changelog.version }}" class="img-fluid w-100" style="object-fit: cover; height: 100%; display: block;">
+      </figure>
     {% endif %}
 
     <hr style="border-color: #444;">
 
-    <div class="changelog-content" style="white-space: pre-line; font-size: 1.1rem;">
+    <section class="changelog-content" style="white-space: pre-line; font-size: 1.1rem;" aria-label="Contenu de la mise à jour">
       {{ changelog.content }}
-    </div>
+    </section>
 
-    <div class="text-center mt-4">
+    <nav class="text-center mt-4" aria-label="Retour vers la liste des changelogs">
       <a href="{{ path('news.changelog') }}" class="btn btn-outline-light">← Retour aux changelogs</a>
-    </div>
-  </div>
-</div>
+    </nav>
+  </article>
+</main>
 {% endblock %}

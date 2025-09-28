@@ -1,5 +1,23 @@
 {% extends "base.html.twig" %}
 
+{% block seo %}
+  <meta name="description" content="Explorez le monde de Morning Soul à travers des récits immersifs, des personnages aux quêtes immersives et des monstres terrifiants.">
+  <meta name="robots" content="index, follow">
+
+  {# Open Graph pour Discord, Facebook, LinkedIn… #}
+  <meta property="og:title" content="Découverte - Morning Soul">
+  <meta property="og:description" content="Plongez dans l'univers narratif de Morning Soul. Une ambiance unique et une histoire dantesque à découvrir.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ app.request.uri }}">
+  <meta property="og:image" content="{{ asset('img/seo/discord_seo.png') }}">
+
+  {# Twitter Card #}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Découverte - Morning Soul">
+  <meta name="twitter:description" content="Plongez dans l'univers narratif de Morning Soul. Une ambiance unique et une histoire dantesque à découvrir.">
+  <meta name="twitter:image" content="{{ asset('img/seo/twitter_seo.png') }}">
+{% endblock %}
+
 {% block stylesheets %}
   {{ parent() }}
   <link rel="stylesheet" href="{{ asset('css/discover.css') }}">
@@ -9,18 +27,18 @@
 
 {% block body %}
   <div class="site-wrapper d-flex flex-column min-vh-100">
-    <main class="container-fluid p-0">
+    <main class="container-fluid p-0" role="main" aria-label="Section découverte des mondes Morning Soul">
 
       {% for article in contenu %}
-        <section class="world-section-discover" id="{{ article.background }}">
+        <section class="world-section-discover" id="{{ article.background }}" role="region" aria-labelledby="title-{{ article.id }}">
           <div class="overlay-text-discover">
-            <h2 class="title-world-section-discover">{{ article.title }}</h2>
+            <h2 id="title-{{ article.id }}" class="title-world-section-discover">{{ article.title }}</h2>
             <p class="paragraph-world-section-discover">{{ article.description }}</p>
           </div>
         </section>
 
         {% if not loop.last %}
-          <div class="transition-section" id="transition-{{ article.id }}">
+          <div class="transition-section" id="transition-{{ article.id }}" aria-hidden="true">
             <div class="gradient-overlay"></div>
           </div>
         {% endif %}

@@ -8,34 +8,56 @@
 {% block title %}Onglet sécurité{% endblock %}
 
 {% block body %}
-<div class="profile-main-container">
+<main class="profile-main-container" role="main" aria-label="Espace personnel - sécurité">
   <div class="profile-card-container">
 
     <!-- Onglets -->
-    <div class="profile-buttons-container tab-buttons-right">
-      <a href="{{ path('account.profile') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.profile' %}active{% endif %}">Profil</a>
-      <a href="{{ path('account.favorites') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.favorites' %}active{% endif %}">Favoris</a>
-      <a href="{{ path('account.history') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.history' %}active{% endif %}">Historique</a>
-      <a href="{{ path('account.security') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.security' %}active{% endif %}">Sécurité</a>
-    </div>
+    <nav class="profile-buttons-container tab-buttons-right" role="navigation" aria-label="Navigation du profil">
+      <a href="{{ path('account.profile') }}"
+         class="tab-button {% if app.request.attributes.get('_route') == 'account.profile' %}active{% endif %}"
+         aria-current="{% if app.request.attributes.get('_route') == 'account.profile' %}page{% endif %}">
+        Profil
+      </a>
+      <a href="{{ path('account.favorites') }}"
+         class="tab-button {% if app.request.attributes.get('_route') == 'account.favorites' %}active{% endif %}"
+         aria-current="{% if app.request.attributes.get('_route') == 'account.favorites' %}page{% endif %}">
+        Favoris
+      </a>
+      <a href="{{ path('account.history') }}"
+         class="tab-button {% if app.request.attributes.get('_route') == 'account.history' %}active{% endif %}"
+         aria-current="{% if app.request.attributes.get('_route') == 'account.history' %}page{% endif %}">
+        Historique
+      </a>
+      <a href="{{ path('account.security') }}"
+         class="tab-button {% if app.request.attributes.get('_route') == 'account.security' %}active{% endif %}"
+         aria-current="{% if app.request.attributes.get('_route') == 'account.security' %}page{% endif %}">
+        Sécurité
+      </a>
+    </nav>
 
     <!-- Contenu principal -->
-    <div class="profile-mycard-container card-container-large">
-      <h2>Sécurité</h2>
+    <section class="profile-mycard-container card-container-large" role="region" aria-labelledby="security-title">
+      <header>
+        <h2 id="security-title">Sécurité</h2>
+      </header>
 
       <div class="security-feature-block">
-        <h3>Fonctionnalités à venir</h3>
-        <ul class="security-feature-list">
-          <li><strong>Modifier ton mot de passe</strong></li>
-          <li><strong>Activer la double authentification</strong></li>
-          <li><strong>Gérer les alertes de connexion</strong></li>
+        <h3 id="security-features">Fonctionnalités à venir</h3>
+        <ul class="security-feature-list" role="list" aria-labelledby="security-features">
+          <li role="listitem"><strong>Modifier ton mot de passe</strong></li>
+          <li role="listitem"><strong>Activer la double authentification</strong></li>
+          <li role="listitem"><strong>Gérer les alertes de connexion</strong></li>
         </ul>
-        <p class="security-note">Ces options seront bientôt disponibles pour renforcer la sécurité de ton compte.</p>
+        <p class="security-note" role="status" aria-live="polite">
+          Ces options seront bientôt disponibles pour renforcer la sécurité de ton compte.
+        </p>
 
-        <a href="{{ path('contact.support') }}" class="support-button">Pour plus d'information : contacter le support</a>
+        <nav aria-label="Contacter le support">
+          <a href="{{ path('contact.support') }}" class="support-button">Pour plus d'information : contacter le support</a>
+        </nav>
       </div>
-    </div>
+    </section>
 
   </div>
-</div>
+</main>
 {% endblock %}

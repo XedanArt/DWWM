@@ -8,87 +8,97 @@
 {% block title %}Historique des entrées supprimables{% endblock %}
 
 {% block body %}
-<div class="delete-entries-container">
-  <h2 class="delete-entries-title">Historique des entrées supprimables</h2>
+<main class="delete-entries-container" role="main" aria-label="Historique des entrées supprimables">
+  <header>
+    <h2 class="delete-entries-title">Historique des entrées supprimables</h2>
+  </header>
 
   <div class="delete-entries-wrapper">
+
     {# Devblogs #}
-    <section class="delete-entries-section">
-      <h3 class="delete-entries-section-title">Devblogs</h3>
+    <section class="delete-entries-section" role="region" aria-labelledby="devblog-section-title">
+      <h3 id="devblog-section-title" class="delete-entries-section-title">Devblogs</h3>
 
-      {% for entry in devblogs %}
-        <div class="delete-entries-card">
-          <div class="delete-entries-card-content">
-            <div class="delete-entries-card-info">
-              <strong class="delete-entries-card-title">{{ entry.title }}</strong>
-              <span class="delete-entries-card-date">{{ entry.date|date('d/m/Y') }}</span>
+      <div role="list" aria-label="Liste des devblogs supprimables">
+        {% for entry in devblogs %}
+          <article class="delete-entries-card" role="listitem">
+            <div class="delete-entries-card-content">
+              <div class="delete-entries-card-info">
+                <strong class="delete-entries-card-title">{{ entry.title }}</strong>
+                <span class="delete-entries-card-date">{{ entry.date|date('d/m/Y') }}</span>
+              </div>
+              <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'devblog' }) }}" onsubmit="return confirm('Confirmer la suppression ?');" aria-label="Formulaire de suppression du devblog {{ entry.title }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-devblog-' ~ entry.id) }}">
+                <button class="delete-entries-btn">Supprimer</button>
+              </form>
             </div>
-            <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'devblog' }) }}" onsubmit="return confirm('Confirmer la suppression ?');">
-              <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-devblog-' ~ entry.id) }}">
-              <button class="delete-entries-btn">Supprimer</button>
-            </form>
-          </div>
-        </div>
-      {% else %}
-        <p class="delete-entries-empty">Aucun devblog disponible.</p>
-      {% endfor %}
-
-      <div class="delete-entries-pagination">
-        {{ knp_pagination_render(devblogs) }}
+          </article>
+        {% else %}
+          <p class="delete-entries-empty" role="status" aria-live="polite">Aucun devblog disponible.</p>
+        {% endfor %}
       </div>
+
+      <nav class="delete-entries-pagination" aria-label="Pagination des devblogs">
+        {{ knp_pagination_render(devblogs) }}
+      </nav>
     </section>
 
     {# Changelogs #}
-    <section class="delete-entries-section">
-      <h3 class="delete-entries-section-title">Changelogs</h3>
+    <section class="delete-entries-section" role="region" aria-labelledby="changelog-section-title">
+      <h3 id="changelog-section-title" class="delete-entries-section-title">Changelogs</h3>
 
-      {% for entry in changelogs %}
-        <div class="delete-entries-card">
-          <div class="delete-entries-card-content">
-            <div class="delete-entries-card-info">
-              <strong class="delete-entries-card-title">Version {{ entry.version }}</strong>
-              <span class="delete-entries-card-date">{{ entry.date|date('d/m/Y') }}</span>
+      <div role="list" aria-label="Liste des changelogs supprimables">
+        {% for entry in changelogs %}
+          <article class="delete-entries-card" role="listitem">
+            <div class="delete-entries-card-content">
+              <div class="delete-entries-card-info">
+                <strong class="delete-entries-card-title">Version {{ entry.version }}</strong>
+                <span class="delete-entries-card-date">{{ entry.date|date('d/m/Y') }}</span>
+              </div>
+              <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'changelog' }) }}" onsubmit="return confirm('Confirmer la suppression ?');" aria-label="Formulaire de suppression du changelog version {{ entry.version }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-changelog-' ~ entry.id) }}">
+                <button class="delete-entries-btn">Supprimer</button>
+              </form>
             </div>
-            <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'changelog' }) }}" onsubmit="return confirm('Confirmer la suppression ?');">
-              <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-changelog-' ~ entry.id) }}">
-              <button class="delete-entries-btn">Supprimer</button>
-            </form>
-          </div>
-        </div>
-      {% else %}
-        <p class="delete-entries-empty">Aucun changelog disponible.</p>
-      {% endfor %}
-
-      <div class="delete-entries-pagination">
-        {{ knp_pagination_render(changelogs) }}
+          </article>
+        {% else %}
+          <p class="delete-entries-empty" role="status" aria-live="polite">Aucun changelog disponible.</p>
+        {% endfor %}
       </div>
+
+      <nav class="delete-entries-pagination" aria-label="Pagination des changelogs">
+        {{ knp_pagination_render(changelogs) }}
+      </nav>
     </section>
 
     {# Annonces #}
-    <section class="delete-entries-section">
-      <h3 class="delete-entries-section-title">Annonces</h3>
+    <section class="delete-entries-section" role="region" aria-labelledby="announcement-section-title">
+      <h3 id="announcement-section-title" class="delete-entries-section-title">Annonces</h3>
 
-      {% for entry in announcements %}
-        <div class="delete-entries-card">
-          <div class="delete-entries-card-content">
-            <div class="delete-entries-card-info">
-              <strong class="delete-entries-card-title">{{ entry.title }}</strong>
-              <span class="delete-entries-card-date">{{ entry.createdAt|date('d/m/Y') }}</span>
+      <div role="list" aria-label="Liste des annonces supprimables">
+        {% for entry in announcements %}
+          <article class="delete-entries-card" role="listitem">
+            <div class="delete-entries-card-content">
+              <div class="delete-entries-card-info">
+                <strong class="delete-entries-card-title">{{ entry.title }}</strong>
+                <span class="delete-entries-card-date">{{ entry.createdAt|date('d/m/Y') }}</span>
+              </div>
+              <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'announcement' }) }}" onsubmit="return confirm('Confirmer la suppression ?');" aria-label="Formulaire de suppression de l’annonce {{ entry.title }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-announcement-' ~ entry.id) }}">
+                <button class="delete-entries-btn">Supprimer</button>
+              </form>
             </div>
-            <form method="post" action="{{ path('admin.entry.delete_item', { id: entry.id, type: 'announcement' }) }}" onsubmit="return confirm('Confirmer la suppression ?');">
-              <input type="hidden" name="_token" value="{{ csrf_token('delete-entry-announcement-' ~ entry.id) }}">
-              <button class="delete-entries-btn">Supprimer</button>
-            </form>
-          </div>
-        </div>
-      {% else %}
-        <p class="delete-entries-empty">Aucune annonce disponible.</p>
-      {% endfor %}
-
-      <div class="delete-entries-pagination">
-        {{ knp_pagination_render(announcements) }}
+          </article>
+        {% else %}
+          <p class="delete-entries-empty" role="status" aria-live="polite">Aucune annonce disponible.</p>
+        {% endfor %}
       </div>
+
+      <nav class="delete-entries-pagination" aria-label="Pagination des annonces">
+        {{ knp_pagination_render(announcements) }}
+      </nav>
     </section>
+
   </div>
-</div>
+</main>
 {% endblock %}

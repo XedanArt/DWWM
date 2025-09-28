@@ -173,14 +173,19 @@
       <small class="form-hint">Ajoutez jusqu’à 10 tags composés uniquement de lettres.</small>
     </div>
 
-    <div class="forum-new-topic-actions">
-      <button type="submit" class="forum-submit">Créer</button>
-    </div>
+    <div class="forum-flex-buttons">
+      <div class="forum-new-topic-actions">
+        <button type="submit" class="forum-submit">Créer</button>
+      </div>
 
-    <div class="quick-topic-form">
-      <a href="{{ path('topic_new') }}" class="btn btn-secondary">
-        ✍️ Créer un sujet complet
-      </a>
+      <div class="quick-topic-form">
+        <button type="button"
+        class="forum-submit"
+        onclick="window.location.href='{{ path('topic_new') }}'"
+        aria-label="Créer un sujet complet">
+          <i class="icon-plus"></i> Créer un sujet complet
+        </button>
+      </div>
     </div>
 
   {{ form_end(form) }}

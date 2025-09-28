@@ -1,0 +1,46 @@
+27/09/2025 : 18H48 
+
+Forum formulaire de création simple : OK
+- correction css
+
+Forum formulaire de création détaillée :
+- bug contraintes contenu 5000 caractères
+
+Avatar par défaut : OK
+- mal configuré
+
+Legals : OK
+- ajout informations domaine et url
+
+Contraintes regex / logs / a11y / seo meta :
+- includes header/footer 
+- contact/support : regex 
+- contact/socials
+- game/discover
+- game/download (anticipation, création d'une vue dédiée pour log car téléchargement = côté utilisateur)
+- homepage
+- news/changelog
+- news/changelog/{}
+- news/devblog
+- news/devblog/{}
+- legals/terms
+- legals/privacy
+- legals/legal
+- legals/cookies
+- redirect
+- tags/search (problème css donc pas de modif)
+- dashboard/contact
+- dashboard/delete-entries
+- dashboard
+- dashboard/logs
+- account/favorites 
+- account/history 
+- account/security 
+- account/profile (bug après modification donc pas de modif)
+- admin/anouncement/new (bug après modification donc pas de modif)
+- admin/devblog/new (bug après modification donc pas de modif)
+- admin/changelog/new (bug après modification donc pas de modif)
+- admin/quarantine-topics (bug après modification donc pas de modif)
+- superadmin/create-admin (bug après modification donc pas de modif)
+- superadmin/revoke-admin (bug après modification donc pas de modif)
+- forum index form : regex 

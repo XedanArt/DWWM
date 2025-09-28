@@ -1,5 +1,5 @@
 monolog:
-    channels: ['super_admin', 'security', 'user', 'account', 'content_modif', 'admin_actions']
+    channels: ['super_admin', 'security', 'user', 'account', 'content_modif', 'admin_actions', 'contact_form', 'download']
 
     handlers:
         super_admin_handler:
@@ -37,3 +37,15 @@ monolog:
             path: '%kernel.logs_dir%/controllers/admin_actions.log'
             level: info
             channels: ['admin_actions']
+            
+        contact_form_handler:
+            type: stream
+            path: '%kernel.logs_dir%/controllers/contact_form.log'
+            level: info
+            channels: ['contact_form']
+        
+        download_handler:
+            type: stream
+            path: '%kernel.logs_dir%/controllers/download.log'
+            level: notice
+            channels: ['download']

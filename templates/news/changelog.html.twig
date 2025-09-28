@@ -1,5 +1,23 @@
 {% extends "base.html.twig" %}
 
+{% block seo %}
+  <meta name="description" content="Consultez les dernières mises à jour de Morning Soul : correctifs, améliorations et nouveautés.">
+  <meta name="robots" content="index, follow">
+
+  {# Open Graph #}
+  <meta property="og:title" content="Changelog - Morning Soul">
+  <meta property="og:description" content="Toutes les notes de mise à jour du jeu Morning Soul, avec les dernières versions et correctifs.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ app.request.uri }}">
+  <meta property="og:image" content="{{ asset('img/seo/discord_seo.png') }}">
+
+  {# Twitter Card #}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Changelog - Morning Soul">
+  <meta name="twitter:description" content="Découvrez les dernières mises à jour et correctifs du jeu Morning Soul.">
+  <meta name="twitter:image" content="{{ asset('img/seo/twitter_seo.png') }}">
+{% endblock %}
+
 {% block stylesheets %}
   {{ parent() }}
   <link rel="stylesheet" href="{{ asset('css/changelog.css') }}">
@@ -8,28 +26,25 @@
 {% block title %}Changelog{% endblock %}
 
 {% block body %}
-<div class="container changelog-main-container">
+<main class="container changelog-main-container" role="main" aria-label="Historique des mises à jour Morning Soul">
   <div class="row">
 
     <!-- Section principale -->
-    <div class="col-lg-8 changelog-patchs-container">
+    <section class="col-lg-8 changelog-patchs-container" role="region" aria-labelledby="changelog-heading">
+      <header class="changelog-title mb-4">
+        <h1 id="changelog-heading">NOTES DE MISE À JOUR</h1>
+      </header>
 
-      <!-- Titre principal -->
-      <div class="changelog-title mb-4">
-        <h1>NOTES DE MISE À JOUR</h1>
-      </div>
-
-      <!-- Dernier patch mis en avant -->
       {% if pagination|length > 0 %}
         {% set latest = pagination|first %}
-        <div class="changelog-last-patch mb-5" id="entry-{{ latest.date|date('Y-m-d') }}">
+        <article class="changelog-last-patch mb-5" id="entry-{{ latest.date|date('Y-m-d') }}" aria-labelledby="latest-patch-title">
           <a href="{{ path('news.changelog.show', {slug: latest.slug}) }}" class="text-decoration-none text-light">
             <div class="changelog-last-title text-center">
-              <h2>MÀJ {{ latest.version }} : {{ latest.date|date('d/m/Y') }}</h2>
+              <h2 id="latest-patch-title">MÀJ {{ latest.version }} : {{ latest.date|date('d/m/Y') }}</h2>
             </div>
             <div class="changelog-last-image-wrapper">
               {% if latest.image %}
-                <img src="{{ asset('img/changelog/' ~ latest.image) }}" alt="Illustration {{ latest.version }}" class="changelog-last-image">
+                <img src="{{ asset('img/changelog/' ~ latest.image) }}" alt="Illustration de la mise à jour {{ latest.version }}" class="changelog-last-image">
               {% endif %}
               <div class="changelog-last-content">
                 <h4>{{ latest.date|date('d F Y') }}</h4>
@@ -37,45 +52,43 @@
               </div>
             </div>
           </a>
-        </div>
+        </article>
       {% endif %}
 
-      <!-- Liste des patchs précédents -->
-      <div class="changelog-patch-list">
+      <section class="changelog-patch-list" aria-label="Liste des mises à jour précédentes">
         {% for changelog in pagination|slice(1) %}
-          <div class="patch-entry mb-4" id="entry-{{ changelog.date|date('Y-m-d') }}">
-            <h5>
+          <article class="patch-entry mb-4" id="entry-{{ changelog.date|date('Y-m-d') }}" aria-labelledby="patch-{{ changelog.version }}">
+            <h5 id="patch-{{ changelog.version }}">
               <a href="{{ path('news.changelog.show', {slug: changelog.slug}) }}" class="text-decoration-none text-light">
                 MÀJ {{ changelog.version }} - {{ changelog.date|date('d F Y') }}
               </a>
             </h5>
             <p><strong>Changelog :</strong> {{ changelog.content|length > 200 ? changelog.content[:200] ~ '...' : changelog.content|nl2br }}</p>
-          </div>
+          </article>
         {% else %}
           <p>Aucun changelog disponible pour le moment.</p>
         {% endfor %}
-      </div>
+      </section>
 
-      <!-- Pagination dynamique -->
-      <div class="changelog-pagination mt-4">
+      <nav class="changelog-pagination mt-4" aria-label="Pagination des mises à jour">
         {{ knp_pagination_render(pagination) }}
-      </div>
-    </div>
+      </nav>
+    </section>
 
     <!-- Sidebar -->
-    <div class="col-lg-4 changelog-sidebar-container">
+    <aside class="col-lg-4 changelog-sidebar-container" role="complementary" aria-label="Navigation vers les correctifs">
       <div class="changelog-patch-nav">
-        <h5>Correctifs</h5>
-        <div class="changelog-patch-items-container">
+        <h2 class="h5">Correctifs</h2>
+        <nav class="changelog-patch-items-container" aria-label="Liste des correctifs disponibles">
           {% for changelog in pagination %}
             <a class="changelog-patch-items" href="{{ path('news.changelog.show', {slug: changelog.slug}) }}">
               MÀJ - {{ changelog.version }} : {{ changelog.date|date('d/m/Y') }}
             </a><br>
           {% endfor %}
-        </div>
+        </nav>
       </div>
-    </div>
+    </aside>
 
   </div>
-</div>
+</main>
 {% endblock %}

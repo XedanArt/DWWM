@@ -1,4 +1,22 @@
-{%  extends "base.html.twig" %}
+{% extends "base.html.twig" %}
+
+{% block seo %}
+  <meta name="description" content="Suivez Morning Soul sur Instagram, Discord et Twitter pour ne rien manquer des dernières actualités, mises à jour et événements communautaires.">
+  <meta name="robots" content="index, follow">
+
+  {# Open Graph pour Facebook, Discord, etc. #}
+  <meta property="og:title" content="Réseaux sociaux - Morning Soul">
+  <meta property="og:description" content="Rejoignez-nous sur Instagram, Discord et Twitter pour suivre les nouveautés du jeu Morning Soul.">
+  <meta property="og:image" content="{{ asset('img/seo/discord_seo.png') }}">
+  <meta property="og:url" content="{{ app.request.uri }}">
+  <meta property="og:type" content="website">
+
+  {# Twitter Card #}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Réseaux sociaux - Morning Soul">
+  <meta name="twitter:description" content="Suivez-nous sur les réseaux pour rester informé des dernières nouveautés.">
+  <meta name="twitter:image" content="{{ asset('img/twitter_seo.png') }}">
+{% endblock %}
 
 {% block stylesheets %}
   {{ parent() }}
@@ -8,40 +26,44 @@
 {% block title %}Réseaux sociaux{% endblock %}
 
 {% block body %}
-<div class="socials-separator">
-</div>
-<section class="social-section">
+<div class="socials-separator" role="presentation"></div>
+
+<section class="social-section" role="region" aria-labelledby="socials-heading">
   <div class="social-container">
-    <h2>Suivez-nous sur les réseaux sociaux</h2>
-    <p class="social-note">Restez connectés avec nous pour les dernières nouvelles et mises à jour.</p>
-    <div class="social-cards">
-      <div class="social-card" id="instagram">
-        <a href="https://www.instagram.com" target="_blank">
-          <i class="fab fa-instagram"></i>
+    <h2 id="socials-heading">Suivez-nous sur les réseaux sociaux</h2>
+    <p class="social-note" aria-label="Note informative sur les réseaux sociaux">
+      Restez connectés avec nous pour les dernières nouvelles et mises à jour.
+    </p>
+
+    <div class="social-cards" role="list" aria-label="Liste des réseaux sociaux disponibles">
+      <div class="social-card" id="instagram" role="listitem">
+        <a href="https://www.instagram.com" target="_blank" aria-label="Lien vers notre compte Instagram">
+          <i class="fab fa-instagram" aria-hidden="true"></i>
           <h3>Instagram</h3>
           <img src="{{ asset('img/socials_insta_logo.png') }}" alt="Logo Instagram">
         </a>
       </div>
 
-      <div class="social-card" id="discord">
-        <a href="https://discord.gg/dYv6WBetaU" target="_blank">
-          <i class="fab fa-discord"></i>
+      <div class="social-card" id="discord" role="listitem">
+        <a href="https://discord.gg/dYv6WBetaU" target="_blank" aria-label="Lien vers notre serveur Discord">
+          <i class="fab fa-discord" aria-hidden="true"></i>
           <h3>Discord</h3>
-          <img src="{{ asset('img/socials_discord_logo.png') }}" alt="Logo discord" style="margin-top: 50px;">
+          <img src="{{ asset('img/socials_discord_logo.png') }}" alt="Logo Discord" style="margin-top: 50px;">
         </a>
       </div>
 
-      <div class="social-card" id="twitter">
-        <a href="https://www.twitter.com" target="_blank">
-          <i class="fab fa-twitter"></i>
+      <div class="social-card" id="twitter" role="listitem">
+        <a href="https://www.twitter.com" target="_blank" aria-label="Lien vers notre compte Twitter">
+          <i class="fab fa-twitter" aria-hidden="true"></i>
           <h3>Twitter</h3>
           <img src="{{ asset('img/socials_x_logo.png') }}" alt="Logo Twitter">
         </a>
       </div>
     </div>
   </div>
-</section>v
+</section>
 {% endblock %}
+
 {% block javascripts %}
   {{ parent() }}
   <script src="{{ asset('js/socials.js') }}"></script>

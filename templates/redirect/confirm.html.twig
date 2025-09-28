@@ -3,20 +3,28 @@
 {% block title %}Redirection externe{% endblock %}
 
 {% block body %}
-<div class="alert-overlay">
-  <div class="alert-box">
-    <h2>⚠️ Attention</h2>
-    <p>Vous êtes sur le point de quitter <strong>Morning Soul</strong>.</p>
-    <p class="external-link">{{ target }}</p>
-    <p class="domain-warning">Ce lien n’appartient pas au domaine Morning Soul et peut mener vers un site non sécurisé.</p>
-    <div class="buttons">
+<main class="alert-overlay" role="main" aria-label="Avertissement de redirection externe">
+  <section class="alert-box" role="alertdialog" aria-modal="true" aria-labelledby="redirect-title" aria-describedby="redirect-description">
+    <header>
+      <h2 id="redirect-title">⚠️ Attention</h2>
+    </header>
+
+    <div id="redirect-description">
+      <p>Vous êtes sur le point de quitter <strong>Morning Soul</strong>.</p>
+      <p class="external-link">{{ target }}</p>
+      <p class="domain-warning">Ce lien n’appartient pas au domaine Morning Soul et peut mener vers un site non sécurisé.</p>
+    </div>
+
+    <nav class="buttons" aria-label="Choix de redirection">
       <a href="{{ target }}" class="btn btn-danger no-intercept">Continuer</a>
       <a href="{{ path('homepage.index') }}" class="btn btn-outline-light">Annuler</a>
-    </div>
-    <p class="countdown">Redirection automatique dans <span id="timer">5</span> secondes…</p>
-  </div>
-</div>
+    </nav>
+
+    <p class="countdown" aria-live="polite">Redirection automatique dans <span id="timer">5</span> secondes…</p>
+  </section>
+</main>
 {% endblock %}
+
 
 {% block stylesheets %}
 <style>
