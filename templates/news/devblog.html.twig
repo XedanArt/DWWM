@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+
+{% block seo %}
+  <meta name="description" content="Découvrez les coulisses du développement de Morning Soul à travers notre devblog hebdomadaire.">
+  <meta name="robots" content="index, follow">
+
+  {# Open Graph #}
+  <meta property="og:title" content="Devblog de l'équipe - Morning Soul">
+  <meta property="og:description" content="Les coulisses du développement de Morning Soul, révélées chaque semaine par l’équipe.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ app.request.uri }}">
+  <meta property="og:image" content="{{ asset('img/seo/discord_seo.png') }}">
+
+  {# Twitter Card #}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Devblog de l'équipe - Morning Soul">
+  <meta name="twitter:description" content="Suivez l’évolution du jeu Morning Soul à travers les récits de l’équipe de développement.">
+  <meta name="twitter:image" content="{{ asset('img/seo/twitter_seo.png') }}">
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/devblog.css') }}">
+{% endblock %}
+
+{% block title %}Devblog de l'équipe{% endblock %}
+
+{% block body %}
+<main class="devblog-section" role="main" aria-label="Devblog hebdomadaire de l’équipe Morning Soul">
+  <header class="devblog-header" role="banner" aria-labelledby="devblog-heading">
+    <h1 id="devblog-heading" class="devblog-heading">Devblog de l'équipe</h1>
+    <p class="devblog-subheading">Les coulisses du développement, révélées chaque semaine</p>
+  </header>
+
+  <section class="devblog-grid" role="region" aria-label="Liste des articles du devblog">
+    {% for devblog in devblogs %}
+      <article class="devblog-card" role="article" aria-labelledby="devblog-title-{{ loop.index }}">
+        <a href="{{ path('news.devblog.show', { slug: devblog.slug }) }}">
+          <div class="devblog-image-wrapper">
+            {% if devblog.image %}
+              <img src="{{ asset(devblog.imagePath) }}" alt="Illustration de l’article {{ devblog.title }}" class="devblog-image">
+            {% endif %}
+            <div class="devblog-overlay">
+              <h2 id="devblog-title-{{ loop.index }}" class="devblog-title">{{ devblog.title }}</h2>
+              <p class="devblog-date">{{ devblog.date|date('d/m/Y') }}</p>
+              <p class="devblog-excerpt">{{ devblog.content|striptags }}</p>
+              <span class="devblog-readmore">→ Lire la suite</span>
+            </div>
+          </div>
+        </a>
+      </article>
+    {% else %}
+      <p class="text-muted">Aucun devblog disponible pour le moment.</p>
+    {% endfor %}
+  </section>
+</main>
+{% endblock %}

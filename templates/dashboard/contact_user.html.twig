@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+{% endblock %}
+
+{% block title %}Contacter {{ targetUser.displayUsername ?? targetUser.username }}{% endblock %}
+
+{% block body %}
+<main class="contact-user-container" role="main" aria-label="Formulaire de contact vers {{ targetUser.displayUsername ?? targetUser.username }}">
+  <section role="region" aria-labelledby="contact-title">
+    <header>
+      <h2 id="contact-title">Contacter {{ targetUser.displayUsername ?? targetUser.username }}</h2>
+    </header>
+
+    <form method="post" role="form" aria-describedby="contact-instructions">
+      <p id="contact-instructions" class="visually-hidden">
+        Utilisez ce formulaire pour envoyer un message à {{ targetUser.displayUsername ?? targetUser.username }}.
+      </p>
+
+      {{ form_start(form) }}
+        {{ form_row(form.message) }}
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+      {{ form_end(form) }}
+    </form>
+  </section>
+</main>
+{% endblock %}

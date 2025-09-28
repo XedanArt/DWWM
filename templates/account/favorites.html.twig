@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+{% endblock %}
+
+{% block title %}Mes favoris{% endblock %}
+
+{% block body %}
+<main class="profile-main-container" role="main" aria-label="Espace personnel - favoris">
+  <div class="profile-card-container">
+
+    <!-- Onglets -->
+    <nav class="profile-buttons-container tab-buttons-right" role="navigation" aria-label="Navigation du profil">
+      <a href="{{ path('account.profile') }}"
+         class="tab-button {% if app.request.attributes.get('_route') == 'account.profile' %}active{% endif %}"
+         aria-current="{% if app.request.attributes.get('_route') == 'account.profile' %}page{% endif %}">
+        Profil
+      </a>
+      <a href="{{ path('account.favorites') }}"
+         class="tab-button {% if app.request.attributes.get('_route') == 'account.favorites' %}active{% endif %}"
+         aria-current="{% if app.request.attributes.get('_route') == 'account.favorites' %}page{% endif %}">
+        Favoris
+      </a>
+      <a href="{{ path('account.history') }}"
+         class="tab-button {% if app.request.attributes.get('_route') == 'account.history' %}active{% endif %}"
+         aria-current="{% if app.request.attributes.get('_route') == 'account.history' %}page{% endif %}">
+        Historique
+      </a>
+      <a href="{{ path('account.security') }}"
+         class="tab-button {% if app.request.attributes.get('_route') == 'account.security' %}active{% endif %}"
+         aria-current="{% if app.request.attributes.get('_route') == 'account.security' %}page{% endif %}">
+        Sécurité
+      </a>
+    </nav>
+
+    <!-- Contenu principal -->
+    <section class="profile-mycard-container card-container-large" role="region" aria-labelledby="favorites-title">
+      <header>
+        <h2 id="favorites-title">Favoris</h2>
+      </header>
+
+      <div class="profile-secondcard-main">
+        <div class="profile-secondcard-favorites">
+          <div class="profile-secondcard-favlist">
+            {% if favorites|length > 0 %}
+              <ul class="fav-scroll-list" role="list" aria-label="Liste de tes topics favoris">
+                {% for topic in favorites %}
+                  <li class="fav-item" role="listitem">
+                    <a href="{{ path('topic.show', { id: topic.id }) }}">{{ topic.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+              <nav class="profile-pagination" aria-label="Pagination des favoris">
+                {{ knp_pagination_render(favorites) }}
+              </nav>
+            {% else %}
+              <p class="fav-empty" role="status" aria-live="polite">Tu n'as encore aucun favoris.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+{% endblock %}

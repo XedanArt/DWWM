@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block seo %}
+  <meta name="description" content="Article du devblog : {{ devblog.title }} publié le {{ devblog.date|date('d/m/Y') }}. Découvrez les coulisses du développement de Morning Soul.">
+  <meta name="robots" content="index, follow">
+
+  {# Open Graph #}
+  <meta property="og:title" content="{{ devblog.title }} - Devblog Morning Soul">
+  <meta property="og:description" content="Découvrez les coulisses du développement de Morning Soul dans cet article : {{ devblog.title }}.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="{{ app.request.uri }}">
+  <meta property="og:image" content="{{ asset(devblog.imagePath) }}">
+
+  {# Twitter Card #}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ devblog.title }} - Devblog Morning Soul">
+  <meta name="twitter:description" content="Suivez l’évolution du jeu Morning Soul à travers cet article du devblog : {{ devblog.title }}.">
+  <meta name="twitter:image" content="{{ asset(devblog.imagePath) }}">
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/devblog.css') }}">
+{% endblock %}
+
+{% block title %}{{ devblog.title }}{% endblock %}
+
+{% block body %}
+<main class="devblog-article" role="main" aria-label="Article du devblog Morning Soul : {{ devblog.title }}">
+  {% if devblog.image %}
+    <header class="devblog-banner" role="banner" aria-labelledby="devblog-title">
+      <figure>
+        <img src="{{ asset(devblog.imagePath) }}" alt="Illustration de l’article {{ devblog.title }}" class="devblog-banner-image">
+        <figcaption class="visually-hidden">{{ devblog.title }}</figcaption>
+      </figure>
+      <div class="devblog-banner-overlay">
+        <h1 id="devblog-title" class="devblog-banner-title">{{ devblog.title }}</h1>
+        <p class="devblog-banner-date">Publié le {{ devblog.date|date('d/m/Y') }}</p>
+      </div>
+    </header>
+  {% endif %}
+
+  <article class="devblog-article-wrapper" role="article" aria-labelledby="devblog-title">
+    <div class="devblog-article-content">
+      <div class="devblog-body">
+
+        {% if devblog.image %}
+          <figure class="devblog-body-image">
+            <img src="{{ asset(devblog.imagePath) }}" alt="Illustration de l’article {{ devblog.title }}">
+            <figcaption class="visually-hidden">{{ devblog.title }}</figcaption>
+          </figure>
+        {% endif %}
+
+        <h2 class="devblog-body-title">{{ devblog.title }}</h2>
+        <p class="devblog-body-date">Publié le {{ devblog.date|date('d/m/Y') }}</p>
+
+        <section class="devblog-text" aria-label="Contenu de l’article">
+          {{ devblog.content|nl2br }}
+        </section>
+
+        <nav class="devblog-back text-center mt-4" aria-label="Retour vers la liste des devblogs">
+          <a href="{{ path('news.devblog') }}" class="btn btn-return">← Retour aux devblogs</a>
+        </nav>
+      </div>
+    </div>
+  </article>
+</main>
+{% endblock %}

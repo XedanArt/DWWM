@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/logs.css') }}">
+{% endblock %}
+
+{% block title %}Logs{% endblock %}
+
+{% block body %}
+<main class="logs-container" role="main" aria-label="Historique des logs système">
+  <section class="logs-table-container" role="region" aria-labelledby="logs-title">
+    <header>
+      <h1 id="logs-title" class="logs-title">Logs</h1>
+    </header>
+
+    {% if logs is not empty %}
+      <section class="logs-card" role="region" aria-labelledby="logs-card-header">
+        <h2 id="logs-card-header" class="logs-card-header">Dernières actions enregistrées</h2>
+        <div class="logs-card-body">
+          <div class="logs-table-wrapper">
+            <table class="logs-table" role="table" aria-label="Table des logs système">
+              <thead>
+                <tr role="row">
+                  <th scope="col">Horodatage</th>
+                  <th scope="col">Niveau</th>
+                  <th scope="col">Message</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for line in logs %}
+                  {% set parts = line|split('] ') %}
+                  {% set timestamp = parts[0]|replace({'[': ''}) %}
+                  {% set level = parts[1] is defined ? parts[1]|split('.')|last : 'UNKNOW' %}
+                  {% set message = parts|length > 2 ? parts|slice(2)|join('] ') : '' %}
+                  {% set levelColor = {
+                    'INFO': 'logs-badge-info',
+                    'WARNING': 'logs-badge-warning',
+                    'ERROR': 'logs-badge-error',
+                    'CRITICAL': 'logs-badge-critical'
+                  }[level] ?? 'logs-badge-default' %}
+
+                  <tr class="logs-row" role="row">
+                    <td class="logs-timestamp" role="cell">{{ timestamp }}</td>
+                    <td class="logs-level" role="cell">
+                      <span class="logs-badge {{ levelColor }}">{{ level }}</span>
+                    </td>
+                    <td class="logs-message" role="cell">
+                      <code>{{ message }}</code>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    {% else %}
+      <div class="logs-empty" role="status" aria-live="polite">
+        Aucun log à afficher pour le moment.
+      </div>
+    {% endif %}
+
+    <nav class="logs-pagination" aria-label="Pagination des logs">
+      {{ knp_pagination_render(logs) }}
+    </nav>
+
+    <nav aria-label="Retour au tableau de bord">
+      <a href="{{ path('dashboard') }}" class="logs-back-btn">← Retour au dashboard</a>
+    </nav>
+  </section>
+</main>
+{% endblock %}
