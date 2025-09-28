@@ -1,0 +1,19 @@
+28/09/2025 : 15h20
+
+Dockerization :
+- projet fonctionnel en local sous docker
+  - docker-compose.yaml
+  - docker/php/Dockerfile
+  - docker/nginx/default.conf
+  - .env.docker
+
+Peaufinage :
+- création de la commande d'insertion des sections en base
+- création de la commande d'insertion des tags en base
+- création de la commande d'insertion des changelogs en base
+- création de la commande d'insertion des devblogs en base
+
+Sécurité :
+- PostType sécurisé avec Regex
+
+Makefile :
