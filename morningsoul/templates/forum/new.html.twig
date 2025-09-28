@@ -31,8 +31,8 @@
 
   <div class="newtopic-group">
     {{ form_label(form.content, null, {'label_attr': {'class': 'newtopic-label'}}) }}
-    {{ form_widget(form.content, {'attr': {'class': 'newtopic-textarea'}}) }}
-    <small id="content-count" class="newtopic-hint">0/5000 caractères</small>
+    {{ form_widget(form.content, {'attr': {'class': 'newtopic-textarea', 'maxlength': 4000}}) }}
+    <small id="content-count" class="newtopic-hint">0/4000 caractères</small>
     {{ form_errors(form.content) }}
   </div>
 
@@ -71,9 +71,9 @@
       height: 300,
       entities: '160,nbsp,38,amp,60,lt,62,gt',
       entity_encoding: 'raw',
-      forced_root_block: false,
-      force_br_newlines: true,
-      force_p_newlines: false,
+      forced_root_block: 'p',
+      force_br_newlines: false,
+      force_p_newlines: true,
       valid_elements: "a[href|target], b,strong,i,em,br",
       extended_valid_elements: "a[href|target|rel]",
       skin_url: '/js/tinymce/skins/ui/oxide',
@@ -83,10 +83,20 @@
       setup: function (editor) {
         editor.on('input', () => {
           const rawContent = editor.getContent({ format: 'raw' });
-          const length = rawContent.length;
-          contentCounter.textContent = `${length}/5000 caractères`;
-          contentCounter.style.color = length > 5000 ? 'red' : '#666';
+          const plainText = editor.getContent({ format: 'text' }).trim();
+
+          const rawLength = rawContent.length;
+          const textLength = plainText.length;
+
+          contentCounter.textContent = `${rawLength}/6000 caractères HTML`;
+          contentCounter.style.color = rawLength > 6000 ? 'red' : '#666';
+
+          if (rawLength > 6000) {
+            editor.undoManager.undo();
+            alert('Vous avez atteint la limite maximale de 6000 caractères HTML.');
+          }
         });
+
 
         editor.on('change', () => {
           editor.save();
@@ -99,8 +109,17 @@
       form.addEventListener('submit', (e) => {
         const editor = tinymce.get(document.querySelector('.newtopic-textarea').id);
         if (editor) {
+          editor.save();
+
           const rawContent = editor.getContent({ format: 'raw' });
           const plainText = editor.getContent({ format: 'text' }).trim();
+          const textLength = plainText.length;
+
+          if (textLength === 0) {
+            e.preventDefault(),
+            alert('Le contenu ne peut pas être vide.');
+            return;
+          }
 
           if (plainText.length === 0) {
             e.preventDefault();
@@ -108,9 +127,9 @@
             return;
           }
 
-          if (rawContent.length > 5000) {
+          if (rawContent.length > 6000) {
             e.preventDefault();
-            alert('Le contenu dépasse la limite de 5000 caractères.');
+            alert('Le contenu dépasse la limite de 6000 caractères.');
           }
         }
       });

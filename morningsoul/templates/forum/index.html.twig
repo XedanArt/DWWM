@@ -157,7 +157,7 @@
       {{ form_errors(form.title) }}
     </div>
 
-    {{ form_row(form.content, {'attr': {'class': 'forum-textarea', 'maxlength': 5000}}) }}
+    {{ form_row(form.content, {'attr': {'class': 'forum-textarea', 'maxlength': 4000}}) }}
 
     <div style="display:none;">
       {{ form_widget(form.tags) }}
@@ -294,8 +294,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateCounter() {
       const length = contentInput.value.length;
-      counter.textContent = `${length}/5000 caractères`;
-      counter.style.color = length > 5000 ? 'red' : '#666';
+      counter.textContent = `${length}/4000 caractères`;
+      counter.style.color = length > 4000 ? 'red' : '#666';
     }
 
     contentInput.addEventListener('input', updateCounter);

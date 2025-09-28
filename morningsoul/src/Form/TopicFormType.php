@@ -13,6 +13,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class TopicFormType extends AbstractType
 {
@@ -24,9 +28,7 @@ class TopicFormType extends AbstractType
                 'class' => ForumSection::class,
                 'choice_label' => 'title',
                 'placeholder' => '-- Choisissez une catégorie --',
-                'attr' => [
-                    'class' => 'form-select',
-                ],
+                'attr' => ['class' => 'form-select'],
             ])
             ->add('title', TextType::class, [
                 'label' => 'Titre du sujet',
@@ -62,8 +64,8 @@ class TopicFormType extends AbstractType
                 ],
                 'constraints' => [
                     new Length([
-                        'max' => 5000,
-                        'maxMessage' => 'Le contenu ne doit pas dépasser 5000 caractères.',
+                        'max' => 6000,
+                        'maxMessage' => 'Le contenu HTML ne doit pas dépasser 6000 caractères.',
                     ]),
                     new Regex([
                         'pattern' => '/<script\b[^>]*>(.*?)<\/script>/i',
@@ -88,6 +90,19 @@ class TopicFormType extends AbstractType
                     ]),
                 ],
             ]);
+
+        // Nettoyage du champ content avant validation
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            $data = $event->getData();
+
+            if (isset($data['content'])) {
+                $raw = $data['content'];
+                $cleaned = preg_replace('/^<(p|span)[^>]*>(.*?)<\/\1>$/is', '$2', trim($raw));
+                $cleaned = strip_tags($cleaned, '<a><b><strong><i><em><br>');
+                $data['content'] = $cleaned;
+                $event->setData($data);
+            }
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void
