@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -20,7 +22,7 @@ class HomepageController extends AbstractController
     // [URL + NOM DE LA ROUTE, index = accueil)]
     #[Route('/', name: 'homepage.index')]
     public function index(): Response {
-       $title = "Morging Soul - Jeu Indépendant";
+       $title = "Morning Soul - Jeu Indépendant";
        $subtitle = "- Un espace communautaire pour suivre l’évolution du projet -";
        return $this->render('homepage/index.html.twig', [
         "title" => $title, 
@@ -68,6 +70,7 @@ class HomepageController extends AbstractController
     public function support(
         Request $request,
         EntityManagerInterface $em,
+        MailerInterface $mailer,
         #[Autowire(service: 'monolog.logger.contact_form')]
         LoggerInterface $logger
     ): Response {
@@ -79,6 +82,15 @@ class HomepageController extends AbstractController
             $contact = $form->getData();
             $em->persist($contact);
             $em->flush();
+
+            // Brevo
+            $email = (new Email())
+                ->from($contact->getEmail())
+                ->to('contact@morningsoul.fr')
+                ->subject('Demande de support Morning Soul')
+                ->text($contact->getMessage());
+            
+                $mailer->send($email);
 
             // Log de soumission réussie
             $logger->info('Formulaire de contact soumis avec succès.', [
