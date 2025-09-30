@@ -242,7 +242,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getAvatarPath(): string
     {
-        return 'img/avatars/' . ($this->avatar ?? 'default-avatar.png');
+        return 'uploads/avatars/' . ($this->avatar ?? 'default-avatar.png');
 
     }
 
