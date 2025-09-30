@@ -34,7 +34,6 @@ class SitemapController extends AbstractController
             ['loc' => $urlGenerator->generate('cookies.preferences', [], UrlGeneratorInterface::ABSOLUTE_URL)],
             ['loc' => $urlGenerator->generate('game.discover', [], UrlGeneratorInterface::ABSOLUTE_URL)],
             ['loc' => $urlGenerator->generate('game.download', [], UrlGeneratorInterface::ABSOLUTE_URL)],
-            ['loc' => $urlGenerator->generate('external_redirect', [], UrlGeneratorInterface::ABSOLUTE_URL)],
         ];
 
         // Boucle sur les changelogs publiés
