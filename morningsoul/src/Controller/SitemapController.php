@@ -36,30 +36,12 @@ class SitemapController extends AbstractController
             ['loc' => $urlGenerator->generate('game.download', [], UrlGeneratorInterface::ABSOLUTE_URL)],
         ];
 
-        // Boucle sur les changelogs publiés
-        foreach ($changelogRepository->findPublished() as $changelog) {
-            $urls[] = [
-                'loc' => $urlGenerator->generate('news.changelog.show', [
-                    'slug' => $changelog->getSlug()
-                ], UrlGeneratorInterface::ABSOLUTE_URL)
-            ];
-        }
-
-        // Boucle sur les devblogs publiés
-        foreach ($devblogRepository->findPublished() as $post) {
-            $urls[] = [
-                'loc' => $urlGenerator->generate('news.devblog.show', [
-                    'slug' => $post->getSlug()
-                ], UrlGeneratorInterface::ABSOLUTE_URL)
-            ];
-        }
-
         $xml = new \SimpleXMLElement('<urlset/>');
         $xml->addAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
 
         foreach ($urls as $url) {
             $urlElement = $xml->addChild('url');
-            $urlElement->addChild('loc', $url['loc']);
+            $urlElement->addChild('loc', htmlspecialchars($url['loc'], ENT_XML1));
         }
 
         return new Response($xml->asXML(), 200, ['Content-Type' => 'application/xml']);
