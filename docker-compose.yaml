@@ -6,7 +6,7 @@ services:
     volumes:
       - ./morningsoul:/var/www/html
     environment:
-      MAILER_DSN: smtp://9891719dad3ab0cdae835bbef994a418:ee42e2b13014092121a2385a51832f6b@smtp.mailjet.com:587
+      MAILER_DSN: smtp://contact@morningsoul.fr:PgEc4TjBKVRt6SQr@smtp-relay.brevo.com:587
     depends_on:
       - db
 
