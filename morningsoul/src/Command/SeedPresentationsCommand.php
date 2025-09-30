@@ -25,7 +25,7 @@ class SeedPresentationsCommand extends Command
         $presentations = [
             [
                 'title' => 'Un univers sombre et complet',
-                'description' => 'Plongez dans un monde où chaque décision est lourde de sens et chaque réussite arrachée à la difficulté. - Morning Soul - récompse l\'audace, la réflexion et la persévérance dans une avanteure intense et inoubliable.',
+                'description' => 'Plongez dans un monde où chaque décision est lourde de sens et chaque réussite arrachée à la difficulté. - Morning Soul - récompense l\'audace, la réflexion et la persévérance dans une aventure intense et inoubliable.',
                 'background' => 'hero-1',
             ],
             [

@@ -13,4 +13,14 @@ class ChangelogRepository extends ServiceEntityRepository
         parent::__construct($registry, Changelog::class);
     }
 
+    public function findPublished(): array
+    { 
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.date <= :now')
+            ->setParameter('now', new \DateTimeImmutable())
+            ->orderBy('c.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

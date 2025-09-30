@@ -1,0 +1,27 @@
+30/09/2025 : 00H18
+
+GITHUB :
+- récupération de la version prod OVH sur la branche dédiée
+- récupération de la dernière version de la branche dédiée, en local
+
+SEO : SITEMAP :
+- composant symfony dédiée obsolète (sitemap-bundle)
+- sitemap manuel :
+  - création d'un controller dédié
+  - insertion dans les repository de la récupération des slugs (changelog, devblog)
+- robot :
+  - création d'un robots.txt pour guider les robots
+
+CORRECTIONS :
+- erreur de saisie dans la commande seed:presentations : OK
+- problème de css pour les écrans vraiment petits : 768px, 480px, 375px
+  - topic.show : le status quarantined d'un topic passe sous les boutons de contrôle OK
+  - tag.search : stats. sortent largement du bloc OK
+  - download : fichier non disponible sur le site
+  - profile : le bloc profil sort de son bloc parent OK
+  - devblog : les devblogs se collent à droite de l'écran OK
+  - changelog : possibilité d'amélioration confort visuel en affichant les images de toutes les entrées
+  - logs : visibilité des logs complètement arrachée
+- problème d'avatar par défaut : OK
+  - rajout dans les méthodes PHP de l'entité User le trajet vers l'image (en plus du nom du fichier)
+- affichage contenu différent dans les topics (par rapport aux posts) OK

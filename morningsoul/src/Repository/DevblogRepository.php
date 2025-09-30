@@ -16,6 +16,16 @@ class DevblogRepository extends ServiceEntityRepository
         parent::__construct($registry, Devblog::class);
     }
 
+    public function findPublished(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->where('d.date <= :now')
+            ->setParameter('now', new \DateTimeImmutable())
+            ->orderBy('d.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Devblog[] Returns an array of Devblog objects
 //     */

@@ -28,3 +28,88 @@ body{margin:0;font-family:'Segoe UI',Roboto,sans-serif}.profile-main-container{m
   background-color: #FFD7A1;
   color: rgb(24, 20, 20);
 }
+
+@media (max-width: 768px) {
+  .profile-main-container {
+    margin: 3rem auto 8rem auto;
+    padding: 15px;
+  }
+
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .profile-username {
+    font-size: 1.6rem;
+  }
+
+  .form-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-main-container {
+    padding: 10px;
+    margin: 2rem auto 6rem auto;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    padding: 4px;
+  }
+
+  .profile-username {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  .profile-firstcard-left,
+  .profile-firstcard-right {
+    padding: 15px;
+    min-width: auto;
+  }
+
+  .tab-button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .bio-textarea {
+    min-height: 80px;
+    font-size: 0.9rem;
+  }
+
+  .fav-item,
+  .history-list li {
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .profile-username {
+    font-size: 1.2rem;
+  }
+
+  .tab-button {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+  }
+
+  .form-button {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+
+  .char-counter {
+    font-size: 0.8rem;
+  }
+
+  .profile-pagination .pagination a,
+  .profile-pagination .pagination span {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+  }
+}
