@@ -94,22 +94,35 @@ class HomepageController extends AbstractController
                 '<strong>Email :</strong> ' . htmlspecialchars($data['email']) . '<br>' .
                 '<strong>Message :</strong><br>' . nl2br(htmlspecialchars($data['message'])) . '</p>');
 
-                // Envoi via Brevo, config mailer.yaml
+            try {// Envoi via Brevo, config mailer.yaml
                 $mailer->send($email);
 
-            // Log de soumission réussie
-            $logger->info('Formulaire de contact soumis avec succès.', [
-                'nom' => $data['nom'],
-                'email' => $data['email'],
-                'message' => $data['message'],
-                'ip' => $request->getClientIp(),
-                'userAgent' => $request->headers->get('User-Agent'),
-            ]);
+                // Log de soumission réussie
+                $logger->info('Formulaire de contact soumis avec succès.', [
+                    'nom' => $data['nom'],
+                    'email' => $data['email'],
+                    'message' => $data['message'],
+                    'ip' => $request->getClientIp(),
+                    'userAgent' => $request->headers->get('User-Agent'),
+                ]);
 
-            $this->addFlash('success', 'Votre message a bien été envoyé. Nous vous répondrons sous peu.');
+                $this->addFlash('success', 'Votre message a bien été envoyé. Nous vous répondrons sous peu.');
+            } catch (\Throwable $e) {
+                $logger->error('Erreur SMTP lors de l’envoi du formulaire de contact.', [
+                    'nom' => $data['nom'],
+                    'email' => $data['email'],
+                    'message' => $data['message'],
+                    'exception' => $e->getMessage(),
+                    'ip' => $request->getClientIp(),
+                    'userAgent' => $request->headers->get('User-Agent'),
+                ]);
+
+                $this->addFlash('danger', 'Le serveur de mail ne répond pas. Réessayez plus tard.');
+            }
+
             return $this->redirectToRoute('contact.support');
-        } 
-            // Log de soumission invalide
+        }
+
         if ($form->isSubmitted()) {
             $logger->warning('Formulaire de contact soumis invalide.', [
                 'erreurs' => (string) $form->getErrors(true, false),
@@ -118,10 +131,11 @@ class HomepageController extends AbstractController
             ]);
         }
 
-        return $this->render('contact/support.html.twig', [
+    return $this->render('contact/support.html.twig', [
         'form' => $form->createView()
-        ]);
-    }
+    ]);
+}
+
 
 
 
