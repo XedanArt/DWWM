@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Morning Soul est une plateforme communautaire immersive mêlant jeu narratif, tutoriels, devblog et forum. Rejoignez l’aventure.">
     <title>{% block title %}- Morning Soul -{% endblock %}</title>
-    <link rel="icon" type="image/png" href="{{ asset('img/favicon_ms_00.png') }}">
+    <link rel="icon" href="https://morningsoul.fr/img/favicon_ms_00.png" type="image/png">
+    <link rel="shortcut icon" href="https://morningsoul.fr/img/favicon_ms_00.png" type="image/png">
+    <link rel="icon" href="{{ asset('img/favicon_ms_00.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
@@ -97,6 +99,7 @@
 
     {% block javascripts %}
       <script>
+      {# Gestion des flashs #}
         document.addEventListener('DOMContentLoaded', () => {
           const flash = document.querySelector('.flash-overlay');
           if (flash) {
@@ -106,7 +109,7 @@
               setTimeout(() => flash.remove(), 500);
             }, 3000);
           }
-
+          
           document.querySelectorAll('a[href^="http"]:not(.no-intercept)').forEach(link => {
             const hostname = window.location.hostname;
             if (!link.href.includes(hostname)) {
@@ -117,7 +120,7 @@
               });
             }
           });
-
+          
           const banner = document.getElementById("cookie-banner");
           const consent = localStorage.getItem("cookieConsent");
 
