@@ -52,7 +52,7 @@
           <a href="#" class="nav-link d-flex align-items-center" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
             <span class="me-2">{{ app.user.displayUsername }}</span>
             <span class="chevron-icon me-2"><i class="fas fa-chevron-down"></i></span>
-            <img src="{{ asset('uploads/avatars/' ~ (app.user.avatar ?? 'default-avatar.png')) }}" alt="Avatar" class="rounded-circle" width="60" height="60">
+            <img src="{{ asset('uploads/avatars/' ~ (app.user.avatar ?? 'default.png')) }}" alt="Avatar" class="rounded-circle" width="60" height="60">
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
             <li><a class="dropdown-item" href="{{ path('account.profile') }}">Mon Profil</a></li>

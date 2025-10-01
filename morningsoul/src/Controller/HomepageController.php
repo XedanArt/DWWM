@@ -108,6 +108,7 @@ class HomepageController extends AbstractController
 
                 $this->addFlash('success', 'Votre message a bien été envoyé. Nous vous répondrons sous peu.');
             } catch (\Throwable $e) {
+                $logger->error('Erreur SMTP : ' . $e->getMessage());
                 $logger->error('Erreur SMTP lors de l’envoi du formulaire de contact.', [
                     'nom' => $data['nom'],
                     'email' => $data['email'],

@@ -6,10 +6,13 @@
 /public/uploads/
 
 # Environment files
-.env
-.env.docker
 .env.local
 .env.*.local
+.env.dev
+.env.dev.local
+.env.test.local
+.env.prod.local
+
 
 # IDE and OS files
 *.log

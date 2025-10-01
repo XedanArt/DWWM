@@ -106,7 +106,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->posts = new ArrayCollection();
         $this->announcements = new ArrayCollection();
         $this->favoriteTopics = new ArrayCollection();
-        $this->avatar = 'default-avatar.png';
+        $this->avatar = 'default.png';
     }
 
     public function getId(): ?int { return $this->id; }
@@ -242,7 +242,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getAvatarPath(): string
     {
-        return 'uploads/avatars/' . ($this->avatar ?? 'default-avatar.png');
+        return 'uploads/avatars/' . ($this->avatar ?? 'default.png');
 
     }
 

@@ -28,7 +28,7 @@
         <div class="profile-firstcard-left">
           <!-- Avatar -->
           <div class="profile-avatar-block">
-            <img src="{{ asset('uploads/avatars/' ~ app.user.avatarPath) }}" alt="Avatar" class="profile-avatar" />
+            <img src="{{ asset(app.user.avatarPath) }}" alt="Avatar" class="profile-avatar" />
             {{ form_start(avatarForm, {'attr': {'enctype': 'multipart/form-data'}}) }}
               {{ form_row(avatarForm.avatar) }}
               <button type="submit" class="form-button">Changer ma photo</button>

@@ -6,7 +6,8 @@ services:
     volumes:
       - ./morningsoul:/var/www/html
     environment:
-      MAILER_DSN: smtp://contact@morningsoul.fr:PgEc4TjBKVRt6SQr@smtp-relay.brevo.com:587
+      MAILER_DSN: ${SENDINBLUE_MAILER_DSN}
+
     depends_on:
       - db
 
