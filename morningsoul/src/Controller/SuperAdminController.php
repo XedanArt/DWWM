@@ -71,7 +71,7 @@ class SuperAdminController extends AbstractController
                 ], UrlGeneratorInterface::ABSOLUTE_URL);
 
                 $email = (new TemplatedEmail())
-                    ->from('Morning Soul <no-reply@morning-soul.fr>')
+                    ->from('Morning Soul <contact@morningsoul.fr>')
                     ->to($user->getEmail())
                     ->subject('Activation de votre compte administrateur')
                     ->htmlTemplate('emails/admin_invitation.html.twig')

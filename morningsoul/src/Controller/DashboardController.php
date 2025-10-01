@@ -58,7 +58,7 @@ class DashboardController extends AbstractController
             ]);
 
             $email = (new Email())
-                ->from('no-reply@morning-soul.fr')
+                ->from('contact@morningsoul.fr')
                 ->to($user->getEmail())
                 ->subject('Message de l\'administration')
                 ->text($data['message'])

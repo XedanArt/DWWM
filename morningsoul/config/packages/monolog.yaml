@@ -1,5 +1,5 @@
 monolog:
-    channels: ['super_admin', 'security', 'user', 'account', 'content_modif', 'admin_actions', 'contact_form', 'download']
+    channels: ['super_admin', 'security', 'user', 'account', 'content_modif', 'admin_actions', 'contact_form', 'download', 'mailer']
 
     handlers:
         super_admin_handler:
@@ -49,3 +49,14 @@ monolog:
             path: '%kernel.logs_dir%/controllers/download.log'
             level: notice
             channels: ['download']
+        
+        main:
+            type: stream
+            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            level: debug
+        
+        mailer:
+            type: stream
+            path: '%kernel.logs_dir%/mailer.log'
+            level: debug
+            channels: ['mailer']

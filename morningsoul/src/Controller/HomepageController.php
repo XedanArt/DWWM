@@ -94,7 +94,7 @@ class HomepageController extends AbstractController
                 '<strong>Email :</strong> ' . htmlspecialchars($data['email']) . '<br>' .
                 '<strong>Message :</strong><br>' . nl2br(htmlspecialchars($data['message'])) . '</p>');
 
-            try {// Envoi via Brevo, config mailer.yaml
+            try {// // Envoi via MailerSend, configuré via MAILER_DSN dans .env.local
                 $mailer->send($email);
 
                 // Log de soumission réussie
@@ -108,6 +108,7 @@ class HomepageController extends AbstractController
 
                 $this->addFlash('success', 'Votre message a bien été envoyé. Nous vous répondrons sous peu.');
             } catch (\Throwable $e) {
+                $logger->info('MailerSend :: contact.support envoyé');
                 $logger->error('Erreur SMTP : ' . $e->getMessage());
                 $logger->error('Erreur SMTP lors de l’envoi du formulaire de contact.', [
                     'nom' => $data['nom'],

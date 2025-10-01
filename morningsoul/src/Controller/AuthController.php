@@ -65,7 +65,7 @@ class AuthController extends AbstractController
 
                 $em->persist($user);
                 $em->flush();
-
+                
                 $mailService->sendAccountConfirmation($user->getEmail(), $user->getUsername());
 
                 $this->addFlash('success', 'Inscription réussie');

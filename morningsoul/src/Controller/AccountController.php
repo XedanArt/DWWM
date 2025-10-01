@@ -100,7 +100,7 @@ class AccountController extends AbstractController
                     $file->move($this->getParameter('avatars_directory'), $filename);
 
                     $oldAvatar = $user->getAvatar();
-                    if ($oldAvatar && $oldAvatar !== 'default-avatar.png') {
+                    if ($oldAvatar && $oldAvatar !== 'default.png') {
                         $oldPath = $this->getParameter('avatars_directory') . '/' . $oldAvatar;
                         if (file_exists($oldPath)) {
                             unlink($oldPath);
