@@ -9,6 +9,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+// docker exec -it symfony_php php bin/console app:seed-tags
 #[AsCommand(name: 'app:seed-tags')]
 class SeedTagsCommand extends Command
 {

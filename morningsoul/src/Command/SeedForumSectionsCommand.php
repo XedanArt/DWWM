@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+// php bin/console app:seed-forum-sections
 #[AsCommand(name: 'app:seed-forum-sections')]
 class SeedForumSectionsCommand extends Command
 {

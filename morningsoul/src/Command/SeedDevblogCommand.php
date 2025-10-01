@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Cocur\Slugify\Slugify;
 
+// docker exec -it symfony_php php bin/console app:seed-devblog
 #[AsCommand(name: 'app:seed-devblogs')]
 class SeedDevblogCommand extends Command
 {

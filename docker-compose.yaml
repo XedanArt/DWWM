@@ -1,5 +1,7 @@
 services:
   php:
+    env_file:
+      - .env.docker
     build:
       context: ./docker/php
     container_name: symfony_php
@@ -7,7 +9,6 @@ services:
       - ./morningsoul:/var/www/html
     environment:
       MAILER_DSN: ${SENDINBLUE_MAILER_DSN}
-
     depends_on:
       - db
 
