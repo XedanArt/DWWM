@@ -1,0 +1,10 @@
+.world-section-discover{position:relative;height:100vh;width:100%;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;color:#fff}.title-world-section-discover{font-family:OptimusPrinceps}.overlay-text-discover{background:rgba(0,0,0,.6);backdrop-filter:blur(5px);padding:40px;text-align:center;border-radius:10px;max-width:800px}.transition-section{height:50px;width:100%;background:linear-gradient(to bottom,rgba(0,0,0,.6),rgba(0,0,0,0))}.gradient-overlay{height:100%;width:100%}@keyframes backgroundZoom{0%,100%{background-size:100%}50%{background-size:105%}}.overlay-text-discover:hover{box-shadow:0 0 25px rgba(255,255,255,.3);transition:box-shadow .4s ease}
+#hero-1 {
+  background-image: url('../img/world-section-discover_01.png');
+}
+#hero-2 {
+  background-image: url('../img/gameplay-section-discover_02.png');
+}
+#hero-3 {
+  background-image: url('../img/evo-section-discover_03.png');
+}

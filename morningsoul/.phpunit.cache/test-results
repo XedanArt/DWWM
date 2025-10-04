@@ -1,0 +1,1 @@
+{"version":2,"defects":{"App\\Test\\Service\\Logging\\AdminAuditLoggerTest::test_log_admin_creation_work":7},"times":{"App\\Test\\PremierTest::test_1_egale_1":0.001,"App\\Test\\Service\\Logging\\AdminAuditLoggerTest::test_log_admin_creation_work":0.1}}

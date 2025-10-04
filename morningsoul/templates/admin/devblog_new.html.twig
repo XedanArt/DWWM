@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+{% endblock %}
+
+{% block title %}Ajouter un Devblog{% endblock %}
+
+{% block body %}
+<div class="devblog-new-container container mt-5">
+  <h2 class="text-center dashboard-devblog-title">
+    <i class="bi bi-megaphone-fill me-2"></i> Ajouter un Devblog
+  </h2>
+
+  {% for message in app.flashes('success') %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      {{ form_start(form) }}
+
+        <div class="mb-3">
+          {{ form_label(form.title, 'Titre', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+          {{ form_widget(form.title, {
+            'attr': {
+              'class': 'form-control',
+              'maxlength': 100,
+              'placeholder': 'Ex: Nouveau Raid : Kraken'
+            }
+          }) }}
+          <small class="char-counter" data-max="100">0/100 caractères</small>
+          {{ form_errors(form.title) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(form.date, 'Date de publication', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+          {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+          {{ form_errors(form.date) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(form.content, 'Contenu', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+          {{ form_widget(form.content, {
+            'attr': {
+              'class': 'form-control',
+              'rows': '6',
+              'maxlength': 5000,
+              'placeholder': 'Décrivez les nouveautés...'
+            }
+          }) }}
+          <small class="char-counter" data-max="5000">0/5000 caractères</small>
+          {{ form_errors(form.content) }}
+        </div>
+
+        {% if devblog is defined and devblog.image is not empty %}
+          <div class="mb-3">
+            <label class="form-label fw-bold">Image actuelle</label>
+            <img src="{{ asset(devblog.imagePath) }}" alt="Image du Devblog" class="img-fluid rounded border" style="max-height: 300px;">
+          </div>
+        {% endif %}
+
+        <div class="mb-3">
+          {{ form_label(form.imageFile, 'Illustration du Devblog', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+          {{ form_widget(form.imageFile, {
+            'attr': {
+              'class': 'form-control',
+              'accept': 'image/*',
+              'maxlength': 100
+            }
+          }) }}
+          <small class="char-counter" data-max="100">0/100 caractères</small>
+          {{ form_errors(form.imageFile) }}
+        </div>
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-circle me-1"></i> Enregistrer
+          </button>
+        </div>
+
+      {{ form_end(form) }}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const counters = document.querySelectorAll('.char-counter');
+
+    counters.forEach(counter => {
+      const input = counter.previousElementSibling;
+      const max = parseInt(counter.dataset.max);
+
+      const updateCounter = () => {
+        const length = input.value?.length || 0;
+        counter.textContent = `${length}/${max} caractères`;
+
+        if (input.name.includes('content')) {
+          if (length < 100) {
+            counter.textContent += ' (minimum 100 requis)';
+          }
+          counter.style.color = length > max ? 'red' : '#666';
+        } else {
+          counter.style.color = length > max ? 'red' : '#666';
+        }
+      };
+
+      input.addEventListener('input', updateCounter);
+      updateCounter();
+    });
+  });
+</script>
+{% endblock %}

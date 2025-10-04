@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/topic_show.css') }}">
+{% endblock %}
+
+{% block title %}{{ topic.title }}{% endblock %}
+
+{% block body %}
+<div class="topic-separator"></div>
+
+<div class="topic-container-global">
+  <div class="topic-show-wrapper">
+
+    <div class="topic-show-main">
+      <div class="topic-header" style="position: relative; padding-bottom: 3rem;">
+        <h1 class="topic-show-title text-center">
+          {{ topic.title }}
+        </h1>
+
+        <p class="topic-meta text-center mt-2">
+          Publié le {{ topic.createdAt|date('d/m/Y') }}
+          {% if topic.author is defined %}
+            par <strong>{{ topic.author.displayUsername }}</strong>
+          {% endif %}
+        </p>
+
+        {% if topic.isQuarantined %}
+          <div class="text-center mt-2">
+            <span class="badge bg-warning text-dark"> Ce topic est en quarantaine</span>
+          </div>
+        {% endif %}
+        {% if topic.deletedAt %}
+          <div class="text-center mt-2">
+            <span class="badge bg-danger"> Ce topic a été supprimé</span>
+          </div>
+        {% endif %}
+
+        <div class="topic-actions" style="position: absolute; bottom: 0; right: 0;">
+          <div class="d-flex gap-2">
+            {% if app.user %}
+              <form method="post" action="{{ path('topic.toggle_favorite', { id: topic.id }) }}">
+                <button type="submit" class="btn btn-sm btn-primary" style="font-size: 0.95rem;">
+                  {% if topic in app.user.favoriteTopics %}
+                    ★ Retirer des favoris
+                  {% else %}
+                    ☆ Ajouter aux favoris
+                  {% endif %}
+                </button>
+              </form>
+            {% endif %}
+
+            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') %}
+              <form method="post" action="{{ path('topic.quarantine', { id: topic.id }) }}">
+                <button type="submit" class="btn btn-sm btn-primary"> Quarantaine</button>
+              </form>
+              <form method="post" action="{{ path('topic.delete', { id: topic.id }) }}">
+                <button type="submit" class="btn btn-sm btn-danger"> Supprimer</button>
+              </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-show-content mt-4">
+        {{ topic.content|raw }}
+      </div>
+
+      <div class="topic-tags mt-4">
+        {% if topic.tags|length > 0 %}
+          <small class="topic-show-small d-block mb-2">Tags :
+            {% for tag in topic.tags %}
+              <a href="{{ path('tag.search', { tag: tag.name }) }}" class="badge bg-light text-dark me-2" style="font-size: 1.1rem; padding: 0.45em 0.7em;">
+                {{ tag.name }}
+              </a>
+            {% endfor %}
+          </small>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="topic-show-comments mt-5">
+      <h2 class="comments-title">Réponses</h2>
+
+      {% if topic.posts is defined and topic.posts|length > 0 %}
+        {% for post in pagination %}
+          <div class="comment-card {% if post.user and post.user.roles is defined and ('ROLE_ADMIN' in post.user.roles or 'ROLE_SUPER_ADMIN' in post.user.roles) %}admin-post{% endif %}">
+            <div class="comment-meta">
+              <img src="{{ asset('uploads/avatars/' ~ post.user.avatar) }}" alt="Avatar de {{ post.user.displayUsername }}" class="comment-avatar-inline">
+
+              <span class="comment-author {% if post.user and post.user.roles is defined and ('ROLE_ADMIN' in post.user.roles or 'ROLE_SUPER_ADMIN' in post.user.roles) %}admin-author{% endif %}">
+                <strong>{{ post.user.displayUsername }}</strong>
+                {% if 'ROLE_SUPER_ADMIN' in post.user.roles %}
+                  <span class="badge badge-super">Super Admin</span>
+                {% elseif 'ROLE_ADMIN' in post.user.roles %}
+                  <span class="badge badge-admin">Admin</span>
+                {% endif %}
+              </span>
+
+              <span class="comment-date">le {{ post.createdAt|date('d/m/Y') }}</span>
+            </div>
+
+            <div class="comment-body {% if post.user and post.user.roles is defined and ('ROLE_ADMIN' in post.user.roles or 'ROLE_SUPER_ADMIN' in post.user.roles) %}admin-body{% endif %}">
+              {{ post.content|nl2br }}
+            </div>
+          </div>
+        {% endfor %}
+
+        <div class="topic-show-pagination">
+          {{ knp_pagination_render(pagination) }}
+        </div>
+      {% else %}
+        <p class="no-comments">Aucune réponse pour l’instant.</p>
+      {% endif %}
+    </div>
+
+    {% if topic.isQuarantined %}
+      <p class="text-center text-muted mt-5">Ce topic est en quarantaine. Il n’est plus possible d’y répondre.</p>
+    {% elseif app.user %}
+      <div class="comment-form mt-5">
+        <h3 class="form-title">Ajouter une réponse</h3>
+        <form action="{{ path('post.create', { id: topic.id }) }}" method="POST">
+          <textarea name="content" rows="4" required class="form-control" placeholder="Votre réponse..." maxlength="2000"></textarea>
+          <button type="submit" class="btn btn-dark mt-2" style="font-size: 0.95rem;">Envoyer</button>
+        </form>
+      </div>
+    {% else %}
+      <p class="login-prompt mt-4"><a href="{{ path('app_login') }}">Connectez-vous</a> pour répondre.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const textarea = document.querySelector('textarea[name="content"]');
+  if (textarea) {
+    const counter = document.createElement('small');
+    counter.className = 'char-counter';
+    counter.style.display = 'block';
+    counter.style.marginTop = '4px';
+    counter.style.fontSize = '0.85rem';
+    counter.style.color = '#666';
+    textarea.parentNode.appendChild(counter);
+
+    function updateCounter() {
+      const length = textarea.value.length;
+      counter.textContent = `${length}/2000 caractères`;
+      counter.style.color = length > 2000 ? 'red' : '#666';
+    }
+
+    textarea.addEventListener('input', updateCounter);
+    updateCounter();
+  }
+});
+</script>
+{% endblock %}

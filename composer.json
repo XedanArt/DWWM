@@ -1,0 +1,6 @@
+{
+    "require": {
+        "symfony/mailer-send-mailer": "^7.3",
+        "symfony/sendgrid-mailer": "^7.3"
+    }
+}

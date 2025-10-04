@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Préférences Cookies{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <style>
+    .cookie-preferences-wrapper {
+      background-color: rgb(255, 240, 206);
+      padding: 3rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+      animation: fadeIn 0.4s ease-out;
+    }
+    .cookie-preferences-title {
+      background-color: rgb(24,20,20);
+      color: #fff;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1.8rem;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .accordion-button:not(.collapsed) {
+      background-color: #dee2e6;
+    }
+    .form-check {
+      margin-bottom: 1rem;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  <div class="container py-5">
+    <div class="cookie-preferences-wrapper">
+      <h1 class="cookie-preferences-title mb-4">Gérer mes préférences de cookies</h1>
+
+      <form id="cookie-preferences-form">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="cookie-functional" checked disabled>
+          <label class="form-check-label" for="cookie-functional">
+            Cookies fonctionnels (obligatoires)
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="cookie-statistics" {% if preferences.statistics %}checked{% endif %}>
+          <label class="form-check-label" for="cookie-statistics">
+            Cookies statistiques
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="cookie-marketing" {% if preferences.marketing %}checked{% endif %}>
+          <label class="form-check-label" for="cookie-marketing">
+            Cookies marketing
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Enregistrer mes préférences</button>
+        <p class="mt-3">
+          Pour en savoir plus, consultez notre <a href="{{ path('legals.privacy') }}">politique de confidentialité</a>.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('cookie-preferences-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const statistics = document.getElementById('cookie-statistics').checked;
+      const marketing = document.getElementById('cookie-marketing').checked;
+
+      fetch('{{ path('cookies.save') }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          statistics: statistics,
+          marketing: marketing
+        })
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("Vos préférences ont été enregistrées.");
+        } else {
+          alert("Une erreur est survenue.");
+        }
+      });
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,26 @@
+25/09/2025 : 15h44
+
+Cookies : OK
+- refonte bannière Cookies
+
+base.html.twig et feuilles de styles : OK
+- allègement du site en séparant chaque feuilles de style via un block d'insertion dans leurs templates twig respectif et en les retirant de la base.html.twig
+
+Pagination : OK
+- modification style des paginations du site
+
+Dashboard : OK
+- ajouter pagination dans les logs
+- corriger bug pagination dans la suppression des entrées
+- créer une vue de contact utilisateur + un mail type + un formulaire + ajouter la configuration dans le controller
+
+Création d'une clé SSH via GitHub pour pouvoir héberger le site ---> Test effectué et succès ! La clé SSH publique est valide
+Apprentissage GitHub Actions / workflows, etc.
+
+Contrôle Lighthouse II : + + + ~
+- ordinateur : Performances 82, Accessibilité 95, Bonnes pratiques 100, SEA 54 (site pas encore hébergé)
+- mobile : Performances 61, Accessibilité 85, Bonne pratiques 96, SEO 54 (site pas encore hébergé)
+
+Sémantique + Aria : OK
+- navbar update sémantique + aria
+- footer update sémantique + aria

@@ -1,0 +1,191 @@
+/* === LOGS PAGE STYLES === */
+
+body {
+  background-color: #121212;
+  margin: 2rem;
+  padding: 2rem;
+}
+
+.logs-container {
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem;
+  background-color: #1e1e2f;
+  border-radius: 8px;
+  color: #f8f9fa;
+}
+
+.logs-table-container {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  gap: 1.5rem;
+}
+
+.logs-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #444;
+  padding-bottom: 0.5rem;
+}
+
+.logs-card {
+  background-color: #2a2a3d;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.logs-card-header {
+  background-color: #343a40;
+  padding: 1rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  border-bottom: 1px solid #555;
+}
+
+.logs-card-body {
+  padding: 0;
+}
+
+.logs-table-wrapper {
+  overflow-x: auto;
+}
+
+.logs-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.logs-table th,
+.logs-table td {
+  padding: 1rem;
+  text-align: left;
+  vertical-align: top;
+  background-color: #2f2f3f;
+  color: #f1f1f1;
+  word-break: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.logs-table th {
+  background-color: #3a3a4f;
+  color: #ffffff;
+}
+
+.logs-row:hover {
+  background-color: #3f3f5f;
+}
+
+.logs-timestamp {
+  width: 20%;
+  color: #adb5bd;
+}
+
+.logs-level {
+  width: 15%;
+  text-align: center;
+}
+
+.logs-message {
+  width: 65%;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+  color: #dee2e6;
+}
+
+/* Badge styles */
+.logs-badge {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  white-space: normal;
+}
+
+.logs-badge-info {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
+.logs-badge-warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.logs-badge-error {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.logs-badge-critical {
+  background-color: #212529;
+  color: #fff;
+}
+
+.logs-badge-default {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+/* Empty state */
+.logs-empty {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #444;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* Back button */
+.logs-back-btn {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.6rem 1rem;
+  background-color: #6c757d;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.logs-back-btn:hover {
+  background-color: #5a6268;
+}
+
+.logs-pagination {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.logs-pagination .pagination {
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+.logs-pagination .pagination li {
+  list-style: none;
+}
+
+.logs-pagination .pagination a,
+.logs-pagination .pagination span {
+  padding: 0.4rem 0.8rem;
+  background-color: rgb(24, 20, 20);
+  color: #FFD7A1;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.logs-pagination .pagination .current {
+  background-color: #FFD7A1;
+  color: rgb(24, 20, 20);
+}

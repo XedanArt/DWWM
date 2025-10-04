@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Règles du forum{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .rule-separator {
+            height: 5rem;
+        }
+
+        .rules-main-back {
+           flex: 3;
+           display: flex;
+           flex-direction: column;
+           background-color: rgba(0, 0, 0, 0.6);
+           box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.6);
+           padding: 15px;
+           gap: 20px;
+        }
+
+        .rules-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            margin-bottom: 10rem;
+        }
+
+        .rule-block {
+            margin-bottom: 2.5rem;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .rule-title {
+            font-family: 'Montserrat';
+            background-color: rgb(24,20,20);
+            color: #FFD7A1;
+            margin: 0;
+            padding: 12px 20px;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .rule-content {
+            font-family: 'Roboto';
+            background-color: #fff8e7;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .rule-content ul {
+            padding-top: 10px;
+            list-style-type: none;
+        }
+
+        .rule-content li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="rule-separator">
+    </div>
+    <div class="rules-container">
+        <div class="rules-main-back">
+            <div class="rule-block">
+                <div class="rule-title">Comportement général</div>
+                <div class="rule-content">
+                    <ul>
+                        <li>Respect mutuel entre les membres du forum</li>
+                        <li>Pas d’insultes, menaces ou propos haineux</li>
+                        <li>Pas de contenus illégaux ou offensants</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="rule-block">
+                <div class="rule-title">Utilisation du forum</div>
+                <div class="rule-content">
+                    <ul>
+                        <li>Poster dans les bonnes catégories</li>
+                        <li>Utiliser des titres clairs et pertinents</li>
+                        <li>Ne pas spammer ou flooder les discussions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="rule-block">
+                <div class="rule-title">Publicité et contenu externe</div>
+                <div class="rule-content">
+                    <ul>
+                        <li>Pas de publicité non autorisée</li>
+                        <li>Les liens doivent être utiles et sans virus</li>
+                        <li>Le contenu partagé doit être conforme à la législation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="rule-block">
+                <div class="rule-title">Modération et sanctions</div>
+                <div class="rule-content">
+                    <ul>
+                        <li>Les modérateurs ont le dernier mot</li>
+                        <li>Les comportements abusifs seront sanctionnés</li>
+                        <li>Les décisions de bannissement sont définitives sauf recours exceptionnel</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

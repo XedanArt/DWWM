@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+{% endblock %}
+
+{% block title %}Ajouter une annonce{% endblock %}
+
+{% block body %}
+<div class="announcement-new-container container mt-5">
+  <h2 class="text-center dashboard-announce-title">
+    <i class="bi bi-megaphone-fill me-2"></i> Nouvelle annonce
+  </h2>
+
+  {% for message in app.flashes('success') %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      {{ form_start(form) }}
+
+        <div class="mb-3">
+          {{ form_label(form.title, 'Titre', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+          {{ form_widget(form.title, {'attr': {'class': 'form-control', 'maxlength': 100,'placeholder': 'Ex: Maintenance prévue ce weekend'}}) }}
+          <small class="char-counter" data-max="100">0/100 caractères</small>
+          {{ form_errors(form.title) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(form.content, 'Contenu', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+          {{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': '6', 'maxlength': 1000, 'placeholder': 'Détaillez le message à transmettre à la communauté'}}) }}
+          <small class="char-counter announcement-counter" data-max="1000">0/1000 caractères</small>
+
+          {{ form_errors(form.content) }}
+        </div>
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-circle me-1"></i> Publier l’annonce
+          </button>
+        </div>
+
+      {{ form_end(form) }}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const counters = document.querySelectorAll('.char-counter');
+
+    counters.forEach(counter => {
+      const input = counter.previousElementSibling;
+      const max = parseInt(counter.dataset.max);
+
+      const updateCounter = () => {
+        const length = input.value.length;
+        counter.textContent = `${length}/${max} caractères`;
+        counter.style.color = length > max ? 'red' : '#666';
+      };
+
+      input.addEventListener('input', updateCounter);
+      updateCounter();
+    });
+  });
+</script>
+{% endblock %}

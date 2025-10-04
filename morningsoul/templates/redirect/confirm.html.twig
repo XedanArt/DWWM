@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Redirection externe{% endblock %}
+
+{% block body %}
+<main class="alert-overlay" role="main" aria-label="Avertissement de redirection externe">
+  <section class="alert-box" role="alertdialog" aria-modal="true" aria-labelledby="redirect-title" aria-describedby="redirect-description">
+    <header>
+      <h2 id="redirect-title">⚠️ Attention</h2>
+    </header>
+
+    <div id="redirect-description">
+      <p>Vous êtes sur le point de quitter <strong>Morning Soul</strong>.</p>
+      <p class="external-link">{{ target }}</p>
+      <p class="domain-warning">Ce lien n’appartient pas au domaine Morning Soul et peut mener vers un site non sécurisé.</p>
+    </div>
+
+    <nav class="buttons" aria-label="Choix de redirection">
+      <a href="{{ target }}" class="btn btn-danger no-intercept">Continuer</a>
+      <a href="{{ path('homepage.index') }}" class="btn btn-outline-light">Annuler</a>
+    </nav>
+
+    <p class="countdown" aria-live="polite">Redirection automatique dans <span id="timer">5</span> secondes…</p>
+  </section>
+</main>
+{% endblock %}
+
+
+{% block stylesheets %}
+<style>
+  .alert-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .alert-box {
+    background-color: #1a1a1a;
+    border: 4px solid #ff3c3c;
+    box-shadow: 0 0 25px #ff3c3c;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    color: #fff;
+    max-width: 600px;
+    animation: pulseGlow 1.5s infinite;
+  }
+
+  .external-link {
+    color: #9ec3ff;
+    margin: 1rem 0;
+    word-break: break-word;
+    font-weight: bold;
+  }
+
+  .domain-warning {
+    color: #ffaaaa;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .countdown {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+
+  @keyframes pulseGlow {
+    0% { box-shadow: 0 0 15px #ff3c3c; }
+    50% { box-shadow: 0 0 30px #ff3c3c; }
+    100% { box-shadow: 0 0 15px #ff3c3c; }
+  }
+</style>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    let countdown = 60;
+    const timerEl = document.getElementById('timer');
+    const targetUrl = "{{ target }}";
+
+    const interval = setInterval(() => {
+      countdown--;
+      timerEl.textContent = countdown;
+      if (countdown === 0) {
+        clearInterval(interval);
+        window.location.href = targetUrl;
+      }
+    }, 1000);
+  });
+</script>
+{% endblock %}

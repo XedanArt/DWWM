@@ -1,0 +1,235 @@
+-----------------------------------------------------------
+TEST MANUEL DES FONCTIONNALITÉS ET REDIRECTIONS DU SITE :
+-----------------------------------------------------------
+///////////////////////
+-----------------------
+navbar : 
+-----------------------
+redirections : OK
+-----------------------
+
+///////////////////////
+-----------------------
+'/' Homepage : 
+-----------------------
+  - redirections : OK
+-----------------------
+
+///////////////////////
+-----------------------
+/game/discover : OK
+-----------------------
+
+///////////////////////
+-----------------------
+/game/download : 
+-----------------------
+  - téléchargement : OK
+-----------------------
+
+///////////////////////
+-----------------------
+/contact/support : 
+-----------------------
+  - formulaire en base : OK
+  - création de vue dédiée : X
+  - gestion des tickets : X
+-----------------------
+
+///////////////////////
+-----------------------
+/contact/socials :
+-----------------------
+  - redirections : OK
+  - vue de sécurité : OK
+-----------------------
+
+///////////////////////
+-----------------------
+/news/changelog :
+-----------------------
+  - création d'un changelog sécurisé : OK
+  - vue changelog dédiée : OK
+  - pagination : OK
+-----------------------
+
+///////////////////////
+-----------------------
+/news/devblog :
+-----------------------
+  - création d'un devblog sécurisé : OK
+  - vue devblog dédiée : OK
+  - bouton redirection /news : OK
+-----------------------
+
+///////////////////////
+-----------------------
+/forum (index) :
+-----------------------
+  - boutons de rétractation des blocs : OK
+  - formulaire de recherche par tags : OK
+  - bouton de redirection vers sections dédiées : OK
+  - redirection bloc derniers sujets créés : OK
+  - redirection bloc infos pratiques : OK 
+  - affichage des annonces bloc annonces : OK
+  - redirection bloc à la une : OK
+-----------------------
+
+///////////////////////
+-----------------------
+/tags/search :
+-----------------------
+  - affichage des topics créés : OK
+  - affichage du badge admin/superadmin : X
+  - informations stats. corrects : OK
+  - redirection vers vue topic dédiée : OK
+  - pagination : ok
+-----------------------
+
+///////////////////////
+-----------------------
+/forum/topic/{slug} :
+-----------------------
+  - affichage du topic créé : OK
+  - fonctionnalités ajouter aux favoris : OK
+  - [admin] quarantaine : OK
+  - [admin] supprimer : OK
+  - possibilité de réponse (post) : OK
+  - redirection tags sous-topic : OK
+  - pagination posts : OK
+-----------------------
+
+///////////////////////
+-----------------------
+/forum/section/{slug} :
+-----------------------
+  - affichage des topics créés dans la section dédiée : OK
+  - affichage du badge admin ou superadmi, : OK
+  - information stast. corrects : OK
+  - redirection vers vue topic dédiée : OK
+  - pagination : OK
+-----------------------
+
+///////////////////////
+-----------------------
+/forum (index) :
+-----------------------
+  - contraintes/validité formulaire de création de topic simple : OK
+  - redirection vers vue de création complète TinyMCE : OK
+-----------------------
+
+///////////////////////
+-----------------------
+/forum/topic/new :
+-----------------------
+  - affichage de la vue : OK
+  - insertion de liens Tiny MCE : OK
+  - styles police TinyMCE : OK
+  - contraintes 5000 caractères sur contenu : X
+  - insertion de tags : OK
+  - création du topic : OK
+-----------------------
+
+///////////////////////
+-----------------------
+account/ (profile) : 
+-----------------------
+  - fonctionnalités personnalisation du profil :
+    - avatar : OK
+    - email : OK
+    - username : OK
+    - bio : OK   
+-----------------------
+
+///////////////////////
+-----------------------
+account/favorites : 
+-----------------------
+  - affichage des favoris : OK
+  - redirection vers le topic : OK
+  - pagination : OK
+-----------------------
+
+///////////////////////
+-----------------------
+account/history :
+-----------------------
+  - affichage historique topics : OK
+  - redirection : OK
+  - pagination : OK
+  - affichage posts : OK
+  - redirection : OK
+  - pagination : OK
+-----------------------
+
+///////////////////////
+-----------------------
+account/sécurity :
+-----------------------
+  - affichage de la vue : OK
+  - fonctionnalités : X
+-----------------------
+
+///////////////////////
+-----------------------
+/dashboard (admin/superadmin) :
+-----------------------
+  - affichage de la vue : OK
+  - bloc statistiques : OK
+  - redirection vers vues logs : OK
+  - bloc gestion des utilisateurs : OK
+  - liste avec filtre de recherche : OK
+  - suppression d'un user : OK
+  - bannissement d'un user 24h : OK
+  - bannissement d'un user 48h : OK
+  - contact d'un user et redirection vers vue dédiée : OK
+  - envoie mail après demande de contact : OK
+  - bloc gérer le contenu : OK
+  - ajout d'un devblog : OK
+  - ajout d'un changelog : OK
+  - ajout d'une annonce : OK
+  - suppression d'une entrées : OK
+    - redirection 1 : OK
+    - pagination 1 : OK
+    - redirection 2 : OK
+    - pagination 2 : OK
+    - redirection 3 : OK
+    - pagination 3 : OK
+  - bloc [[superadmin]] : OK
+    - créer un administrateur : OK
+    - révoquer un administrateur : OK
+-----------------------
+
+///////////////////////
+-----------------------
+/auth/login :
+-----------------------
+  - fonctionnalité : OK
+  - contraintes formulaire : OK
+-----------------------
+
+///////////////////////
+-----------------------
+/auth/register :
+-----------------------
+  - fonctionnalité : OK
+  - contraintes formulaire : OK
+-----------------------
+
+///////////////////////
+-----------------------
+/auth/forgot_password :
+-----------------------
+  - fonctionnalité : OK
+  - contraintes formulaire : OK
+  - envoi mail : OK
+-----------------------
+
+///////////////////////
+-----------------------
+/auth/reset-password :
+-----------------------
+  - fonctionnalité : OK
+  - contraintes formulaire : OK
+  - validité formulaire : OK
+-----------------------

@@ -1,0 +1,28 @@
+User-agent: *
+
+Allow: /sitemap.xml
+Allow: /auth/register
+Allow: /news/changelog/
+Allow: /news/devblog/
+Allow: /game/discover
+Allow: /game/download
+Allow: /contact/support
+Allow: /contact/socials
+Allow: /legals/privacy
+Allow: /legals/legal
+Allow: /legals/terms
+Allow: /legals/cookies
+Allow: /
+
+Disallow: /admin/
+Disallow: /superadmin/
+Disallow: /forum/
+Disallow: /dashboard/
+Disallow: /auth/
+Disallow: /account/
+Disallow: /cookies/save
+Disallow: /cookies/preferences
+Disallow: /external_redirect
+Disallow: /redirect
+
+Sitemap: https://morningsoul.fr/sitemap.xml

@@ -1,0 +1,22 @@
+26/09/2025 : 
+
+Workflows : OK
+- création d'un CI avancé 
+- (pour les composants symfony, le fichier composer.jso nest directement vérifié donc pas besoin de rentrer les composants/bundles à la main) 
+- (pour PHP il faut préciser les modules  extensions: bcmath, calendar, ctype, curl, dom, fileinfo, filter, hash, iconv, intl, json, libxml, mbstring, mysqlnd, openssl, pcre, PDO, pdo_mysql, Phar, random, readline, Reflection, session, SimpleXML, SPL, standard, tokenizer, xml, xmlreader, xmlwriter, zlib)
+
+Mise en ligne sur serveur distant OVH : OK
+- tentative fructueuse en Docker malgré quelques soucis
+
+Achat du nom de domaine : OK 
+- morningsoul.fr : en attente de validation par OVH
+- en attente de validation pour relier le nom de domaine à l'IP publique du site
+
+Corrections :
+- Dashboard :
+  - suppression de la possibilité de supprimer le superadmin, de base il existait des contraintes mais ce n'est pas suffisant, c'était une incohérence de rendre l'option visibile mais indisponible
+  - idem pour la suppression d'un admin, étant donné que cela sera à la charge du superadmin via formulaire de création + mail et formulaire de suppression
+  - correction d'un bug dans la vue des logs, en effet elle devait afficher le 1er log sauf que c'est impossible si la bdd est remise à zéro
+
+Search :
+- ajout du badge [[superadmin]] et [admin] lors de la recherche des topics par tags, quand ceux-ci ont été crée par l'un des rôles ou l'autre

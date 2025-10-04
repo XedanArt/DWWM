@@ -1,0 +1,32 @@
+28/09/2025 : 15h20
+
+Dockerization : OK
+- projet fonctionnel en local sous docker
+  - docker-compose.yaml
+  - docker/php/Dockerfile
+  - docker/nginx/default.conf
+  - .env.docker
+
+Peaufinage : OK
+- création de la commande d'insertion des sections en base
+- création de la commande d'insertion des tags en base
+- création de la commande d'insertion des changelogs en base
+- création de la commande d'insertion des devblogs en base
+- création de la commande d'insertion des presentations en base
+
+Sécurité : OK
+- PostType sécurisé avec Regex
+
+Forum new form : OK
+- bug contraintes caractères
+
+Forum topic show :
+- contrôler la structure d'un formulaire avant publication pour accepter des sauts, espaces, etc.
+
+Mailer : OK
+- paramétrage 
+
+CSS :
+- devblog bug visuel
+
+Makefile : OK

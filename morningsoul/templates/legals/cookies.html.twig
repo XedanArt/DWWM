@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/legals.css') }}">
+{% endblock %}
+
+{% block title %}Politique de cookies{% endblock %}
+
+{% block body %}
+<main class="legals-container" role="main" aria-label="Politique de cookies du site Morning Soul">
+  <div class="legals-main-back">
+
+    <section class="legals-block" role="region" aria-labelledby="cookies-definition">
+      <header>
+        <h2 id="cookies-definition" class="legals-title">1. Qu’est-ce qu’un cookie ?</h2>
+      </header>
+      <div class="legals-content">
+        <p>Un cookie est un petit fichier texte enregistré sur le disque dur de votre terminal (ordinateur, tablette, mobile) lors de votre navigation sur un site internet. Il permet notamment de mémoriser vos préférences, d’améliorer votre expérience utilisateur ou de réaliser des analyses de trafic.</p>
+        <p>Les cookies ne permettent pas d’identifier directement un utilisateur mais reconnaissent un appareil pour faciliter l’accès au service.</p>
+      </div>
+    </section>
+
+    <section class="legals-block" role="region" aria-labelledby="cookies-used">
+      <header>
+        <h2 id="cookies-used" class="legals-title">2. Cookies utilisés sur Morning Soul</h2>
+      </header>
+      <div class="legals-content">
+        <p>Nous utilisons les types de cookies suivants :</p>
+        <ul>
+          <li><strong>Cookies techniques</strong> : nécessaires au bon fonctionnement du site (navigation, sécurité, session utilisateur).</li>
+        </ul>
+
+        <p>Nous pourrions, à l'avenir et avec votre consentement, utiliser les types de cookies suivants :</p>
+        <ul>
+          <li><strong>Cookies de mesure d’audience</strong> : pour analyser la fréquentation et améliorer les contenus (ex : Google Analytics).</li>
+          <li><strong>Cookies tiers</strong> : déposés par des services externes (ex : vidéos YouTube, boutons de partage réseaux sociaux).</li>
+        </ul>
+
+        <p>Voici quelques exemples :</p>
+        <ul>
+          <li><strong>_ga</strong> : Google Analytics, mesure d’audience, durée 13 mois</li>
+          <li><strong>_gid</strong> : Google Analytics, suivi de session, durée 24h</li>
+          <li><strong>cookie_consent</strong> : mémorise vos préférences de consentement, durée 6 mois</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="legals-block" role="region" aria-labelledby="cookies-consent">
+      <header>
+        <h2 id="cookies-consent" class="legals-title">3. Consentement et paramétrage</h2>
+      </header>
+      <div class="legals-content">
+        <p>Lors de votre première visite, un bandeau vous informe de l’utilisation des cookies et vous permet de les accepter, de les refuser ou de les personnaliser.</p>
+        <p>Vous pouvez à tout moment modifier vos préférences via ce bandeau ou en configurant votre navigateur pour bloquer certains types de cookies.</p>
+        <p>Le refus des cookies non essentiels n’affecte pas votre navigation ni l’accès aux services proposés.</p>
+      </div>
+    </section>
+
+    <section class="legals-block" role="region" aria-labelledby="cookies-duration">
+      <header>
+        <h2 id="cookies-duration" class="legals-title">4. Durée de conservation</h2>
+      </header>
+      <div class="legals-content">
+        <p>Les cookies techniques sont conservés pendant la session ou quelques jours. Les cookies de mesure d’audience sont conservés jusqu’à 13 mois maximum. Le consentement est conservé pendant 6 mois conformément aux recommandations de la CNIL.</p>
+      </div>
+    </section>
+
+    <section class="legals-block" role="region" aria-labelledby="cookies-rights">
+      <header>
+        <h2 id="cookies-rights" class="legals-title">5. Vos droits</h2>
+      </header>
+      <div class="legals-content">
+        <p>Conformément au RGPD, vous disposez du droit de consentir ou non au dépôt de cookies non essentiels. Vous pouvez également retirer votre consentement à tout moment via le bandeau de paramétrage ou les réglages de votre navigateur.</p>
+        <p>Pour en savoir plus sur la gestion de vos données personnelles, consultez notre <a href="{{ path('legals.privacy') }}">politique de confidentialité</a>.</p>
+      </div>
+    </section>
+
+  </div>
+</main>
+{% endblock %}

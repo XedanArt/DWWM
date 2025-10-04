@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+{% endblock %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+<div class="profile-main-container">
+  <div class="profile-card-container">
+
+    <!-- Onglets -->
+    <div class="profile-buttons-container tab-buttons-right">
+      <a href="{{ path('account.profile') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.profile' %}active{% endif %}">Profil</a>
+      <a href="{{ path('account.favorites') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.favorites' %}active{% endif %}">Favoris</a>
+      <a href="{{ path('account.history') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.history' %}active{% endif %}">Historique</a>
+      <a href="{{ path('account.security') }}" class="tab-button {% if app.request.attributes.get('_route') == 'account.security' %}active{% endif %}">Sécurité</a>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="profile-mycard-container card-container-large">
+      <h2 class="profile-username">{{ app.user.displayUsername }}</h2>
+
+      <div class="profile-firstcard-main">
+        <!-- Colonne gauche -->
+        <div class="profile-firstcard-left">
+          <!-- Avatar -->
+          <div class="profile-avatar-block">
+            <img src="{{ asset(app.user.avatarPath) }}" alt="Avatar" class="profile-avatar" />
+            {{ form_start(avatarForm, {'attr': {'enctype': 'multipart/form-data'}}) }}
+              {{ form_row(avatarForm.avatar) }}
+              <button type="submit" class="form-button">Changer ma photo</button>
+            {{ form_end(avatarForm) }}
+          </div>
+
+          <!-- Email -->
+          <div class="profile-form-block">
+            <h5>Adresse e-mail</h5>
+            {{ form_start(emailForm) }}
+              {{ form_row(emailForm.email) }}
+              <button type="submit" class="form-button">Mettre à jour mon email</button>
+            {{ form_end(emailForm) }}
+          </div>
+
+          <!-- Pseudo -->
+          <div class="profile-form-block">
+            <h5>Nom d'utilisateur</h5>
+            {{ form_start(usernameForm) }}
+              {{ form_row(usernameForm.username) }}
+              <button type="submit" class="form-button">Modifier mon pseudo</button>
+            {{ form_end(usernameForm) }}
+          </div>
+        </div>
+
+        <!-- Colonne droite -->
+        <div class="profile-firstcard-right">
+          <h5>Biographie</h5>
+          {% if app.user.bio %}
+            <p class="profile-bio">{{ app.user.bio }}</p>
+          {% else %}
+            <p class="profile-bio-empty">Tu n'as pas encore écrit de bio. Parle un peu de toi !</p>
+          {% endif %}
+
+          {{ form_start(bioForm, {'attr': {'id': 'bio-form'}}) }}
+            <div class="form-group">
+              {{ form_label(bioForm.bio) }}
+              {{ form_widget(bioForm.bio, {
+                'attr': {
+                  'maxlength': 400,
+                  'id': bioForm.bio.vars.id,
+                  'class': 'bio-textarea'
+                }
+              }) }}
+              {{ form_errors(bioForm.bio) }}
+            </div>
+            <div id="bio-counter" class="char-counter">0 / 400 caractères</div>
+            <button type="submit" class="form-button">Mettre à jour ma bio</button>
+          {{ form_end(bioForm) }}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const bioInput = document.getElementById('{{ bioForm.bio.vars.id }}');
+    const counter = document.getElementById('bio-counter');
+    const bioForm = document.getElementById('bio-form');
+
+    if (bioInput && counter) {
+      const updateCounter = () => {
+        const length = bioInput.value.length;
+        counter.textContent = `${length} / 400 caractères`;
+        counter.style.color = length > 400 ? 'red' : '#555';
+      };
+
+      bioInput.addEventListener('input', updateCounter);
+      updateCounter();
+
+      bioForm.addEventListener('submit', e => {
+        if (bioInput.value.length > 400) {
+          e.preventDefault();
+          alert('⛔ Ta biographie dépasse 400 caractères. Réduis-la avant de valider.');
+        }
+      });
+    }
+  });
+</script>
+{% endblock %}

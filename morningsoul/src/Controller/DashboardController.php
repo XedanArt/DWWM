@@ -1,0 +1,262 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\User;
+use App\Entity\Devblog;
+use App\Entity\Changelog;
+use App\Entity\Announcement;
+use Psr\Log\LoggerInterface;
+use App\Form\ContactUserType;
+use Symfony\Component\Mime\Email;
+use App\Repository\UserRepository;
+use App\Repository\DevblogRepository;
+use App\Repository\ChangelogRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\AnnouncementRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+
+class DashboardController extends AbstractController
+{
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/dashboard', name: 'dashboard')]
+    public function index(UserRepository $userRepository): Response
+    {
+        $users = $userRepository->findAllWithRelations();
+        $currentUser = $this->getUser();
+
+        return $this->render('dashboard/index.html.twig', [
+            'users' => $users,
+            'user' => $currentUser
+        ]);
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/dashboard/contact/{id}', name: 'dashboard.contact_user')]
+    public function contactUser(
+        User $user, 
+        Request $request, 
+        MailerInterface $mailer
+    ): Response {
+        $form = $this->createForm(ContactUserType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $html = $this->renderView('emails/contact_user.html.twig', [
+                'user' => $user,
+                'message' => $data['message']
+            ]);
+
+            $email = (new Email())
+                ->from('contact@morningsoul.fr')
+                ->to($user->getEmail())
+                ->subject('Message de l\'administration')
+                ->text($data['message'])
+                ->html($html);
+            
+            $mailer->send($email);
+
+            $this->addFlash('success', 'Message envoyé à' . $user->getDisplayUsername());
+            return $this->redirectToRoute('dashboard');
+        }
+
+        return $this->render('dashboard/contact_user.html.twig', [
+            'targetUser' => $user,
+            'form' => $form->createView()
+        ]);
+    }
+
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/dashboard/ban/{id}/{duration}', name: 'dashboard.ban_user', methods: ['POST'])]
+    public function banUser(
+        User $user,
+        int $duration,
+        Request $request,
+        EntityManagerInterface $em,
+        #[Autowire(service: 'monolog.logger.admin_actions')]
+        LoggerInterface $adminLogger
+    ): Response {
+        if (!$this->isCsrfTokenValid('ban-' . $duration . '-' . $user->getId(), $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Jeton CSRF invalide.');
+        }
+
+        if ($user->getId() === 1) {
+            $this->addFlash('error', 'Impossible de bannir le superadmin.');
+            return $this->redirectToRoute('dashboard');
+        }
+
+        $banUntil = new \DateTimeImmutable("+{$duration} hours");
+        $user->setBanUntil($banUntil);
+
+        $em->persist($user);
+        $em->flush();
+        /** @var User $user */
+        $user=$this->getUser();
+        
+
+        $adminLogger->warning("[BAN] Admin {$user->getUsername()} a banni {$user->getUsername()} jusqu’au {$banUntil->format('Y-m-d H:i')}.");
+
+        $this->addFlash('warning', "L’utilisateur {$user->getDisplayUsername()} a été banni pour {$duration}h.");
+        return $this->redirectToRoute('dashboard');
+    }
+
+    #[Route('/dashboard/delete-user/{id}', name: 'dashboard.delete_user', methods: ['POST'])]
+    public function deleteUser(
+        int $id,
+        Request $request,
+        EntityManagerInterface $em,
+        #[Autowire(service: 'monolog.logger.admin_actions')]
+        LoggerInterface $adminLogger
+    ): Response {
+        $targetUser = $em->getRepository(User::class)->find($id);
+
+        if (!$targetUser) {
+            $this->addFlash('error', 'Utilisateur introuvable.');
+            return $this->redirectToRoute('dashboard');
+        }
+
+        if (!$this->isCsrfTokenValid('delete-user-' . $targetUser->getId(), $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Jeton CSRF invalide.');
+        }
+
+        if ($targetUser->getId() === $this->getUser()->getId()) {
+            $this->addFlash('error', 'Vous ne pouvez pas vous supprimer vous-même.');
+            return $this->redirectToRoute('dashboard');
+        }
+
+        if (
+            in_array('ROLE_ADMIN', $targetUser->getRoles()) ||
+            in_array('ROLE_SUPERADMIN', $targetUser->getRoles())
+        ) {
+            $this->addFlash('error', 'Les comptes administrateurs ne peuvent pas être supprimés.');
+            return $this->redirectToRoute('dashboard');
+        }
+
+
+        $adminLogger->info("[DELETE_USER] Admin {$this->getUser()->getUsername()} a supprimé l’utilisateur {$targetUser->getUsername()} (ID: {$targetUser->getId()}).");
+
+        $em->remove($targetUser);
+        $em->flush();
+
+        $this->addFlash('success', 'Utilisateur supprimé avec succès.');
+        return $this->redirectToRoute('dashboard');
+    }
+
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/dashboard/delete-entries', name: 'admin.entry.delete')]
+    public function deleteEntries(
+        DevblogRepository $devblogRepo,
+        ChangelogRepository $changelogRepo,
+        AnnouncementRepository $announcementRepo,
+        Request $request,
+        PaginatorInterface $paginator
+    ): Response {
+        $devblogs = $paginator->paginate(
+            $devblogRepo->createQueryBuilder('d')->orderBy('d.date', 'DESC')->getQuery(),
+            $request->query->getInt('page_devblog', 1),
+            5,
+            ['pageParameterName' => 'page_devblog']
+        );
+
+
+        $changelogs = $paginator->paginate(
+            $changelogRepo->createQueryBuilder('c')->orderBy('c.date', 'DESC')->getQuery(),
+            $request->query->getInt('page_changelog', 1),
+            5,
+            ['pageParameterName' => 'page_changelog']
+        );
+
+
+        $announcements = $paginator->paginate(
+            $announcementRepo->createQueryBuilder('a')->orderBy('a.createdAt', 'DESC')->getQuery(),
+            $request->query->getInt('page_announcement', 1),
+            5,
+            ['pageParameterName' => 'page_announcement']
+        );
+
+
+        return $this->render('dashboard/delete_entries.html.twig', [
+            'devblogs' => $devblogs,
+            'changelogs' => $changelogs,
+            'announcements' => $announcements
+        ]);
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/dashboard/delete-entry/{type}/{id}', name: 'admin.entry.delete_item', methods: ['POST'])]
+    public function deleteEntry(
+        string $type,
+        int $id,
+        Request $request,
+        EntityManagerInterface $em,
+        #[Autowire(service: 'monolog.logger.admin_actions')]
+        LoggerInterface $adminLogger
+    ): Response {
+        $classMap = [
+            'devblog' => Devblog::class,
+            'changelog' => Changelog::class,
+            'announcement' => Announcement::class,
+        ];
+
+        if (!array_key_exists($type, $classMap)) {
+            throw $this->createNotFoundException('Type d’entrée invalide.');
+        }
+
+        $entry = $em->getRepository($classMap[$type])->find($id);
+
+        if (!$entry) {
+            throw $this->createNotFoundException('Entrée introuvable.');
+        }
+
+        // Si le jeton CSRF reçu ne correspond pas à celui attendu pour cette suppression d’entrée, alors on bloque l’action et on affiche une erreur de sécurité
+        if (!$this->isCsrfTokenValid('delete-entry-' . $type . '-' . $id, $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Jeton CSRF invalide.');
+        }
+        /** @var User $user */
+        $user=$this->getUser();
+
+        $adminLogger->info("[DELETE_ENTRY] Admin {$user->getUsername()} a supprimé un(e) {$type} (ID: {$entry->getId()}).");
+
+        $em->remove($entry);
+        $em->flush();
+
+        $this->addFlash('success', ucfirst($type) . ' supprimé avec succès.');
+        return $this->redirectToRoute('admin.entry.delete');
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/dashboard/logs', name: 'dashboard.logs')]
+    public function viewLogs(Request $request, PaginatorInterface $paginator): Response
+    {
+        $logPath = $this->getParameter('kernel.logs_dir') . '/controllers/admin_actions.log';
+
+        if (!file_exists($logPath)) {
+            $logs = ['Fichier de log introuvable.'];
+        } else {
+            $lines = file($logPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            $logs = array_reverse($lines);
+        }
+
+        $pagination = $paginator->paginate(
+            $logs,
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        return $this->render('dashboard/logs.html.twig', [
+            'logs' => $pagination
+        ]);
+    }
+}

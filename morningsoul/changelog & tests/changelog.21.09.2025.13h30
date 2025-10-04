@@ -1,0 +1,10 @@
+21/09/2025 : 22h47
+
+Topic :
+- rajout de la possibilité d'utiliser des liens (redirection vers une vue de sécurité) dans la création de topic
+
+Cookies :
+- correction apportée à la validation visuelle des cases à cocher 
+
+Footer :
+- correction d'un petit réglage css sur le border-bottom des footer-custom-title qui rendait l'écran scrollable vers la droite sur différents petits formats d'écran

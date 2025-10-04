@@ -1,0 +1,155 @@
+body {
+  background-color: #fdf6e3;
+  margin: 0;
+  padding: 0;
+}
+
+.delete-entries-container {
+  max-width: 1200px;
+  margin: 10rem auto;
+  padding: 2rem;
+  background-color: rgba(255, 240, 206, 0.548);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.delete-entries-title {
+  background-color: rgb(24, 20, 20);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgb(0, 0, 0);
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #FFD7A1;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.delete-entries-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.delete-entries-section {
+  background-color: #fff8e7;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 0 6px rgb(0, 0, 0);
+}
+
+.delete-entries-section-title {
+  background-color: rgb(24, 20, 20);
+  color: #FFD7A1;
+  font-size: 1.4rem;
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 8px rgb(0, 0, 0);
+}
+
+.delete-entries-card {
+  background-color: #eef2f5;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s;
+}
+
+.delete-entries-card:hover {
+  background-color: #dde6ed;
+}
+
+.delete-entries-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.delete-entries-card-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.delete-entries-card-title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.delete-entries-card-date {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.delete-entries-btn {
+  background-color: rgb(24, 20, 20);
+  color: #FFD7A1;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.85rem;
+  transition: background-color 0.2s ease;
+}
+
+.delete-entries-btn:hover {
+  background-color: rgb(61, 54, 54);
+}
+
+.delete-entries-empty {
+  font-style: italic;
+  color: #999;
+  margin-top: 1rem;
+}
+
+.delete-entries-pagination {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .delete-entries-card-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .delete-entries-btn {
+    align-self: flex-end;
+  }
+}
+
+.logs-pagination {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.logs-pagination .pagination {
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+.logs-pagination .pagination li {
+  list-style: none;
+}
+
+.delete-entries-pagination .pagination a,
+.delete-entries-pagination .pagination span {
+  padding: 0.4rem 0.8rem;
+  background-color: rgb(24, 20, 20);
+  color: #FFD7A1;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.delete-entries-pagination .pagination .current {
+  background-color: #FFD7A1;
+  color: rgb(24, 20, 20);
+}

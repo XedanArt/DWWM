@@ -1,0 +1,85 @@
+name: Morning Soul CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  setup:
+    name: Setup & Build Symfony
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: my_app_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    env:
+      DATABASE_URL: "mysql://root:root@127.0.0.1:3306/my_app_test"
+      APP_ENV: test
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.4'
+        extensions: bcmath, ctype, curl, dom, fileinfo, filter, hash, iconv, intl, json, mbstring, mysqlnd, openssl, pdo, pdo_mysql, tokenizer, xml, xmlreader, xmlwriter, zlib
+        coverage: none
+
+    - name: Check PHP version
+      run: php -v
+
+    - name: Wait for MySQL to be ready
+      run: |
+        for i in {1..30}; do
+          if mysqladmin ping -h 127.0.0.1 -uroot -proot --silent; then
+            echo "MySQL is up!"
+            break
+          fi
+          echo "Waiting for MySQL..."
+          sleep 2
+        done
+
+    - name: Validate composer.json & composer.lock
+      run: composer validate --strict
+
+    - name: Install dependencies
+      run: composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts
+
+    - name: Clear Symfony cache manually
+      run: php bin/console cache:clear --env=test || echo "Cache clear failed, continuing"
+
+    - name: Test DB connection
+      run: php bin/console doctrine:query:sql "SELECT 1"
+
+    - name: Check migration status
+      run: php bin/console doctrine:migrations:status
+
+    - name: Run migrations
+      run: php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+
+    - name: Run tests
+      run: php bin/phpunit --testdox
+
+    - name: Lint Twig templates
+      run: php bin/console lint:twig templates
+
+    - name: Lint YAML config
+      run: php bin/console lint:yaml config
+
+    - name: Check Symfony requirements
+      run: php bin/console about
