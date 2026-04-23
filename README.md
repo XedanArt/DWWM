@@ -154,7 +154,8 @@ L’objectif était de garantir un environnement fiable pour les utilisateurs, p
 - Pour le **MCD, MLD, MPD**, renseignez vous correctement sur leur fonction initiale, une légère erreur et vous vous retrouver avec quelque chose qui n'a rien à voir.
 - Faites des **Wireframes** c'est impératif, utilisez **Figma** ou **Photoshop** par exemple.
 - Faites un **Cahier des Charges**, même si celui-ci est fictif (attention si vous décidez de faire une **Identité Visuelle** à ne pas empiéter sur le domaine du **Design System**, la nuance est dans le nombre d'éléments que vous précisez).
-- N'oubliez pas de faire un **Dictionnaire des Données**.  
+- N'oubliez pas de faire un **Dictionnaire des Données**.
+- Faites également une **Présentation** type **PowerPoint** pour le jour de l'épreuve, entrainez vous à passer via ce support.  
 
 Si vous souhaitez un accès aux pdf des livrables présentés au jury, contactez moi : vincentpeltier.pro@outlook.fr
 
