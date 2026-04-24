@@ -150,7 +150,7 @@ L’objectif était de garantir un environnement fiable pour les utilisateurs, p
 - Pour le **Dossier de Projet**, ne pas hésiter à faire plus de 50 pages.
 - Pour le **Dossier Professionnel**, l'épreuve étant, l'année de mon passage, séparée en deux grands axes (activité-type) pouvant être résumés par : Front-end sécurisé et Back-end sécurisé; vous devez expliquer comment vous sécurisez votre appli sur ces deux plans, n'évoquez pas que la sécurité côté back. **// Vous devez répondre point par point à l'axe d'évaluation, si vous n'avez qu'un seul projet, n'hésitez pas à le diviser en plusieurs points //**.
 - Vous devez utiliser un **framework**.
-- Si vous n'utilisez pas de **NoSQL** et que vous vous contentez de **MySQL** par exemple, vous allez devoir justifier pourquoi (plus d'expérience dessus, vous estimez que c'est tout aussi scalable, sécurité, etc.)
+- Si vous n'utilisez pas de **NoSQL** et que vous vous contentez du **SQL**, vous allez peut être devoir le justifier (plus d'expérience dessus, vous estimez que c'est tout aussi scalable, sécurité, etc.)
 - Pour le **MCD, MLD, MPD**, renseignez vous correctement sur leur fonction initiale, une légère erreur et vous vous retrouver avec quelque chose qui n'a rien à voir.
 - Faites des **Wireframes** c'est impératif, utilisez **Figma** ou **Photoshop** par exemple.
 - Faites un **Cahier des Charges**, même si celui-ci est fictif (attention si vous décidez de faire une **Identité Visuelle** à ne pas empiéter sur le domaine du **Design System**, la nuance est dans le nombre d'éléments que vous précisez).
