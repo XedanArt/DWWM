@@ -1,6 +1,6 @@
 **Morning Soul — Site Vitrine & Forum Communautaire**
 
-*Projet réalisé dans le cadre du Titre Professionnel DWWM*
+*Projet réalisé dans le cadre de la soutenance du Titre Professionnel DWWM*
 
 Morning Soul est un site web hybride combinant une vitrine immersive dédiée à un jeu vidéo indépendant et un forum communautaire complet.
 Le projet met en avant une identité visuelle sombre et narrative, un espace éditorial (actualités, devblog, changelog) et un forum structuré avec gestion des rôles, sécurité avancée et outils de modération.  
