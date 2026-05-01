@@ -168,3 +168,14 @@ Si vous souhaitez un accès aux pdf des livrables présentés au jury, contactez
 **Développeur Web & Web Mobile, Technicien Informatique & Réseaux.**  
 |
 *Merci au Studio Vesperveil pour leur confiance ainsi que cette opportunité de travailler avec eux.*
+
+
+Quelques screenshots du site :
+
+<img width="1901" height="857" alt="MS_HOMEPAGE" src="https://github.com/user-attachments/assets/382d67f2-fafb-41e3-8b1a-7184f12acc24" />
+<img width="1900" height="855" alt="MS_DEVBLOG" src="https://github.com/user-attachments/assets/c9411573-1fb1-463c-b152-ee138c168cc5" />
+<img width="1902" height="859" alt="MS_FORUM" src="https://github.com/user-attachments/assets/8ecd862e-95d4-48ec-b6da-024fdc6b8792" />
+<img width="842" height="1093" alt="image" src="https://github.com/user-attachments/assets/e79c4874-b3c2-450c-917a-2fa58bbbab9d" />
+
+
+
