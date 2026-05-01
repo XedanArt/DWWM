@@ -175,7 +175,15 @@ Quelques screenshots du site :
 <img width="1901" height="857" alt="MS_HOMEPAGE" src="https://github.com/user-attachments/assets/382d67f2-fafb-41e3-8b1a-7184f12acc24" />
 <img width="1900" height="855" alt="MS_DEVBLOG" src="https://github.com/user-attachments/assets/c9411573-1fb1-463c-b152-ee138c168cc5" />
 <img width="1902" height="859" alt="MS_FORUM" src="https://github.com/user-attachments/assets/8ecd862e-95d4-48ec-b6da-024fdc6b8792" />
-<img width="842" height="1093" alt="image" src="https://github.com/user-attachments/assets/e79c4874-b3c2-450c-917a-2fa58bbbab9d" />
+<img width="1903" height="857" alt="MS_SUPPORT" src="https://github.com/user-attachments/assets/b53f63b6-42c6-49cd-942f-4c0300dcb651" />
+<img width="484" height="814" alt="MS_HOMEPAGE_RESPONSIVE" src="https://github.com/user-attachments/assets/110b6e5a-819f-4898-a80e-2e9fb48a28b2" />
+<img width="481" height="819" alt="MS_DEVBLOG_RESPONSIVE" src="https://github.com/user-attachments/assets/e517ba65-6e2a-4680-bc28-f8d6b516ad2a" />
+<img width="484" height="821" alt="MS_FORUM_RESPONSIVE" src="https://github.com/user-attachments/assets/1ba2be3d-4245-404c-8218-51a8ed4eb0a7" />
+<img width="485" height="818" alt="MS_SUPPORT_RESPONSIVE" src="https://github.com/user-attachments/assets/60491446-9b39-4239-89d1-fc634c4ede9f" />
+
+
+
+
 
 
 
