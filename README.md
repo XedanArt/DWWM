@@ -65,7 +65,7 @@ Le projet met en avant une identité visuelle sombre et narrative, un espace éd
 - Dictionnaire des données (impératif)
 
 **Outils et workflow**
-- Git / GitHub
+- Git / GitHub (versioning)
 - Symfony CLI
 - MySQL Workbench / DBeaver
 - Figma (maquettes & identité visuelle)
